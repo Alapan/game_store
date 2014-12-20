@@ -1,0 +1,92 @@
+Project plan - Web Software Development
+
+
+Our group
+
+
+Alapan Mukherjee - 400244
+Gergely Horváth - 432885
+Habtamnesh Goite -397548
+
+
+Requirements
+
+
+General description of what you are doing and how you are doing that (what kinds of views, models are needed), how they relate to each other, and what is the implementation order and timetable.
+   * What features you plan to implement?
+   * Are there some extra features not listed in the project description what you plan to implement?
+   * For each feature, how do you plan to implement it?
+   * Adding information on how you plan on working on the project is recommended as well (will you meet face-to-face regularly, will use some project management tools, etc.)
+
+
+General description
+
+
+Our goal with this project is to get as many points as possible, by implementing the mandatory features to work flawlessly and complete the platform with additional features both from the list provided and extra we come up with. We plan to create it in a clear and user-friendly way. 
+
+Regarding the timeline, our main goal is to complete the mandatory features first by doing them in parallel, distributing the tasks between the group members. Our very first objective is to design the underlying models and database structure, which we plan to do together in the beginning of January, as the kick-off of our project. For the first three modules - authentication, player module and developer module - we plan to finish within three weeks. Then the message structure together with the save/load functionalities comes next. If these features are working properly, which we plan to test thoroughly, then we continue with the extra features listed later in this document. We plan to do testing also during the development, but before submitting we want to do a testing round, where we want to find all possible bugs and errors in order to get the highest score.
+What features we plan to implement and how
+
+
+* All of the mandatory features
+   * Authentication
+      * Login, logout, register - Django built in authentication solution
+         * Separate options of login for developers and players
+      * We plan to do the e-mail validation as well
+   * Basic player functionalities
+      * Use provided material for implementation of payments (http://payments.webcourse.niksula.hut.fi/ )
+         * Access rights 
+      * Separate page for players 
+         * about the bought games
+         * for each game their scores, from the saved state
+      * Layout structure is not going to be the same as the provided mockup, but we will come up with a different one, when we have some basic functionalities already working
+      * Search: two ways:
+         * Category search - you only see the games in a certain category and can search them by name
+         * Free text search
+   * Developer functionalities
+      * Separate page for setting up the game’s outline, what is visible for the users when they search for it
+         * Setting the price
+         * Adding pictures of the game
+         * Writing a description
+         * Add the URL pointing to the game itself
+         * Modifiable and removable at any time
+      * Statistics
+         * General statistics for all the games
+         * Separate statistics for each of the games
+   * Game/service interaction
+      * Messages will be implemented in the same structure as it is provided
+         * playerItems is just stored for save/load functionality
+         * score is what we care about, as we are showing it to the players
+      * All 5 types of messages are going to be implemented (needed for the save/load functionality)
+   * We plan to write reusable modules aiming to increase quality and clear implementation (make use of Don’t Repeat Yourself (DRY) principle)
+
+
+
+
+* Extra features:
+   * 3rd party login
+      * Login using Facebook and Gmail with the use of their APIs
+   * Social media sharing
+      * Share posts containing points or highscores on Facebook/Twitter/Google+
+      * Main purpose is to advertise the game and the platform, therefore the shared post also contains link to the platform to the exact game
+   * Own game
+      * Very simple, but FUN game :)
+      * More advanced functionality than the provided sample games with some meaningful purpose
+   * Save/load functionality
+      * As described before with the provided message types
+
+
+Extra features not listed
+
+
+* Maybe more, it is going to be clear when we have a working version of the mandatory features
+
+
+
+
+How we plan to work
+
+
+* Mostly online collaboration and clear distribution of tasks
+* If needed, meet face-to-face to discuss problems and help each other
+* Project management tool: Trello (https://trello.com/), GitLab, Google Drive
