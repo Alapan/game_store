@@ -1,0 +1,8 @@
+<html>
+	<body>
+		<p>Welcome,{{user.get_username}}</p>
+		<form action="/logout/" method="post">{% csrf_token %}
+			<input type="submit" value="Logout" />
+		</form>
+	</body>
+</html>
