@@ -17,7 +17,6 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    "/home/mukhera3/Desktop/wsdProject/gamestore/templates",
 
 )
 
@@ -44,6 +43,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'gamestore',    
 )
 
 MIDDLEWARE_CLASSES = (
