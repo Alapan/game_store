@@ -12,11 +12,16 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SETTINGS_PATH = os.path.realpath(os.path.dirname(__file__))
+DATABASE_PATH = os.path.join(BASE_DIR, 'db.sqlite3')
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+<<<<<<< HEAD
+=======
+    "/home/mukhera3/Desktop/wsdProject/gamestore/templates",  #TODO use absolute path here
+>>>>>>> fef93f5e129232e79acf44fb2292bc37c89118e8
 
 )
 
@@ -67,7 +72,7 @@ WSGI_APPLICATION = 'wsdProject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': DATABASE_PATH,
     }
 }
 
