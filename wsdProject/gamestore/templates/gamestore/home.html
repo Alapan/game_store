@@ -3,9 +3,9 @@
 	<body>
 		<form action="/login/" method="post">{% csrf_token %}
 			<label for="username">Username</label>
-			<input id="username" type="text" name="username"/></br></br>
+			<input id="username" type="text" name="username"/>&nbsp;
 			<label for="password">Password</label>
-			<input id="password" type="password" name="password"/></br></br>
+			<input id="password" type="password" name="password"/>&nbsp;
 			<label for="usertype">Login as: </label>
 			<select id="usertype">
 				<option></option>
@@ -13,7 +13,8 @@
 				<option value="False">Developer</option>
 				<option></option>
 			</select></br></br>
-			<input type="submit" name="submit" value="Log in"/>
+			<input type="submit" name="submit" value="Login"/>&nbsp;
+			<p>New user? <a href="{% url 'gamestore:registration' %}">Sign up</a></p>
 		</form>
 	</body>
 </html>
