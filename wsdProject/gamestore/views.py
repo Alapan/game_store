@@ -5,9 +5,12 @@ from django.shortcuts import render_to_response
 from django.core.context_processors import csrf
 from django.template import RequestContext
 from gamestore.models import *
+from django.contrib.auth.models import AnonymousUser
+from django.views.decorators.cache import cache_control
 
 # Create your views here.
 
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def login_view(request):
 
 	c={}
@@ -34,12 +37,14 @@ def login_view(request):
 		#Redirect to login page, as login is incorrect
 		return render_to_response('gamestore/home.html',c)
 
-
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def logout_view(request):
 
 	#c={}
 	#c.update(csrf(request))
 	logout(request)
+	#request.session.flush()
+	#request.user = AnonymousUser
 	#Redirect to logout page
 	return render_to_response('gamestore/logout.html')
 
