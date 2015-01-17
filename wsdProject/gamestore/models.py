@@ -4,7 +4,7 @@ from django.db import models
 
 class Usertypes(models.Model):
     user = models.OneToOneField(User)
-    usertype = models.BooleanField(default=True)                   # True equals Player, False equals Developer
+    usertype = models.TextField()                   
 
     def __unicode__(self):
         return self.user_name
