@@ -3,7 +3,7 @@
     <title></title>
     <body>
         <h3>Player homepage</h3>
-	<p>Welcome,{{request.user.get_username}}</p></br>
+	<p>Welcome, {{user.get_username}}</p></br>
         <form action="/logout/" method="post">{% csrf_token %}
             <input type="submit" value="Logout" />
         </form>
