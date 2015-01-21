@@ -35,6 +35,10 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Image settings
+
+MEDIA_ROOT = os.path.join(SETTINGS_PATH,'media')
+MEDIA_URL = '/media/'
 
 # Application definition
 
