@@ -35,11 +35,6 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# Image settings
-
-MEDIA_ROOT = os.path.join(SETTINGS_PATH,'media')
-MEDIA_URL = '/media/'
-
 # Application definition
 
 INSTALLED_APPS = (
@@ -61,6 +56,10 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
+
+
+# Django console backend for e-mail
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 ROOT_URLCONF = 'wsdProject.urls'
 
@@ -95,3 +94,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+
