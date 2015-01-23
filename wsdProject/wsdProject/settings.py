@@ -95,3 +95,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+if "DYNO" in os.environ:
+    #DEBUG = False
+    ALLOWED_HOSTS = ['*']    
+    STATIC_ROOT = 'staticfiles'
+    import dj_database_url
+    DATABASES['default'] =  dj_database_url.config()
