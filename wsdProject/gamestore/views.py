@@ -10,6 +10,7 @@ from django.views.decorators.cache import cache_control
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth.models import User
+from gamestore.forms import UserData, UserForm
 
 # Create your views here.
 
@@ -33,34 +34,45 @@ def registration(request):
 	registered = False
 	# if it is HTTP POST, form data have to be processed
 	if request.method == 'POST':
-		# create Usertype object with submitted information
+		user_data = UserData(data=request.POST)
 		user_form = UserForm(data=request.POST)
-		print(user_form)
 		# if object is valid, save to database
-		if user_form.is_valid():
-			#user = user_form.save()
+		if user_data.is_valid() and user_form.is_valid():
+			user = user_data.save()
 			#hash the password and save
-			#user.set_password(user.password)
-			#user.save()
+			user.set_password(user.password)
+			user.save()
 			#registered = True
 			profile = user_form.save(commit=False)
-			profile.user.username = user_form['username']
-			profile.user.first_name = user_form['firstname']
-			profile.user.last_name = user_form['lastname']
-			profile.user.email = user_form['email']
-			profile.user.first_name = user_form['email']
-			profile.usertype = user_form['usertype']
-
+			profile.user = user
 			profile.save()	
+			registered = True
+			sendmail(user)
+			#print(user.first_name,user.email)
 		else:
 			#print(data)
-			print(user_form.errors)
+			print(user_data.errors, user_form.errors)
 	# not HTTP POST, so the template form is rendered using Usertypes instances. The form will be blank.
 	else:
+		user_data = UserData()
 		user_form = UserForm()
 
 	# render the template depending on the context
-	return render_to_response('gamestore/registration.html',{'user_form': user_form, 'registered': registered},context_instance=RequestContext(request))
+	return render_to_response('gamestore/registration.html',{'user_data': user_data, 'user_form': user_form, 'registered': registered},context_instance=RequestContext(request))
+
+# send email to a new user after successful registration
+def sendmail(user):
+	subject = 'Registration confirmation mail'
+	message = 'Dear ' + user.first_name + ''', 
+
+Thank you for registering on our website!
+
+Best regards,
+The Gladiators team'''
+	from_email = 'no-reply@gladiator.com'
+	recipient_list = []
+	recipient_list.append(user.email)
+	send_mail(subject, message, from_email, recipient_list, fail_silently=False)
 		
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def login_view(request):
@@ -89,7 +101,6 @@ def login_view(request):
 		#Redirect to login page, as login is incorrect
 		return render_to_response('gamestore/home.html',c)
 
-	
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def logout_view(request):
 

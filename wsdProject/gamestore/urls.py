@@ -9,5 +9,5 @@ urlpatterns = patterns('',
 
 	url(r'^signup/$', gamestore.views.signup, name=' register_url'),
 	url(r'^newlogin/', gamestore.views.newlogin, name= ' new_login'),
-
+	url(r'^home/', gamestore.views.newlogin, name= ' home'),
 )
