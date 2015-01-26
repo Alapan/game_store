@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django import forms
-from gamestore.models import Usertypes
+from gamestore.models import Usertypes, Games
 
 class UserData(forms.ModelForm):
 	password = forms.CharField(widget=forms.PasswordInput())
@@ -19,3 +19,12 @@ class UserForm(forms.ModelForm):
                 model = Usertypes
                 fields = ('usertype',)
 
+class GameForm(forms.ModelForm):
+
+	#developer = forms.CharField(
+	#	widget=forms.TextInput(attrs={'readonly':'readonly'})
+	#)
+
+	class Meta:
+		model = Games
+		fields = ('name','category','url','developer','price')

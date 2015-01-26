@@ -10,7 +10,7 @@ from django.views.decorators.cache import cache_control
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth.models import User
-from gamestore.forms import UserData, UserForm
+from gamestore.forms import UserData, UserForm, GameForm
 
 # Create your views here.
 
@@ -122,18 +122,15 @@ def addgame(request):
 	c={}
 	c.update(csrf(request))
 	saved = False
+	#developer = request.POST['developer']
 	if request.method == 'POST':
-		name = request.POST['name']
-		#print(name)
-		category = request.POST['category']
-		#print(category)
-		url = request.POST['url']
-		#print(url)
-		developer = request.POST['developer']
-		#print(developer)
-		price = request.POST['price']
-		#print(price)
-		game = Games(name,category,url,developer,price)
-		game.save()
-		saved = True
-		return render_to_response('gamestore/developer_homepage.html',{'saved':saved},context_instance=RequestContext(request))
+		game = GameForm(data=request.POST)
+		if game.is_valid():
+			game.save()
+			saved = False
+		else:
+			print(game.errors)
+	else:
+		game = GameForm()
+			
+	return render_to_response('gamestore/developer_homepage.html',{'game': game, 'saved': saved},context_instance=RequestContext(request))
