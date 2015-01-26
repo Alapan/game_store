@@ -1,9 +1,41 @@
 <!DOCTYPE html>
 <html>
-    <title></title>
+    <head>
+    <title>Developer homepage</title>
+    <script>
+	function validateForm(){
+		var name = document.forms["addform"]["name"].value;
+		var category = document.forms["addform"]["category"].value;
+		var url = document.forms["addform"]["url"].value;
+		var price = document.forms["addform"]["price"].value;
+		if((name==null || name="") || (category==null || category=="") || (url==null || url=="") || (price==null || price=="")){
+			alert("No field can be left blank!");
+			return false;
+		}
+	}
+    </script>
+    </head>
     <body>
         <h3>Developer homepage</h3>
         <p>Welcome, {{user.get_username}}</p></br>
+	<form name="addform" action="/addgame/" onsubmit="return valiateForm()" method="post">{% csrf_token %}
+		<fieldset>
+			<legend> Add a game </legend>
+			<label for="name">Name </label>
+			<input id="name" type="text" name="name" /><br><br>
+			<label for="category">Category </label>
+			<input id="category" type="text" name="category" /><br><br>
+			<label for="url">Game URL: </label>
+			<input id="url" type="text" name="url" /><br><br>
+			<input type="hidden" name="developer" value="{{user.get_username}}">
+			<label for="price">Price(EUR): </label>
+			<input id="price" type="text" name="price" /><br><br>
+			<input type="submit" value="Add game"/>
+			{% if saved %}
+				<script>alert("Game successfully added!")</script>
+			{% endif %}
+		</fieldset>
+	</form>
         <form action="/logout/" method="post">{% csrf_token %}
             <input type="submit" value="Logout" />
         </form>

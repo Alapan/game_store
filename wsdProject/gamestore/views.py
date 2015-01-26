@@ -116,3 +116,24 @@ def home(request):
 	c={}
 	c.update(csrf(request))
 	return render_to_response('gamestore/home.html',c)
+
+def addgame(request):
+
+	c={}
+	c.update(csrf(request))
+	saved = False
+	if request.method == 'POST':
+		name = request.POST['name']
+		#print(name)
+		category = request.POST['category']
+		#print(category)
+		url = request.POST['url']
+		#print(url)
+		developer = request.POST['developer']
+		#print(developer)
+		price = request.POST['price']
+		#print(price)
+		game = Games(name,category,url,developer,price)
+		game.save()
+		saved = True
+		return render_to_response('gamestore/developer_homepage.html',{'saved':saved},context_instance=RequestContext(request))

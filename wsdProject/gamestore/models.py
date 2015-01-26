@@ -9,7 +9,7 @@ class Usertypes(models.Model):
 		return self.user_name
 
 class Games(models.Model):
-	name = models.CharField(max_length=100, unique=True)
+	name = models.CharField(max_length=100,unique=True)
 	category = models.CharField(max_length=100)
 	url = models.URLField()
 	developer = models.OneToOneField(User)

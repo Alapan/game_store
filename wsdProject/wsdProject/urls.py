@@ -12,5 +12,6 @@ urlpatterns = patterns('',
 	url(r'^login/','gamestore.views.login_view'),
 	url(r'^logout/','gamestore.views.logout_view'),
 	url(r'^registration/','gamestore.views.registration'),
+	url(r'^addgame/','gamestore.views.addgame'),
 	url(r'^gamestore/', include('gamestore.urls', namespace="gamestore")),
 )
