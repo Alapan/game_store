@@ -12,7 +12,7 @@ class Games(models.Model):
 	name = models.CharField(max_length=100,unique=True)
 	category = models.CharField(max_length=100)
 	url = models.URLField()
-	developer = models.OneToOneField(User)
+	developer = models.ForeignKey(User)
 	price = models.FloatField()
 
 	def __unicode__(self):

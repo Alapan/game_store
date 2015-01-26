@@ -7,13 +7,12 @@
         <h3>Developer homepage</h3>
         <p>Welcome, {{user.get_username}}</p></br>
 	{% if saved %}
-		<script>alert("Game successfully added!")</script>
+		<strong>Game successfully added!</strong>
 	{% else %}
 	<form action="/addgame/" method="post">{% csrf_token %}
 		<fieldset>
 			<legend> Add a game </legend>
 			{{ game.as_p }}
-			<input type="hidden" name="developer" value="{{user.get_username}}">
 			<input type="submit" name="submit" value="Add game"/>			
 		</fieldset>
 	</form>
