@@ -11,6 +11,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth.models import User
 from gamestore.forms import UserData, UserForm, GameForm
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 
@@ -124,13 +125,16 @@ def addgame(request):
 	saved = False
 	#developer = request.POST['developer']
 	if request.method == 'POST':
-		game = GameForm(data=request.POST)
-		if game.is_valid():
-			game.save()
-			saved = False
+		form = GameForm(data=request.POST)
+		if form.is_valid():
+			game = form.save(commit=False)
+			game.developer = request.user
+			print(game.developer)
+			game.save() 
+			saved = True
 		else:
-			print(game.errors)
+			print(form.errors)
 	else:
-		game = GameForm()
+		form = GameForm()
 			
-	return render_to_response('gamestore/developer_homepage.html',{'game': game, 'saved': saved},context_instance=RequestContext(request))
+	return render_to_response('gamestore/developer_homepage.html',{'form': form, 'saved': saved},context_instance=RequestContext(request))

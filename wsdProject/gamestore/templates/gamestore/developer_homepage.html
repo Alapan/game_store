@@ -6,17 +6,17 @@
     <body>
         <h3>Developer homepage</h3>
         <p>Welcome, {{user.get_username}}</p></br>
-	{% if saved %}
-		<strong>Game successfully added!</strong>
-	{% else %}
+	{% if saved %}	
+	<script>alert("Game successfully added!")</script>
+	{% endif %}
 	<form action="/addgame/" method="post">{% csrf_token %}
 		<fieldset>
 			<legend> Add a game </legend>
-			{{ game.as_p }}
+			{{ form.as_p }}
 			<input type="submit" name="submit" value="Add game"/>			
 		</fieldset>
 	</form>
-	{% endif %}
+	
         <form action="/logout/" method="post">{% csrf_token %}
             <input type="submit" value="Logout" />
         </form>
