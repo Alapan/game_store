@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>Add a new game</title>
+    </head>
+    <body>
+        <h3>Add a new game</h3>
+        <p>Logged-in user: {{user.get_username}}</p></br>
+	<!--p><a href="{% url 'gamestore: add' %}"> Add new game</a><br /></p-->
+	{% if saved %}
+        <strong>Game successfully added!</strong>
+	<a href="{% url 'gamestore: dev_home' %}">Return to your homepage.</a><br />
+        {% else %}
+        <form action="/addgame/" method="post">{% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" name="submit" value="Add game"/>
+        </form>
+	{% endif %}
+	<br>
+    </body>
+</html>
+

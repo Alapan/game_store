@@ -6,17 +6,39 @@
     <body>
         <h3>Developer homepage</h3>
         <p>Welcome, {{user.get_username}}</p></br>
-	{% if saved %}	
-	<script>alert("Game successfully added!")</script>
-	{% endif %}
-	<form action="/addgame/" method="post">{% csrf_token %}
-		<fieldset>
-			<legend> Add a game </legend>
-			{{ form.as_p }}
-			<input type="submit" name="submit" value="Add game"/>			
-		</fieldset>
-	</form>
-	
+	<fieldset>
+		<legend><strong> Games in your inventory</strong> </legend>
+		<table>
+			<col width="100">
+			<col width="200">
+			<col width="100">
+			<col width="100">
+			<col width="400">
+			<col width="300">
+			<tr>
+				<th>Game ID</th>
+				<th>Name</th>
+				<th>Category</th>
+				<th>Username</th>
+				<th>URL</th>
+				<th>Price(EUR)</th>
+			</tr>
+			{% for game in list_of_games %}
+			<tr>
+				<td align="center">{{game.id}}</td>
+				<td align="center">{{game.name}}</td>
+				<td align="center">{{game.category}}</td>
+				<td align="center">{{game.developer.username}}</td>
+				<td align="center">{{game.url}}</td>
+				<td align="center">{{game.price}}</td>
+				<td align="center"><a href="/delete/{{game.id}}" data-confirm="true"> Delete this game</a></td>
+			</tr>
+		{% endfor %}
+		</table>
+	</fieldset>
+	<br>
+	<p><a href="{% url 'gamestore: add' %}"> Add new game</a><br /></p>
+	<br>
         <form action="/logout/" method="post">{% csrf_token %}
             <input type="submit" value="Logout" />
         </form>

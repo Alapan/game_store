@@ -12,6 +12,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from gamestore.forms import UserData, UserForm, GameForm
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404,redirect
 
 # Create your views here.
 
@@ -93,7 +94,8 @@ def login_view(request):
 			return render_to_response('gamestore/player_homepage.html',c,context_instance=RequestContext(request))
 		#if user is a developer, load developer homepage
 		elif usertype == 'developer' and user.usertypes.usertype == usertype:
-			return render_to_response('gamestore/developer_homepage.html',c,context_instance=RequestContext(request))
+			list_of_games = Games.objects.filter(developer=user)
+			return render_to_response('gamestore/developer_homepage.html',context_instance=RequestContext(request, {'list_of_games':list_of_games}))
 		#user exists but incorrect type entered
 		else:	
 			return render_to_response('gamestore/usertype_error.html',c)
@@ -113,6 +115,12 @@ def logout_view(request):
 	#Redirect to logout page
 	return render_to_response('gamestore/logout.html')
 
+def devhome(request):
+	
+	if request.user.is_authenticated():
+		list_of_games = Games.objects.filter(developer=request.user)
+		return render_to_response('gamestore/developer_homepage.html',context_instance=RequestContext(request, {'list_of_games':list_of_games}))
+
 def home(request):
 	c={}
 	c.update(csrf(request))
@@ -123,7 +131,6 @@ def addgame(request):
 	c={}
 	c.update(csrf(request))
 	saved = False
-	#developer = request.POST['developer']
 	if request.method == 'POST':
 		form = GameForm(data=request.POST)
 		if form.is_valid():
@@ -137,4 +144,11 @@ def addgame(request):
 	else:
 		form = GameForm()
 			
-	return render_to_response('gamestore/developer_homepage.html',{'form': form, 'saved': saved},context_instance=RequestContext(request))
+	return render_to_response('gamestore/addgame.html',{'form': form, 'saved': saved},context_instance=RequestContext(request))
+
+def deletegame(request, id, template_name='gamestore/game_confirm_delete.html'):
+	game = get_object_or_404(Games, pk=id)    
+	if request.method=='POST':
+		game.delete()
+		return redirect('/devhome/')
+	return render(request, template_name, {'object':game})

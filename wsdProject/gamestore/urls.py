@@ -10,4 +10,7 @@ urlpatterns = patterns('',
 	url(r'^signup/$', gamestore.views.signup, name=' register_url'),
 	url(r'^newlogin/', gamestore.views.newlogin, name= ' new_login'),
 	url(r'^home/', gamestore.views.newlogin, name= ' home'),
+	url(r'^add/', gamestore.views.addgame, name= ' add'),
+	url(r'^login/', gamestore.views.devhome, name= ' dev_home'),
+	url(r'^delete/', gamestore.views.deletegame, name= ' deletegame'),
 )
