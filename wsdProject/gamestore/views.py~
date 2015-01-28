@@ -170,11 +170,6 @@ def create_gamemodel(name, fields=None, app_label='',options=None):
 	if fields:
 		attrs.update(fields)
 
-	# Create the class, which automatically triggers ModelBase processing
-	model = type(name, (models.Model,), attrs)
-
-	return model
-
 
 
 
