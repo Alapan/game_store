@@ -9,12 +9,6 @@
 	<fieldset>
 		<legend><strong> Games in your inventory</strong> </legend>
 		<table>
-			<col width="100">
-			<col width="200">
-			<col width="100">
-			<col width="100">
-			<col width="400">
-			<col width="300">
 			<tr>
 				<th>Game ID</th>
 				<th>Name</th>
@@ -25,13 +19,15 @@
 			</tr>
 			{% for game in list_of_games %}
 			<tr>
-				<td align="center">{{game.id}}</td>
-				<td align="center">{{game.name}}</td>
-				<td align="center">{{game.category}}</td>
-				<td align="center">{{game.developer.username}}</td>
-				<td align="center">{{game.url}}</td>
-				<td align="center">{{game.price}}</td>
-				<td align="center"><a href="/delete/{{game.id}}" data-confirm="true"> Delete this game</a></td>
+				<td width="5%" align="center">{{game.id}}</td>
+				<td width="10%" align="center">{{game.name}}</td>
+				<td width="15%" align="center">{{game.category}}</td>
+				<td width="15%" align="center">{{game.developer.username}}</td>
+				<td width="20%" align="center">{{game.url}}</td>
+				<td width="5%" align="center">{{game.price}}</td>
+				<td width="10%" align="center"><a href="/gamestats/{{game.id}}"> View game statistics</a></td>
+				<td width="10%" align="center"><a href="/editgame/{{game.id}}"> Edit</a></td>
+				<td width="10%" align="center"><a href="/delete/{{game.id}}"> Delete this game</a></td>
 			</tr>
 		{% endfor %}
 		</table>

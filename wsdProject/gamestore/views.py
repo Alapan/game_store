@@ -115,28 +115,27 @@ def logout_view(request):
 	#Redirect to logout page
 	return render_to_response('gamestore/logout.html')
 
+#go back to developer homepage displaying the updated inventory 
 def devhome(request):
 	
 	if request.user.is_authenticated():
 		list_of_games = Games.objects.filter(developer=request.user)
 		return render_to_response('gamestore/developer_homepage.html',context_instance=RequestContext(request, {'list_of_games':list_of_games}))
-
+#load home page
 def home(request):
 	c={}
 	c.update(csrf(request))
 	return render_to_response('gamestore/home.html',c)
 
+#a game is added by a developer
 def addgame(request):
 
-	c={}
-	c.update(csrf(request))
 	saved = False
 	if request.method == 'POST':
 		form = GameForm(data=request.POST)
 		if form.is_valid():
 			game = form.save(commit=False)
 			game.developer = request.user
-			print(game.developer)
 			game.save() 
 			saved = True
 		else:
@@ -146,6 +145,28 @@ def addgame(request):
 			
 	return render_to_response('gamestore/addgame.html',{'form': form, 'saved': saved},context_instance=RequestContext(request))
 
+#called when a game is modified on the developer homepage
+def editgame(request,id):
+
+	game = Games.objects.get(pk=id)
+	saved = False
+	if request.method == 'POST':
+
+		form = GameForm(data=request.POST)
+		game.name = request.POST.get('name','')
+		game.category = request.POST.get('category','')
+		game.url = request.POST.get('url','')
+		game.price = request.POST.get('price','')
+		game.save()
+		saved = True		
+	else:
+		form = GameForm(
+			initial = { 'name' : game.name, 'category' : game.category, 'url' : game.url, 'price' : game.price }
+		)
+	
+	return render_to_response('gamestore/editgame.html',{'game': game,'form': form, 'saved': saved},context_instance=RequestContext(request))
+
+#delete a game on the developer homepage
 def deletegame(request, id, template_name='gamestore/game_confirm_delete.html'):
 	game = get_object_or_404(Games, pk=id)    
 	if request.method=='POST':
@@ -153,28 +174,8 @@ def deletegame(request, id, template_name='gamestore/game_confirm_delete.html'):
 		return redirect('/devhome/')
 	return render(request, template_name, {'object':game})
 
-def create_gamemodel(name, fields=None, app_label='',options=None):
-
-	class Meta:
-		# Using type('Meta', ...) gives a dictproxy error during model creation
+def gamestats(request,id):
 	pass
-
-	if app_label:
-		# app_label must be set using the Meta inner class
-		setattr(Meta, 'app_label', app_label)
-
-	# Set up a dictionary to simulate declarations within a class
-	attrs = {'__module__': module, 'Meta': Meta}
-	
-	# Add in any fields that were provided
-	if fields:
-		attrs.update(fields)
-
-	# Create the class, which automatically triggers ModelBase processing
-	model = type(name, (models.Model,), attrs)
-
-	return model
-
 
 
 

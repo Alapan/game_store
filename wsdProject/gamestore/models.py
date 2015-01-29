@@ -17,3 +17,13 @@ class Games(models.Model):
 
 	def __unicode__(self):
 		return self.name
+
+class Scores(models.Model):
+	game = models.ForeignKey(Games)
+	player = models.ForeignKey(User)
+	registration_date = models.DateField(auto_now=False, auto_now_add=False)
+	highest_score = models.PositiveIntegerField(null=True,blank=True)
+	most_recent_score = models.PositiveIntegerField(null=True,blank=True)
+
+	def __unicode__(self):
+		return self.most_recent_score

@@ -14,6 +14,8 @@ urlpatterns = patterns('',
 	url(r'^registration/','gamestore.views.registration'),
 	url(r'^addgame/','gamestore.views.addgame'),
 	url(r'^devhome/','gamestore.views.devhome'),
+	url(r'^gamestats/(?P<id>\d+)/','gamestore.views.gamestats'),
+	url(r'^editgame/(?P<id>\d+)/','gamestore.views.editgame'),
 	url(r'^delete/(?P<id>\d+)/','gamestore.views.deletegame'),
 	url(r'^gamestore/', include('gamestore.urls', namespace="gamestore")),
 )

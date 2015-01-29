@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>Edit a game</title>
+    </head>
+    <body>
+        <h3>Modify a game</h3>
+        <p>Logged-in user: {{user.get_username}}</p></br>
+        {% if saved %}
+        <strong>Game successfully saved!</strong>
+        <a href="{% url 'gamestore: dev_home' %}">Return to your homepage.</a><br />
+        {% else %}
+        <form action="/editgame/{{game.id}}/" method="post">{% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" name="submit" value="Save changes"/>
+        </form>
+        {% endif %}
+        <br>
+    </body>
+</html>
+
