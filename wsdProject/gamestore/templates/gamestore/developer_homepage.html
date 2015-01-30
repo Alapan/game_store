@@ -1,7 +1,25 @@
 <!DOCTYPE html>
 <html>
     <head>
-    <title>Developer homepage</title>
+    	<title>Developer homepage</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="//code.jquery.com/jquery-1.11.2.js"></script>
+	<script>
+		$(".stats").click(function(){
+			var game = $(this);
+			var id = game.attr('id');
+			var csrf = getCookie('csrftoken');
+			$.ajax({
+				type : "POST",
+				url : "/gamestats/",
+				data : {'id': id , 'csrfmiddlewaretoken': csrf} 
+				success : function(response){
+					$('#gamestats').html(response);
+				}
+			});
+			event.preventDefault();	
+		});
+	</script>
     </head>
     <body>
         <h3>Developer homepage</h3>
@@ -25,7 +43,7 @@
 				<td width="15%" align="center">{{game.developer.username}}</td>
 				<td width="20%" align="center">{{game.url}}</td>
 				<td width="5%" align="center">{{game.price}}</td>
-				<td width="10%" align="center"><a href="/gamestats/{{game.id}}"> View game statistics</a></td>
+				<td width="10%" align="center"><button class="stats" id="{{game.id}}"> View game statistics</button></td>
 				<td width="10%" align="center"><a href="/editgame/{{game.id}}"> Edit</a></td>
 				<td width="10%" align="center"><a href="/delete/{{game.id}}"> Delete this game</a></td>
 			</tr>
@@ -35,6 +53,9 @@
 	<br>
 	<p><a href="{% url 'gamestore: add' %}"> Add new game</a><br /></p>
 	<br>
+	<br>
+	<b>Game statistics: </b>
+	<p id="gamestats"></p>
         <form action="/logout/" method="post">{% csrf_token %}
             <input type="submit" value="Logout" />
         </form>

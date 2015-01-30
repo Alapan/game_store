@@ -12,7 +12,9 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from gamestore.forms import UserData, UserForm, GameForm
 from django.http import HttpResponseRedirect
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404,redirect
+import json
 
 # Create your views here.
 
@@ -174,8 +176,14 @@ def deletegame(request, id, template_name='gamestore/game_confirm_delete.html'):
 		return redirect('/devhome/')
 	return render(request, template_name, {'object':game})
 
-def gamestats(request,id):
-	pass
+def gamestats(request):
+
+	if request.method=='POST' and request.is_ajax:
+		id = request.POST.get('id',None)
+		gameobj = Games.object.filter(pk=id)
+		scores = Scores.object.filter(game=gameobj).values('game','player','registration_date','highest_score','most_recent_score')
+		json_scores = json.dumps(scores)
+		return HttpResponse(json_scores,content_type='application/json')
 
 
 
