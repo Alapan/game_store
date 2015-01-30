@@ -180,9 +180,13 @@ def gamestats(request):
 
 	if request.method=='POST' and request.is_ajax:
 		id = request.POST.get('id',None)
-		gameobj = Games.object.filter(pk=id)
-		scores = Scores.object.filter(game=gameobj).values('game','player','registration_date','highest_score','most_recent_score')
-		json_scores = json.dumps(scores)
+		gameobj = Games.objects.filter(pk=id)
+		d = { 'name' : gameobj[0].name, 'category': gameobj[0].category, 'url': gameobj[0].url, 'price': gameobj[0].price }
+		scores = Scores.objects.filter(game=gameobj)
+		for s in scores:
+			print(s.game.name)
+			print(s.registration_date)
+		json_scores = json.dumps(d)
 		return HttpResponse(json_scores,content_type='application/json')
 
 

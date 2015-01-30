@@ -3,22 +3,41 @@
     <head>
     	<title>Developer homepage</title>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-	<script src="//code.jquery.com/jquery-1.11.2.js"></script>
 	<script>
-		$(".stats").click(function(){
-			var game = $(this);
-			var id = game.attr('id');
-			var csrf = getCookie('csrftoken');
-			$.ajax({
-				type : "POST",
-				url : "/gamestats/",
-				data : {'id': id , 'csrfmiddlewaretoken': csrf} 
-				success : function(response){
-					$('#gamestats').html(response);
-				}
+		$(document).ready(function(){
+			$(".stats").click(function(){
+				var game = $(this);
+				var id = game.attr('id');
+				var csrftoken = getCookie('csrftoken');
+				//alert(csrftoken);
+				$.ajax({
+					type : "POST",
+					url : "/gamestats/",
+					data : {'id': id, 'csrfmiddlewaretoken': csrftoken},
+					dataType : "json", 
+					success : function(response){
+						//alert(response);
+						$("#gamestats").html(response.category);
+					}
+				});
+				event.preventDefault();	
 			});
-			event.preventDefault();	
 		});
+		function getCookie(name) {
+    			var cookieValue = null;
+    			if (document.cookie && document.cookie != '') {
+        			var cookies = document.cookie.split(';');
+        			for (var i = 0; i < cookies.length; i++) {
+            				var cookie = jQuery.trim(cookies[i]);
+            				// Does this cookie string begin with the name we want?
+            				if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                				cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                				break;
+            				}
+        			}
+    			}
+    			return cookieValue;
+		}	
 	</script>
     </head>
     <body>

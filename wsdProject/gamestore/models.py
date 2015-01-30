@@ -25,5 +25,6 @@ class Scores(models.Model):
 	highest_score = models.PositiveIntegerField(null=True,blank=True)
 	most_recent_score = models.PositiveIntegerField(null=True,blank=True)
 
+
 	def __unicode__(self):
 		return self.most_recent_score
