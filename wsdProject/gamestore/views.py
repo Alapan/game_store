@@ -1,3 +1,4 @@
+
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
@@ -15,6 +16,7 @@ from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404,redirect
 import json
+import time
 
 # Create your views here.
 
@@ -176,18 +178,33 @@ def deletegame(request, id, template_name='gamestore/game_confirm_delete.html'):
 		return redirect('/devhome/')
 	return render(request, template_name, {'object':game})
 
+# display game statistics on the developer homepage
 def gamestats(request):
 
+	countlist = []
+	datedict = {}
 	if request.method=='POST' and request.is_ajax:
 		id = request.POST.get('id',None)
 		gameobj = Games.objects.filter(pk=id)
 		d = { 'name' : gameobj[0].name, 'category': gameobj[0].category, 'url': gameobj[0].url, 'price': gameobj[0].price }
+		# get queryset of Scores objects with the selected game ID
 		scores = Scores.objects.filter(game=gameobj)
-		for s in scores:
-			print(s.game.name)
-			print(s.registration_date)
-		json_scores = json.dumps(d)
-		return HttpResponse(json_scores,content_type='application/json')
+		# get list of distinct registration dates from "scores" queryset
+		datelist = scores.values_list('registration_date',flat=True).distinct()
+		for dateobj in datelist:
+			scoredate = scores.filter(registration_date=dateobj)
+			c = scoredate.count()
+			countlist.append(c)
+
+		n = len(countlist)
+		for i in range(n):
+			t = datelist[i].strftime('%d/%m/%Y')
+			datedict[t] = countlist[i]
+			print(t)
+			print(datedict[t])
+
+		json_stats = json.dumps(datedict)
+		return HttpResponse(json_stats,content_type='application/json')
 
 
 

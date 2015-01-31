@@ -15,9 +15,15 @@
 					url : "/gamestats/",
 					data : {'id': id, 'csrfmiddlewaretoken': csrftoken},
 					dataType : "json", 
-					success : function(response){
-						//alert(response);
-						$("#gamestats").html(response.category);
+					success : function(data){
+						alert(data);
+						var obj = $.parseJSON(response);
+						for (var key in obj){
+							alert("inside for loop");
+							var value = obj[key];
+							alert(value);
+							//$("#gamestats").html(value);
+						}
 					}
 				});
 				event.preventDefault();	
