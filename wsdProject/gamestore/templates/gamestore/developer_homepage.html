@@ -9,21 +9,26 @@
 				var game = $(this);
 				var id = game.attr('id');
 				var csrftoken = getCookie('csrftoken');
-				//alert(csrftoken);
 				$.ajax({
 					type : "POST",
 					url : "/gamestats/",
 					data : {'id': id, 'csrfmiddlewaretoken': csrftoken},
 					dataType : "json", 
 					success : function(data){
-						alert(data);
-						var obj = $.parseJSON(response);
-						for (var key in obj){
-							alert("inside for loop");
-							var value = obj[key];
-							alert(value);
-							//$("#gamestats").html(value);
-						}
+						var tableData = '<table>';
+						var total = 0;
+						tableData += '<th>' + "Date of buying" + '</th>';
+						tableData += '<th>' + "Number of players buying this game" + '</th>';
+						$.each(data, function(key, value){
+							tableData += '<tr>';
+							tableData += '<td width="20%" align="center">' + key + '</td>';
+							tableData += '<td width="20%" align="center">' + value + '</td>';
+							tableData += '</tr>';
+							total += value;
+						});
+						tableData += '<tr><td>' + "Total sales: " + total + '</td></tr>';
+						tableData += '</table>';
+						$('#tabledata').html(tableData);
 					}
 				});
 				event.preventDefault();	
@@ -80,7 +85,9 @@
 	<br>
 	<br>
 	<b>Game statistics: </b>
-	<p id="gamestats"></p>
+	<br>
+	<div id="tabledata"></div>
+	<br>
         <form action="/logout/" method="post">{% csrf_token %}
             <input type="submit" value="Logout" />
         </form>
