@@ -21,10 +21,6 @@ class UserForm(forms.ModelForm):
 
 class GameForm(forms.ModelForm):
 
-	#developer = forms.CharField(
-	#	widget=forms.TextInput(attrs={'readonly':'readonly'})
-	#)
-
 	class Meta:
 		model = Games
 		fields = ('name','category','url','price')
