@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Game page</title>
+		<meta charset="utf-8">
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<script>
+			/* global $ */
+			$(document).ready(function() {
+				'use strict';
+				$(window).on('message', function(evt) {
+					//Note that messages from all origins are accepted
+
+					//Get data from sent message
+					var data = evt.originalEvent.data;
+
+					//if SCORE, display score on parent HTML
+					if (data.messageType == "SCORE"){
+						$('#scores').html(data.score);
+					}
+
+				});
+  			});
+  		</script>
+	</head>
+
+	<body>
+  		<iframe id="encoder_iframe" height=75% width=50% src="testgame.html"></iframe>
+  		<p>
+			<strong>Last score:</strong>&nbsp;  
+			<span id="scores"></span>
+		</p>
+	</body>
+</html>
+
