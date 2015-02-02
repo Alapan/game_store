@@ -18,18 +18,62 @@
 					if (data.messageType == "SCORE"){
 						$('#scores').html(data.score);
 					}
+					
+					else if (data.messageType == "SAVE"){
 
+						//HARDCODED GAME AND PLAYER IDs
+						var gameid = 32;
+						var playerid = document.getElementById("playerid").value;
+						//alert(playerid);
+						//REPLACE WITH CODE TO GET IDS DYNAMICALLY
+
+                                		var csrftoken = getCookie('csrftoken');
+						//alert(data.gameState.score);
+                                		$.ajax({
+                                        		type : "POST",
+                                        		url : "/savegamestate/",
+                                        		data : {'gameid': gameid, 'playerid': playerid, 'jsondata' : JSON.stringify(data.gameState), 'csrfmiddlewaretoken': csrftoken},
+							dataType : "json",
+                                        		success : function(data){
+								$('#gamestate').html(data['playerItems']);
+                                        		}
+                                		});
+					}
 				});
   			});
+
+			function getCookie(name) {
+                        	var cookieValue = null;
+                        	if (document.cookie && document.cookie != '') {
+                                	var cookies = document.cookie.split(';');
+                                	for (var i = 0; i < cookies.length; i++) {
+                                        	var cookie = jQuery.trim(cookies[i]);
+                                        	// check if  cookie string begin with the name wanted
+                                        	if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                                                	cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                                	break;
+                                        	}
+                                	}
+                        	}
+                        	return cookieValue;
+                	}
   		</script>
 	</head>
 
 	<body>
-  		<iframe id="encoder_iframe" height=75% width=50% src="testgame.html"></iframe>
-  		<p>
-			<strong>Last score:</strong>&nbsp;  
-			<span id="scores"></span>
+
+		<p>
+			<strong>Player: {{player.username}}</strong>&nbsp;<br>
+			<input type="hidden" id="playerid" name="playerid" value="{{player.id}}"/><br>
+			<iframe id="encoder_iframe" height=75% width="50%" src="{% url 'gamestore: testgame' %}"></iframe>
+			<br>
+			<br>
+			<strong>Last score:</strong>&nbsp;
+                        <span id="scores"></span><br><br>
+			<strong>Game state:</strong>
+                        <div id="gamestate"></span>
 		</p>
+		<br>
 	</body>
 </html>
 

@@ -22,9 +22,14 @@ class Scores(models.Model):
 	game = models.ForeignKey(Games)
 	player = models.ForeignKey(User)
 	registration_date = models.DateField(auto_now=False, auto_now_add=False)
-	highest_score = models.PositiveIntegerField(null=True,blank=True)
-	most_recent_score = models.PositiveIntegerField(null=True,blank=True)
+	gamestate = models.TextField(blank=True, null=True)
+	high_score_1 = models.PositiveIntegerField(default=0)
+	high_score_2 = models.PositiveIntegerField(default=0)
+	high_score_3 = models.PositiveIntegerField(default=0)
+	high_score_4 = models.PositiveIntegerField(default=0)
+	high_score_5 = models.PositiveIntegerField(default=0)
+	last_score = models.PositiveIntegerField(default=0)
 
 
 	def __unicode__(self):
-		return self.most_recent_score
+		return self.game

@@ -4,6 +4,7 @@
     <body>
         <h3>Player homepage</h3>
 	<p>Welcome, {{user.get_username}}</p></br>
+	<p><a href="{% url 'gamestore: load_game' %}">Go to game.</a></p><br>
         <form action="/logout/" method="post">{% csrf_token %}
             <input type="submit" value="Logout" />
         </form>

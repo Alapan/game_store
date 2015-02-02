@@ -178,6 +178,13 @@ def deletegame(request, id, template_name='gamestore/game_confirm_delete.html'):
 		return redirect('/devhome/')
 	return render(request, template_name, {'object':game})
 
+# load game.html with appropriate game iframe
+def loadgame(request):
+
+	player = request.user
+	game = "testgame.html"
+	return render_to_response('gamestore/game.html',{'player': player, 'game': game}, context_instance=RequestContext(request))
+
 # display game statistics on the developer homepage
 def gamestats(request):
 
@@ -207,17 +214,38 @@ def gamestats(request):
 		return HttpResponse(json_stats,content_type='application/json')
 
 
+def savegamestate(request):
+
+	if request.method=='POST' and request.is_ajax:
+		
+		gamestate = json.loads(request.POST.get('jsondata', None))
+		print(gamestate)
+		gameid = request.POST.get('gameid', None)
+		playerid = request.POST.get('playerid', None)
+		gameobj = Games.objects.get(pk=gameid)
+		userobj = User.objects.get(pk=playerid)
+		scoreobj = Scores.objects.filter(game=gameobj, player=userobj)
+
+		scoreobj.update(last_score=gamestate['score'])
 
 
+		# if the last score is higher than any of the 5 highest scores, replace that value to update the high scores list
+		if gamestate['score'] > scoreobj[0].high_score_1:
+			scoreobj.update(high_score_1=gamestate['score'])
+		elif gamestate['score'] > scoreobj[0].high_score_2:
+			scoreobj.update(high_score_2=gamestate['score'])
+		elif gamestate['score'] > scoreobj[0].high_score_3:
+			scoreobj.update(high_score_3=gamestate['score'])
+		elif gamestate['score'] > scoreobj[0].high_score_4:
+			scoreobj.update(high_score_4=gamestate['score'])
+		elif gamestate['score'] > scoreobj[0].high_score_5:
+			scoreobj.update(high_score_5=gamestate['score'])
 
 
+		if scoreobj.update(gamestate=gamestate) == 1:
+			print('GAMESTATE SAVED SUCCESSFULLY!')
 
 
-
-
-
-
-
-
-
+		json_state=json.dumps(gamestate)
+		return HttpResponse(json_state, content_type='application/json')
 
