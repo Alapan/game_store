@@ -218,7 +218,8 @@ def savegamestate(request):
 
 	if request.method=='POST' and request.is_ajax:
 		
-		gamestate = json.loads(request.POST.get('jsondata', None))
+		data = json.loads(request.POST.get('jsondata', None))
+		gamestate = data['gameState']
 		print(gamestate)
 		gameid = request.POST.get('gameid', None)
 		playerid = request.POST.get('playerid', None)
@@ -248,4 +249,37 @@ def savegamestate(request):
 
 		json_state=json.dumps(gamestate)
 		return HttpResponse(json_state, content_type='application/json')
+
+
+def loadgamestate(request):
+
+	if request.method == 'POST' and request.is_ajax:
+		data = json.loads(request.POST.get('jsondata', None))
+		gameid = request.POST.get('gameid', None)
+		playerid = request.POST.get('playerid', None)
+		gameobj = Games.objects.get(pk=gameid)
+		userobj = User.objects.get(pk=playerid)
+		scoreobj = Scores.objects.filter(game=gameobj, player=userobj)
+
+		data['messageType'] = 'LOAD'
+		data['gameState'] = scoreobj[0].gamestate
+		json_state=json.dumps(data)
+		return HttpResponse(json_state, content_type='application/json')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
 

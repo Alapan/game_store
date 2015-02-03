@@ -21,23 +21,39 @@
 					
 					else if (data.messageType == "SAVE"){
 
-						//HARDCODED GAME AND PLAYER IDs
+						//HARDCODED GAME ID
 						var gameid = 32;
-						var playerid = document.getElementById("playerid").value;
-						//alert(playerid);
 						//REPLACE WITH CODE TO GET IDS DYNAMICALLY
 
+						var playerid = document.getElementById("playerid").value;
+
                                 		var csrftoken = getCookie('csrftoken');
-						//alert(data.gameState.score);
                                 		$.ajax({
                                         		type : "POST",
                                         		url : "/savegamestate/",
-                                        		data : {'gameid': gameid, 'playerid': playerid, 'jsondata' : JSON.stringify(data.gameState), 'csrfmiddlewaretoken': csrftoken},
+                                        		data : {'gameid': gameid, 'playerid': playerid, 'jsondata' : JSON.stringify(data), 'csrfmiddlewaretoken': csrftoken},
 							dataType : "json",
                                         		success : function(data){
-								$('#gamestate').html(data['playerItems']);
+								//$('#gamestate').html(data['playerItems']);
+								alert("Game saved successfully!");
                                         		}
                                 		});
+					}
+					else if (data.messageType == "LOAD_REQUEST"){
+						var csrftoken = getCookie('csrftoken');
+						var gameid = 32;
+						var playerid = document.getElementById("playerid").value;
+						$.ajax({
+							type : "POST",
+							url : "/loadgamestate/",
+							data : {'gameid': gameid, 'playerid': playerid, 'jsondata' : JSON.stringify(data), 'csrfmiddlewaretoken' : csrftoken},
+							dataType : "json",
+							success : function(data){
+								if (data['messageType'] == "LOAD"){
+									$('#gamestate').html(data['gameState']);
+								}
+							}
+						});
 					}
 				});
   			});
@@ -71,7 +87,7 @@
 			<strong>Last score:</strong>&nbsp;
                         <span id="scores"></span><br><br>
 			<strong>Game state:</strong>
-                        <div id="gamestate"></span>
+                        <div id="gamestate"></div>
 		</p>
 		<br>
 	</body>
