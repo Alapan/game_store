@@ -1,4 +1,3 @@
-
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
@@ -220,37 +219,38 @@ def savegamestate(request):
 		
 		data = json.loads(request.POST.get('jsondata', None))
 		gamestate = data['gameState']
-		print(gamestate)
+
+		# load player and game associated with this request, and use them to query the Scores object
 		gameid = request.POST.get('gameid', None)
 		playerid = request.POST.get('playerid', None)
 		gameobj = Games.objects.get(pk=gameid)
 		userobj = User.objects.get(pk=playerid)
 		scoreobj = Scores.objects.filter(game=gameobj, player=userobj)
 
-		scoreobj.update(last_score=gamestate['score'])
-
+		scoreobj.update(last_score=gamestate["score"])
 
 		# if the last score is higher than any of the 5 highest scores, replace that value to update the high scores list
-		if gamestate['score'] > scoreobj[0].high_score_1:
-			scoreobj.update(high_score_1=gamestate['score'])
-		elif gamestate['score'] > scoreobj[0].high_score_2:
-			scoreobj.update(high_score_2=gamestate['score'])
-		elif gamestate['score'] > scoreobj[0].high_score_3:
-			scoreobj.update(high_score_3=gamestate['score'])
-		elif gamestate['score'] > scoreobj[0].high_score_4:
-			scoreobj.update(high_score_4=gamestate['score'])
-		elif gamestate['score'] > scoreobj[0].high_score_5:
-			scoreobj.update(high_score_5=gamestate['score'])
+		if gamestate["score"] > scoreobj[0].high_score_1:
+			scoreobj.update(high_score_1=gamestate["score"])
+		elif gamestate["score"] > scoreobj[0].high_score_2:
+			scoreobj.update(high_score_2=gamestate["score"])
+		elif gamestate["score"] > scoreobj[0].high_score_3:
+			scoreobj.update(high_score_3=gamestate["score"])
+		elif gamestate["score"] > scoreobj[0].high_score_4:
+			scoreobj.update(high_score_4=gamestate["score"])
+		elif gamestate["score"] > scoreobj[0].high_score_5:
+			scoreobj.update(high_score_5=gamestate["score"])
 
 
-		if scoreobj.update(gamestate=gamestate) == 1:
+		if scoreobj.update(gamestate=json.dumps(gamestate)) == 1:
 			print('GAMESTATE SAVED SUCCESSFULLY!')
 
 
 		json_state=json.dumps(gamestate)
+		print(json_state)
 		return HttpResponse(json_state, content_type='application/json')
 
-
+# LOAD_REQUEST by the game is handled by this view
 def loadgamestate(request):
 
 	if request.method == 'POST' and request.is_ajax:
@@ -261,8 +261,15 @@ def loadgamestate(request):
 		userobj = User.objects.get(pk=playerid)
 		scoreobj = Scores.objects.filter(game=gameobj, player=userobj)
 
-		data['messageType'] = 'LOAD'
-		data['gameState'] = scoreobj[0].gamestate
+		if scoreobj[0].gamestate is None:
+			data["messageType"] = "MESSAGE"
+			data["message"] = "No gamestate to be loaded"
+
+		else:
+			data["messageType"] = "LOAD"
+			data["gameState"] = scoreobj[0].gamestate
+			print(scoreobj[0].gamestate)	
+
 		json_state=json.dumps(data)
 		return HttpResponse(json_state, content_type='application/json')
 
