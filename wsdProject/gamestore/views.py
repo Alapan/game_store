@@ -146,15 +146,17 @@ def start_buy_view(request):
 
     return render_to_response('gamestore/payment/start_buy.html', {'pid': pid, 'sid': sid, 'amount': amount, 'checksum': checksum})
 
-
+#successful payment
 def success_view(request):
 
     return render_to_response('gamestore/payment/success.html')
 
+#canceled payment
 def cancel_view(request):
 
     return render_to_response('gamestore/payment/cancel.html')
 
+#error in payment
 def error_view(request):
 
     return render_to_response('gamestore/payment/error.html')
