@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+      <head>
+        <title>confirm delet</title>
+        <link rel="stylesheet" href="home.css" />
+        <meta charset="utf-8" />
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script>
+      /* global $ */
+      $(document).ready(function() {
+        'use strict';
+        $(window).on('message', function(evt) {
+          //Note that messages from all origins are accepted
+
+          //Get data from sent message
+          var data = evt.originalEvent.data;
+
+          //if SCORE, display score on parent HTML
+          if (data.messageType == "SCORE"){
+            $('#scores').html(data.score);
+          }
+          
+          else if (data.messageType == "SAVE"){
+
+            //HARDCODED GAME AND PLAYER IDs
+            var gameid = 32;
+            var playerid = document.getElementById("playerid").value;
+            //alert(playerid);
+            //REPLACE WITH CODE TO GET IDS DYNAMICALLY
+
+                                    var csrftoken = getCookie('csrftoken');
+            //alert(data.gameState.score);
+                                    $.ajax({
+                                            type : "POST",
+                                            url : "/savegamestate/",
+                                            data : {'gameid': gameid, 'playerid': playerid, 'jsondata' : JSON.stringify(data.gameState), 'csrfmiddlewaretoken': csrftoken},
+              dataType : "json",
+                                            success : function(data){
+                $('#gamestate').html(data['playerItems']);
+                                            }
+                                    });
+          }
+        });
+        });
+
+      function getCookie(name) {
+                          var cookieValue = null;
+                          if (document.cookie && document.cookie != '') {
+                                  var cookies = document.cookie.split(';');
+                                  for (var i = 0; i < cookies.length; i++) {
+                                          var cookie = jQuery.trim(cookies[i]);
+                                          // check if  cookie string begin with the name wanted
+                                          if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                                                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                                  break;
+                                          }
+                                  }
+                          }
+                          return cookieValue;
+                  }
+      </script>
+      </head>
+      <body>
+        <div id="container">
+          <div id="header">
+            Gladiators 
+          </div>
+          <div id="body">
+            <div id="category"><h3><ul id="menu">
+              <li>Adventure</li>
+              <li>Car Race</li>
+              <li>Sports</li>
+              <li>Puzzle</li>
+              <li>Action</li>
+              <li><a href="help.html">Help</a></li>
+              <li><a href="about.html">About</a></li>
+              </ul></h3>
+            </div>  
+            <div id="login">
+                  <h2>currently you own</h2><br><br>
+                  list goes here
+
+                </div>
+            <div id="court">
+                <strong>Player: {{player.username}}</strong>&nbsp;<br>
+                <input type="hidden" id="playerid" name="playerid" value="{{player.id}}"/><br>
+                <iframe id="encoder_iframe" height=75% width="50%" src="{% url 'gamestore: testgame' %}"></iframe>
+                <br>
+                <br>
+                <strong>Last score:</strong>&nbsp;
+                                  <span id="scores"></span><br><br>
+                <strong>Game state:</strong>
+                                  <div id="gamestate"></span>
+                                  </div>
+            </div>
+
+          
+          <div style="clear:all"></div>       
+          </div>
+          <div id="footer">
+            CopyRight © Gladiators 2015, all rights reserved.
+          </div>
+        </div>
+
+      </body>
+</html>
+      

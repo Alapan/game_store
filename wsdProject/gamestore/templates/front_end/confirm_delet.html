@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+      <head>
+        <title>confirm delet</title>
+        <link rel="stylesheet" href="home.css" />
+        <meta charset="utf-8" />
+      </head>
+      <body>
+        <div id="container">
+          <div id="header">
+            Gladiators 
+          </div>
+          <div id="body">
+            <div id="category"><h3><ul id="menu">
+              <li>Adventure</li>
+              <li>Car Race</li>
+              <li>Sports</li>
+              <li>Puzzle</li>
+              <li>Action</li>
+              <li><a href="help.html">Help</a></li>
+              <li><a href="about.html">About</a></li>
+              </ul></h3>
+            </div>  
+            <div id="disa">
+              <form method="post">{% csrf_token %}
+                <h3>Are you sure you want to delete "{{ object }}" ?</h3>
+                <input type="submit" value="Confirm">  <input type="submit" value="Cancel"><br><br>
+              </form>
+            </div>
+          
+          <div style="clear:all"></div>       
+          </div>
+          <div id="footer">
+            CopyRight © Gladiators 2015, all rights reserved.
+          </div>
+        </div>
+
+      </body>
+</html>
+      

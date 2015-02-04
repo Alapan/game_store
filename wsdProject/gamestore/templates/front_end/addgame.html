@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+      <head>
+        <title>Add Game</title>
+        <link rel="stylesheet" href="home.css" />
+        <meta charset="utf-8" />
+      </head>
+      <body>
+        <div id="container">
+          <div id="header">
+            Gladiators 
+          </div>
+          <div id="body">
+           <div id="disa">
+              <h3>Add a new game</h3>
+        <p>Logged-in user: {{user.get_username}}</p></br>
+  {% if saved %}
+        <strong>Game successfully added!</strong>
+  <a href="{% url 'gamestore: dev_home' %}">Return to your homepage.</a><br />
+        {% else %}
+        <form action="/addgame/" method="post">{% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" name="submit" value="Add game"/>
+        </form>
+  {% endif %}
+  <br>
+          </div>
+        </div>
+          <div style="clear:all"></div>       
+          
+          <div id="footer">
+            CopyRight © Gladiators 2015, all rights reserved.
+          </div>
+        </div>
+
+      </body>
+</html>
+      
