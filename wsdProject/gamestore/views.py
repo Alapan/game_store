@@ -130,6 +130,35 @@ def home(request):
 	c.update(csrf(request))
 	return render_to_response('gamestore/home.html',c)
 
+#start buying a game
+def start_buy_view(request):
+    c={}
+    c.update(csrf(request))
+
+    pid = "abcd"
+    sid = "awesomegladiators"
+    amount = 10
+    secret_key = "3e200efab59d77550cb7893b1b944ded"
+    checksum_str = "pid=%s&sid=%s&amount=%s&token=%s"%(pid, sid, amount, secret_key)
+
+    m = md5(checksum_str.encode("ascii"))
+    checksum = m.hexdigest()
+
+    return render_to_response('gamestore/payment/start_buy.html', {'pid': pid, 'sid': sid, 'amount': amount, 'checksum': checksum})
+
+
+def success_view(request):
+
+    return render_to_response('gamestore/payment/success.html')
+
+def cancel_view(request):
+
+    return render_to_response('gamestore/payment/cancel.html')
+
+def error_view(request):
+
+    return render_to_response('gamestore/payment/error.html')
+
 #a game is added by a developer
 def addgame(request):
 

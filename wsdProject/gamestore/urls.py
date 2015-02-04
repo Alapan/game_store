@@ -8,6 +8,11 @@ urlpatterns = patterns('',
 	# url(r'^$', 'wsdProject.views.home', name='home'),
 	# url(r'^blog/', include('blog.urls')),
 
+	url(r'^payment/start_buy/', 'gamestore.views.start_buy_view'),
+    url(r'^payment/success/', 'gamestore.views.success_view'),
+    url(r'^payment/cancel/', 'gamestore.views.cancel_view'),
+    url(r'^payment/error/', 'gamestore.views.error_view'),
+
 	url(r'^signup/$', gamestore.views.signup, name=' register_url'),
 	url(r'^newlogin/', gamestore.views.newlogin, name= ' new_login'),
 	url(r'^home/', gamestore.views.newlogin, name= ' home'),
