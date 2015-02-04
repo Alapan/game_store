@@ -5,6 +5,7 @@ from django.shortcuts import render_to_response
 from django.core.context_processors import csrf
 from django.template import RequestContext
 from gamestore.models import *
+from hashlib import md5
 from django.contrib.auth.models import AnonymousUser
 from django.views.decorators.cache import cache_control
 from django.core.mail import send_mail
