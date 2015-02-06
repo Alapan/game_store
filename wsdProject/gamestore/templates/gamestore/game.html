@@ -2,6 +2,8 @@
 <html>
 	<head>
 		<title>Game page</title>
+		{% load staticfiles %} 
+        <link rel="stylesheet" type="text/css" href="{% static 'gamestore/home.css'%}" />
 		<meta charset="utf-8">
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 		<script>
@@ -88,6 +90,11 @@
 	</head>
 
 	<body>
+		<div id="container">
+              <div id="header">
+                    Gladiators 
+              </div>
+              <div id="body">
 
 		<p>
 			<strong>Player: {{player.username}}</strong>&nbsp;<br>
@@ -102,6 +109,12 @@
                         <div id="gamestate"></div>
 		</p>
 		<br>
+		</div>
+                <div style="clear:all"></div>
+                <div id="footer">
+                  CopyRight © Gladiators 2015, all rights reserved.
+                </div> 
+            </div>     
 	</body>
 </html>
 

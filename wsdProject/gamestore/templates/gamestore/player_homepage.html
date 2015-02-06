@@ -1,12 +1,74 @@
 <!DOCTYPE html>
 <html>
-    <title></title>
-    <body>
-        <h3>Player homepage</h3>
-	<p>Welcome, {{user.get_username}}</p></br>
-	<p><a href="{% url 'gamestore: load_game' %}">Go to game.</a></p><br>
-        <form action="/logout/" method="post">{% csrf_token %}
-            <input type="submit" value="Logout" />
-        </form>
-    </body>
+      <head>
+        <title>players</title>
+        {% load staticfiles %} 
+        <link rel="stylesheet" type="text/css" href="{% static 'gamestore/home.css'%}" />
+        <meta charset="utf-8" />
+      </head>
+      <body>
+        <div id="container">
+          <div id="header">
+            Gladiators 
+          </div>
+          <div id="body">
+            <div id="category"><h3><ul id="menu">
+              <li>Adventure</li>
+              <li>Car Race</li>
+              <li>Sports</li>
+              <li>Puzzle</li>
+              <li>Action</li>
+              <li><a href="help.html">Help</a></li>
+              <li><a href="about.html">About</a></li>
+              </ul></h3>
+            </div>  
+
+            <div id="srch">
+              <form id="search">
+                <label for="search">Games Search  </label>
+                <input id="search" type="text" name="search" value="  type to search games  "> <br>
+                 <br>
+                <input type="submit" value="Search"><br>
+              </form>
+            </div>
+            <div id="todo">
+              <a href="{% url 'gamestore: load_game' %}">Go to game.</a></p><br>
+              <a href="buygame.html">Buy games</a>
+              <form action="/logout/" method="post">{% csrf_token %}
+                  <input type="submit" value="Logout" />
+              </form>
+            </div>   
+
+            <div id="profile" >         
+            <div id="photo" ><img src="hab.jpg" width="15%"><br></div>
+            <div id="name"> <h2>{{user.get_username}}</h2> </div> 
+            </div>     
+
+                  
+            <div id="paid">         
+            <div id="paid_games"><h3>Paid games</h3></div> 
+              <div id="pop">Car Race<br> <img src="home.png" width="30%">    <img src="players.png" width="30%"></div>
+              <div id="pop">Sports<br> <img src="home.png" width="30%">    <img src="players.png" width="30%"></div>
+              <div id="pop">Puzzle<br> <img src="home.png" width="30%">    <img src="players.png" width="30%"></div>
+              <div id="pop">Action<br> <img src="home.png" width="30%">    <img src="players.png" width="30%"></div>
+            </div>
+           <div id="main_games"> 
+            <div id="stat"><h3>Game Statistics</h3></div>
+            <div id="stat_table"> table goes here </div>       
+          </div>
+          <form action="/logout/" method="post">{% csrf_token %}
+      <input type="submit" value="Logout" />
+    </form>
+          </div>
+          
+          <div style="clear:all"></div>
+          
+          <div id="footer">
+            CopyRight © Gladiators 2015, all rights reserved.
+          </div>
+      </div>
+          
+
+      </body>
 </html>
+      

@@ -1,12 +1,25 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Confirm game deletion</title>
-	</head>
-	<body>
-		<form method="post">{% csrf_token %}
-    		Are you sure you want to delete "{{ object }}" ?
-    		<input type="submit" value="Submit" />
-</form>
-	</body>
+		<head>
+				<title>Confirm game deletion</title>
+				{% load staticfiles %} 
+		        <link rel="stylesheet" type="text/css" href="{% static 'gamestore/home.css'%}" />
+		</head>
+		<body>
+				<div id="container">
+		              <div id="header">
+		                    Gladiators 
+		              </div>
+		              <div id="body">
+							<form method="post">{% csrf_token %}
+		    				Are you sure you want to delete "{{ object }}" ?
+		    				<input type="submit" value="Submit" />
+							</form>
+					  </div>
+					     <div style="clear:all"></div>
+		              <div id="footer">
+		                  CopyRight © Gladiators 2015, all rights reserved.
+		              </div> 
+		        </div>     
+		</body>
 </html>
