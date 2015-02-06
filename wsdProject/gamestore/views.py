@@ -119,6 +119,18 @@ def logout_view(request):
 	return render_to_response('gamestore/logout.html')
 
 #go back to developer homepage displaying the updated inventory 
+def playerhomepage(request):
+
+
+	#go back to player homepage 
+	return render_to_response('gamestore/player_homepage')
+
+def startbuy(request):
+
+
+	#player perchase games
+	return render_to_response('gamestore/start_buy')
+	
 def devhome(request):
 	
 	if request.user.is_authenticated():

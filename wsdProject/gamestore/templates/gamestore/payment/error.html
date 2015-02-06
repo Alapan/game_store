@@ -1,10 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
+ 	        {% load staticfiles %} 
+            <link rel="stylesheet" type="text/css" href="{% static 'gamestore/home.css'%}" />
+            <meta charset="UTF-8">
+            <title>Buying game Success</title>
 </head>
 <body>
-    <p>Error</p>
+	<div id="container">
+              <div id="header">
+                    Gladiators 
+              </div>
+              <div id="body">
+   				 <p>Error has Occured! <a href="{% url 'gamestore: player_homepage' %}"> click here </a>to go back to your profile</p>
+    		  </div>
+              <div style="clear:all"></div>
+              <div id="footer">
+                  CopyRight © Gladiators 2015, all rights reserved.
+               </div> 
+    </div>   
 </body>
 </html>

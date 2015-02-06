@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+    <form action="http://payments.webcourse.niksula.hut.fi/pay/" method="POST">{% csrf_token %}
+    <input type="hidden" name="pid" value="{{ pid }}" />
+    <input type="hidden" name="sid" value="{{ sid }}" />
+    <input type="hidden" name="success_url"
+            value="http://localhost:8000/payment/success" />
+    <input type="hidden" name="cancel_url"
+            value="http://localhost:8000/payment/cancel" />
+    <input type="hidden" name="error_url"
+            value="http://localhost:8000/payment/error" />
+    <input type="hidden" name="checksum" value="{{ checksum }}" />
+
+    <label for="id_amount">Amount</label>
+    <input type="text" id="id_amount" name="amount" value="{{ amount }}" />
+    <input type="submit" value="Start Payment"/>
+</form>
+
+</body>
+</html>
