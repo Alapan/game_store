@@ -32,7 +32,8 @@
               </form>
             </div>
             <div id="todo">
-              <a href="{% url 'gamestore: load_game' %}">Go to game.</a></p><br>
+              <!--p><a href="/loadgame/{{game.id}}">Go to game.</a></p-->
+	      <p><a href="/loadgame/32">Go to game.</a></p>
               <a href="buygame.html">Buy games</a>
               <form action="/logout/" method="post">{% csrf_token %}
                   <input type="submit" value="Logout" />

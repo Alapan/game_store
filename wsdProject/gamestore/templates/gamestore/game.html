@@ -91,29 +91,32 @@
 
 	<body>
 		<div id="container">
-              <div id="header">
-                    Gladiators 
-              </div>
-              <div id="body">
+              		<div id="header">
+				Gladiators 
+              		</div>
+              		<div id="body">
 
-		<p>
-			<strong>Player: {{player.username}}</strong>&nbsp;<br>
-			<input type="hidden" id="playerid" name="playerid" value="{{player.id}}"/><br>
-			<p>You are now playing <strong>{{game.name}}</strong></p><br>
-			<iframe id="encoder_iframe" height=75% width="50%" src="{% url 'gamestore: testgame' %}"></iframe>
-			<br>
-			<br>
-			<strong>Last score:</strong>&nbsp;
-                        <span id="scores"></span><br><br>
-			<strong>Game state:</strong>
-                        <div id="gamestate"></div>
-		</p>
-		<br>
-		</div>
+				<p>
+					<strong>Player: {{player.username}}</strong>&nbsp;<br>
+					<input type="hidden" id="playerid" name="playerid" value="{{player.id}}"/><br>
+					<p>
+						You are now playing <strong>{{game.name}}</strong>
+						<a href="/loadhighscores/{{game.id}}"> View high scores</a>
+					</p><br>
+					<iframe id="encoder_iframe" height=75% width="50%" src="{% url 'gamestore: testgame' %}"></iframe>
+					<br>
+					<br>
+					<strong>Last score: </strong>&nbsp;
+                        		<span id="scores"></span><br><br>
+					<strong>Game state:</strong>
+                        		<div id="gamestate"></div>
+				</p>
+				<br>
+			</div>
                 <div style="clear:all"></div>
-                <div id="footer">
-                  CopyRight © Gladiators 2015, all rights reserved.
-                </div> 
+		<div id="footer">
+			CopyRight © Gladiators 2015, all rights reserved.
+		</div> 
             </div>     
 	</body>
 </html>

@@ -14,6 +14,9 @@ from gamestore.forms import UserData, UserForm, GameForm
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404,redirect
+from gamestore.serializers import ScoreSerializer
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 import json
 import time
 
@@ -144,32 +147,32 @@ def home(request):
 
 #start buying a game
 def start_buy_view(request):
-    c={}
-    c.update(csrf(request))
+	c={}
+	c.update(csrf(request))
 
-    pid = "abcd"
-    sid = "awesomegladiators"
-    amount = 10
-    secret_key = "3e200efab59d77550cb7893b1b944ded"
-    checksum_str = "pid=%s&sid=%s&amount=%s&token=%s"%(pid, sid, amount, secret_key)
+	pid = "abcd"
+	sid = "awesomegladiators"
+	amount = 10
+	secret_key = "3e200efab59d77550cb7893b1b944ded"
+	checksum_str = "pid=%s&sid=%s&amount=%s&token=%s"%(pid, sid, amount, secret_key)
 
-    m = md5(checksum_str.encode("ascii"))
-    checksum = m.hexdigest()
+	m = md5(checksum_str.encode("ascii"))
+	checksum = m.hexdigest()
 
-    return render_to_response('gamestore/payment/start_buy.html', {'pid': pid, 'sid': sid, 'amount': amount, 'checksum': checksum})
+	return render_to_response('gamestore/payment/start_buy.html', {'pid': pid, 'sid': sid, 'amount': amount, 'checksum': checksum})
 
 
 def success_view(request):
 
-    return render_to_response('gamestore/payment/success.html')
+	return render_to_response('gamestore/payment/success.html')
 
 def cancel_view(request):
 
-    return render_to_response('gamestore/payment/cancel.html')
+	return render_to_response('gamestore/payment/cancel.html')
 
 def error_view(request):
 
-    return render_to_response('gamestore/payment/error.html')
+	return render_to_response('gamestore/payment/error.html')
 
 #a game is added by a developer
 def addgame(request):
@@ -219,10 +222,10 @@ def deletegame(request, id, template_name='gamestore/game_confirm_delete.html'):
 	return render(request, template_name, {'object':game})
 
 # load game.html with appropriate game iframe
-def loadgame(request):
+def loadgame(request, id):
 
 	player = request.user
-	game = "testgame.html"
+	game = Games.objects.get(pk=id)
 	return render_to_response('gamestore/game.html',{'player': player, 'game': game}, context_instance=RequestContext(request))
 
 # display game statistics on the developer homepage
@@ -252,6 +255,26 @@ def gamestats(request):
 
 		json_stats = json.dumps(datedict)
 		return HttpResponse(json_stats,content_type='application/json')
+
+# open high scores page
+def loadhighscores(request, id):
+	player = request.user
+	game = get_object_or_404(Games, pk=id)
+	return render_to_response('gamestore/highscores.html',{'player': player, 'game': game},context_instance=RequestContext(request))
+
+
+
+# display high scores in the high scores page
+@api_view(['GET'])
+def highscores(request, id):
+
+	userobj = request.user
+	gameobj = Games.objects.get(pk=id)
+	scoreobj = Scores.objects.filter(game=gameobj, player=userobj)
+
+	if request.method == 'GET':
+		serializer = ScoreSerializer(scoreobj[0])
+		return Response(serializer.data)
 
 
 def savegamestate(request):
@@ -313,21 +336,3 @@ def loadgamestate(request):
 
 		json_state=json.dumps(data)
 		return HttpResponse(json_state, content_type='application/json')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-

@@ -19,5 +19,9 @@ urlpatterns = patterns('',
 	url(r'^loadgamestate/','gamestore.views.loadgamestate'),
 	url(r'^editgame/(?P<id>\d+)/','gamestore.views.editgame'),
 	url(r'^delete/(?P<id>\d+)/','gamestore.views.deletegame'),
+	url(r'^loadgame/(?P<id>\d+)/','gamestore.views.loadgame'),
+	url(r'^loadhighscores/(?P<id>\d+)/','gamestore.views.loadhighscores'),
+	url(r'^highscores/(?P<id>\d+)/','gamestore.views.highscores'),
 	url(r'^gamestore/', include('gamestore.urls', namespace="gamestore")),
+	url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 )
