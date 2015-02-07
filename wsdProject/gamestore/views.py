@@ -17,6 +17,7 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404,redirect
 import json
 import time
+import datetime
 
 # Create your views here.
 
@@ -140,9 +141,17 @@ def game_info_view(request, id):
 
 	game = Games.objects.get(pk=id)
 
+	gameobj = Games.objects.get(pk=game.id)
+	userobj = User.objects.get(pk=request.user.id)
 
+	scoreobj = Scores.objects.filter(game=gameobj, player=userobj)
 
-	return render_to_response('gamestore/game_info.html', {'id': game.id, 'name': game.name, 'price': game.price, 'category': game.category})
+	if scoreobj:
+		have = True
+	else:
+		have = False
+
+	return render_to_response('gamestore/game_info.html', {'id': game.id, 'name': game.name, 'price': game.price, 'category': game.category, 'have': have})
 
 
 #start buying a game
@@ -152,7 +161,7 @@ def start_buy_view(request, game_id):
 
 	game = Games.objects.get(pk=game_id)
 
-	pid = "userid=%sgameid=%s"%(request.user.id, game.id)
+	pid = "%s_%s"%(request.user.id, game.id)
 	sid = "awesomegladiators"
 	amount = game.price
 	secret_key = "3e200efab59d77550cb7893b1b944ded"
@@ -177,9 +186,20 @@ def success_view(request):
 	m = md5(checksum_str.encode("ascii"))
 	checksum = m.hexdigest()
 
-	if got_checksum == checksum:
+	user_id, game_id = pid.split('_')
 
-		return render_to_response('gamestore/payment/success.html', {'pid': pid, 'ref': ref, 'checksum': checksum})
+	if got_checksum == checksum:
+		gameobj = Games.objects.get(pk=game_id)
+		userobj = User.objects.get(pk=user_id)
+
+		scoreobj = Scores.objects.filter(game=gameobj, player=userobj)
+
+		if scoreobj:
+			return render_to_response('gamestore/payment/error.html')
+		else:
+			bought_game = Scores(game=gameobj, player=userobj, registration_date=datetime.datetime.now())
+			bought_game.save()
+			return render_to_response('gamestore/payment/success.html', {'pid': pid, 'ref': ref, 'checksum': checksum})
 	else:
 		return render_to_response('gamestore/payment/error.html')
 

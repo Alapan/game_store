@@ -11,6 +11,10 @@
     <p>Category: {{ category }}</p>
     <p>Price: {{ price }}</p>
 
-    <button onclick="window.location='/payment/start_buy/{{ id }}'">Buy {{ name }}</button>
+    {% if have == True %}
+        <p><a href="{% url 'gamestore: load_game' %}">Go to game.</a></p><br>
+    {% else %}
+        <button onclick="window.location='/payment/start_buy/{{ id }}'">Buy {{ name }}</button>
+    {% endif %}
 </body>
 </html>
