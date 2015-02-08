@@ -230,7 +230,7 @@ def success_view(request):
 		else:
 			bought_game = Scores(game=gameobj, player=userobj, registration_date=datetime.datetime.now())
 			bought_game.save()
-			return render_to_response('gamestore/payment/success.html', {'pid': pid, 'ref': ref, 'checksum': checksum})
+			return render_to_response('gamestore/payment/success.html', {'pid': pid, 'ref': ref, 'checksum': checksum, 'game': gameobj})
 	else:
 		return render_to_response('gamestore/payment/error.html')
 
@@ -250,7 +250,17 @@ def error_view(request):
 #search for games
 def search_view(request):
 
-	return render_to_response('gamestore/search.html')
+	if request.method == 'POST':
+		search_term = request.POST['textsearch'].lower()
+		all_games = Games.objects.all()
+		list_of_games = list()
+
+		for g in all_games:
+			game_name = ''.join(g.name.split()).lower()
+			if game_name.find(search_term) != -1:
+				list_of_games.append(g)
+
+	return render_to_response('gamestore/search.html', {'search_term': search_term, 'list_of_games': list_of_games})
 
 def all_view(request):
 
