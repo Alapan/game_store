@@ -2,14 +2,10 @@
 <html>
     <title></title>
     <body>
-        <h3>Player homepage</h3>
-	    <p>Welcome, {{user.get_username}}</p></br>
+        <h3>All Games</h3>
 
         <button onclick="window.location='/gamestore/all.html'">All games</button>
-        <button onclick="window.location='/gamestore/.html'">All games</button>
-        <button onclick="window.location='/gamestore/all.html'">All games</button>
-        <button onclick="window.location='/gamestore/all.html'">All games</button>
-        <button onclick="window.location='/gamestore/all.html'">All games</button>
+        <button onclick="window.location='/gamestore/player_homepage.html'">Home</button>
 
 
         <form action="/search/" method="post">{% csrf_token %}
@@ -19,14 +15,10 @@
 			<input type="submit" name="submit" value="Search"/>
 		</form>
 
-        {% if not owned_games %}
-            <p>You don't have any games yet, please buy some to be able to play. Here are some from our offer!</p><br>
-        {% endif %}
-
         <br>
         <fieldset>
 
-		<legend><strong> Your games </strong> </legend>
+		<legend><strong> All games </strong> </legend>
 		<table>
 			<tr>
                 <th>Picture</th>
@@ -45,11 +37,10 @@
 			</tr>
 		    {% endfor %}
 		</table>
-	</fieldset>
+	    </fieldset>
 
-        <p><a href="{% url 'gamestore: load_game' %}">Go to game.</a></p><br>
-            <form action="/logout/" method="post">{% csrf_token %}
-                <input type="submit" value="Logout" />
-            </form>
+        <form action="/logout/" method="post">{% csrf_token %}
+            <input type="submit" value="Logout" />
+        </form>
     </body>
 </html>

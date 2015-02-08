@@ -94,12 +94,22 @@ def login_view(request):
 	#password was correctly matched against the username, thus valid user object is returned
 	if user is not None:
 		login(request,user)
+
+		userobj = User.objects.get(pk=request.user.id)
+
 		#if user is a player, load player homepage
-
-
 		if usertype == 'player' and user.usertypes.usertype == usertype:
-			list_of_games = Games.objects.all()
-			return render_to_response('gamestore/player_homepage.html',c ,context_instance=RequestContext(request, {'list_of_games':list_of_games}))
+			owned_games = list()
+
+			for s in Scores.objects.filter(player=userobj):
+				owned_games.append(s.game)
+
+			if owned_games:
+				list_of_games = owned_games
+				return render_to_response('gamestore/player_homepage.html',c ,context_instance=RequestContext(request, {'list_of_games':list_of_games, 'owned_games': owned_games}))
+			else:
+				list_of_games = Games.objects.all()
+				return render_to_response('gamestore/player_homepage.html',c ,context_instance=RequestContext(request, {'list_of_games':list_of_games, 'owned_games': owned_games}))
 		#if user is a developer, load developer homepage
 		elif usertype == 'developer' and user.usertypes.usertype == usertype:
 			list_of_games = Games.objects.filter(developer=user)
@@ -129,11 +139,20 @@ def devhome(request):
 	if request.user.is_authenticated():
 		list_of_games = Games.objects.filter(developer=request.user)
 		return render_to_response('gamestore/developer_homepage.html',context_instance=RequestContext(request, {'list_of_games':list_of_games}))
+
 #load home page
 def home(request):
 	c={}
 	c.update(csrf(request))
 	return render_to_response('gamestore/home.html',c)
+
+#go back to player homepage
+def playerhome(request):
+
+	if request.user.is_authenticated():
+		playerobj = request.user
+		list_of_games = Games.objects.filter(player=playerobj)
+		return render_to_response('gamestore/player_homepage.html', context_instance=RequestContext(request, {'list_of_games': list_of_games}))
 
 
 #game info page
@@ -188,14 +207,17 @@ def success_view(request):
 
 	user_id, game_id = pid.split('_')
 
+	#check if the payment was really successful
 	if got_checksum == checksum:
 		gameobj = Games.objects.get(pk=game_id)
 		userobj = User.objects.get(pk=user_id)
 
 		scoreobj = Scores.objects.filter(game=gameobj, player=userobj)
 
+		#if for some reason the user already have that game, error
 		if scoreobj:
 			return render_to_response('gamestore/payment/error.html')
+		#if the user does not have the game, save it to the Scores table
 		else:
 			bought_game = Scores(game=gameobj, player=userobj, registration_date=datetime.datetime.now())
 			bought_game.save()
