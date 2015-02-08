@@ -5,6 +5,7 @@ from django.shortcuts import render_to_response
 from django.core.context_processors import csrf
 from django.template import RequestContext
 from gamestore.models import *
+from hashlib import md5
 from django.contrib.auth.models import AnonymousUser
 from django.views.decorators.cache import cache_control
 from django.core.mail import send_mail
@@ -19,6 +20,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 import json
 import time
+import datetime
 
 # Create your views here.
 
@@ -53,7 +55,7 @@ def registration(request):
 			#registered = True
 			profile = user_form.save(commit=False)
 			profile.user = user
-			profile.save()	
+			profile.save()
 			registered = True
 			sendmail(user)
 			#print(user.first_name,user.email)
@@ -71,7 +73,7 @@ def registration(request):
 # send email to a new user after successful registration
 def sendmail(user):
 	subject = 'Registration confirmation mail'
-	message = 'Dear ' + user.first_name + ''', 
+	message = 'Dear ' + user.first_name + ''',
 
 Thank you for registering on our website!
 
@@ -81,12 +83,12 @@ The Gladiators team'''
 	recipient_list = []
 	recipient_list.append(user.email)
 	send_mail(subject, message, from_email, recipient_list, fail_silently=False)
-		
+
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def login_view(request):
 
 	c={}
-	c.update(csrf(request))        
+	c.update(csrf(request))
 	username = request.POST.get('username',False)
 	password = request.POST.get('password',False)
 	usertype = request.POST.get('usertype',False)
@@ -95,15 +97,28 @@ def login_view(request):
 	#password was correctly matched against the username, thus valid user object is returned
 	if user is not None:
 		login(request,user)
+
+		userobj = User.objects.get(pk=request.user.id)
+
 		#if user is a player, load player homepage
 		if usertype == 'player' and user.usertypes.usertype == usertype:
-			return render_to_response('gamestore/player_homepage.html',c,context_instance=RequestContext(request))
+			owned_games = list()
+
+			for s in Scores.objects.filter(player=userobj):
+				owned_games.append(s.game)
+
+			if owned_games:
+				list_of_games = owned_games
+				return render_to_response('gamestore/player_homepage.html',c ,context_instance=RequestContext(request, {'list_of_games':list_of_games, 'owned_games': owned_games}))
+			else:
+				list_of_games = Games.objects.all()
+				return render_to_response('gamestore/player_homepage.html',c ,context_instance=RequestContext(request, {'list_of_games':list_of_games, 'owned_games': owned_games}))
 		#if user is a developer, load developer homepage
 		elif usertype == 'developer' and user.usertypes.usertype == usertype:
 			list_of_games = Games.objects.filter(developer=user)
 			return render_to_response('gamestore/developer_homepage.html',context_instance=RequestContext(request, {'list_of_games':list_of_games}))
 		#user exists but incorrect type entered
-		else:	
+		else:
 			return render_to_response('gamestore/usertype_error.html',c)
 
 	else:
@@ -121,38 +136,66 @@ def logout_view(request):
 	#Redirect to logout page
 	return render_to_response('gamestore/logout.html')
 
-#go back to developer homepage displaying the updated inventory 
-def playerhomepage(request):
 
-
-	#go back to player homepage 
-	return render_to_response('gamestore/player_homepage')
-
-def startbuy(request):
-
-
-	#player perchase games
-	return render_to_response('gamestore/start_buy')
-	
+#go back to developer homepage displaying the updated inventory
 def devhome(request):
-	
+
 	if request.user.is_authenticated():
 		list_of_games = Games.objects.filter(developer=request.user)
 		return render_to_response('gamestore/developer_homepage.html',context_instance=RequestContext(request, {'list_of_games':list_of_games}))
+
 #load home page
 def home(request):
 	c={}
 	c.update(csrf(request))
 	return render_to_response('gamestore/home.html',c)
 
+#go back to player homepage
+def playerhome(request):
+
+	if request.user.is_authenticated():
+		userobj = User.objects.get(pk=request.user.id)
+		owned_games = list()
+
+		for s in Scores.objects.filter(player=userobj):
+			owned_games.append(s.game)
+
+		if owned_games:
+			list_of_games = owned_games
+			return render_to_response('gamestore/player_homepage.html',context_instance=RequestContext(request, {'list_of_games':list_of_games, 'owned_games': owned_games}))
+		else:
+			list_of_games = Games.objects.all()
+			return render_to_response('gamestore/player_homepage.html',context_instance=RequestContext(request, {'list_of_games':list_of_games, 'owned_games': owned_games}))
+
+
+#game info page
+def game_info_view(request, id):
+
+	game = Games.objects.get(pk=id)
+
+	gameobj = Games.objects.get(pk=game.id)
+	userobj = User.objects.get(pk=request.user.id)
+
+	scoreobj = Scores.objects.filter(game=gameobj, player=userobj)
+
+	if scoreobj:
+		have = True
+	else:
+		have = False
+
+	return render_to_response('gamestore/game_info.html', {'id': game.id, 'name': game.name, 'price': game.price, 'category': game.category, 'have': have})
+
+
 #start buying a game
-def start_buy_view(request):
+def start_buy_view(request, game_id):
 	c={}
 	c.update(csrf(request))
 
-	pid = "abcd"
+	game = Games.objects.get(pk=game_id)
+
+	pid = "%s_%s"%(request.user.id, game.id)
 	sid = "awesomegladiators"
-	amount = 10
+	amount = game.price
 	secret_key = "3e200efab59d77550cb7893b1b944ded"
 	checksum_str = "pid=%s&sid=%s&amount=%s&token=%s"%(pid, sid, amount, secret_key)
 
@@ -162,17 +205,78 @@ def start_buy_view(request):
 	return render_to_response('gamestore/payment/start_buy.html', {'pid': pid, 'sid': sid, 'amount': amount, 'checksum': checksum})
 
 
+#successful payment
 def success_view(request):
 
-	return render_to_response('gamestore/payment/success.html')
+	pid = request.GET['pid']
+	ref = request.GET['ref']
+	got_checksum = request.GET['checksum']
 
+	secret_key = "3e200efab59d77550cb7893b1b944ded"
+	checksum_str = "pid=%s&ref=%s&token=%s"%(pid, ref, secret_key)
+
+	m = md5(checksum_str.encode("ascii"))
+	checksum = m.hexdigest()
+
+	user_id, game_id = pid.split('_')
+
+	#check if the payment was really successful
+	if got_checksum == checksum:
+		gameobj = Games.objects.get(pk=game_id)
+		userobj = User.objects.get(pk=user_id)
+
+		scoreobj = Scores.objects.filter(game=gameobj, player=userobj)
+
+		#if for some reason the user already have that game, error
+		if scoreobj:
+			return render_to_response('gamestore/payment/error.html')
+		#if the user does not have the game, save it to the Scores table
+		else:
+			bought_game = Scores(game=gameobj, player=userobj, registration_date=datetime.datetime.now())
+			bought_game.save()
+			return render_to_response('gamestore/payment/success.html', {'pid': pid, 'ref': ref, 'checksum': checksum, 'game': gameobj})
+	else:
+		return render_to_response('gamestore/payment/error.html')
+
+
+#canceled payment
 def cancel_view(request):
 
 	return render_to_response('gamestore/payment/cancel.html')
 
+
+#error in payment
 def error_view(request):
 
 	return render_to_response('gamestore/payment/error.html')
+
+
+#search for games
+def search_view(request):
+
+	if request.method == 'POST':
+		search_term = request.POST['textsearch'].lower()
+		all_games = Games.objects.all()
+		list_of_games = list()
+
+		for g in all_games:
+			game_name = ''.join(g.name.split()).lower()
+			if game_name.find(search_term) != -1:
+				list_of_games.append(g)
+
+	return render_to_response('gamestore/search.html', {'search_term': search_term, 'list_of_games': list_of_games})
+
+def all_view(request):
+
+	list_of_games = Games.objects.all()
+	return render_to_response('gamestore/category/all.html',context_instance=RequestContext(request, {'list_of_games':list_of_games}))
+
+def category_view(request, category_name):
+
+	capital_name = category_name.title()
+	list_of_games = Games.objects.filter(category=capital_name)
+	return render_to_response('gamestore/category.html', {'list_of_games': list_of_games, 'category_name': capital_name})
+
 
 #a game is added by a developer
 def addgame(request):
@@ -183,13 +287,13 @@ def addgame(request):
 		if form.is_valid():
 			game = form.save(commit=False)
 			game.developer = request.user
-			game.save() 
+			game.save()
 			saved = True
 		else:
 			print(form.errors)
 	else:
 		form = GameForm()
-			
+
 	return render_to_response('gamestore/addgame.html',{'form': form, 'saved': saved},context_instance=RequestContext(request))
 
 #called when a game is modified on the developer homepage
@@ -205,17 +309,17 @@ def editgame(request,id):
 		game.url = request.POST.get('url','')
 		game.price = request.POST.get('price','')
 		game.save()
-		saved = True		
+		saved = True
 	else:
 		form = GameForm(
 			initial = { 'name' : game.name, 'category' : game.category, 'url' : game.url, 'price' : game.price }
 		)
-	
+
 	return render_to_response('gamestore/editgame.html',{'game': game,'form': form, 'saved': saved},context_instance=RequestContext(request))
 
 #delete a game on the developer homepage
 def deletegame(request, id, template_name='gamestore/game_confirm_delete.html'):
-	game = get_object_or_404(Games, pk=id)    
+	game = get_object_or_404(Games, pk=id)
 	if request.method=='POST':
 		game.delete()
 		return redirect('/devhome/')
@@ -280,7 +384,7 @@ def highscores(request, id):
 def savegamestate(request):
 
 	if request.method=='POST' and request.is_ajax:
-		
+
 		data = json.loads(request.POST.get('jsondata', None))
 		gamestate = data['gameState']
 
@@ -332,7 +436,7 @@ def loadgamestate(request):
 		else:
 			data["messageType"] = "LOAD"
 			data["gameState"] = scoreobj[0].gamestate
-			print(scoreobj[0].gamestate)	
+			print(scoreobj[0].gamestate)
 
 		json_state=json.dumps(data)
 		return HttpResponse(json_state, content_type='application/json')

@@ -13,23 +13,35 @@
           </div>
           <div id="body">
             <div id="category"><h3><ul id="menu">
-              <li>Adventure</li>
-              <li>Car Race</li>
-              <li>Sports</li>
-              <li>Puzzle</li>
-              <li>Action</li>
+                <button onclick="window.location='/playerhome'">Home</button><br><br>
+
+                <button onclick="window.location='/category/all'">All games</button>
+                <button onclick="window.location='/category/adventure'">Adventure</button>
+                <button onclick="window.location='/category/football'">Football</button>
+                <button onclick="window.location='/category/puzzle'">Puzzle</button>
+                <button onclick="window.location='/category/racing'">Racing</button>
+                <button onclick="window.location='/category/sports'">Sports</button>
+                <br><br>
+                <!--
+                <li><a href="category/all.html"></a>All Games</li>
+              <li><a href="category/adventure.html"></a>Adventure</li>
+              <li><a href="category/racing.html">Car Race</a></li>
+              <li><a href="category/sports.html">Sports</a></li>
+              <li><a href="category/puzzle.html">Puzzle</a></li>
+              <li><a href="category/action.html">Action</a></li>
               <li><a href="help.html">Help</a></li>
               <li><a href="about.html">About</a></li>
+              -->
               </ul></h3>
             </div>  
 
             <div id="srch">
-              <form id="search">
-                <label for="search">Games Search  </label>
-                <input id="search" type="text" name="search" value="  type to search games  "> <br>
-                 <br>
-                <input type="submit" value="Search"><br>
-              </form>
+                <form id='search' action="/search/" method="post">{% csrf_token %}
+                    <label for="textsearch">Search for games</label>
+                    <input id="textsearch" type="text" name="textsearch" value="  type to search games  "/><br>
+
+                    <input type="submit" name="submit" value="Search"/>
+		        </form>
             </div>
             <div id="todo">
               <!--p><a href="/loadgame/{{game.id}}">Go to game.</a></p-->
@@ -45,13 +57,45 @@
             <div id="name"> <h2>{{user.get_username}}</h2> </div> 
             </div>     
 
+
+
                   
             <div id="paid">         
-            <div id="paid_games"><h3>Paid games</h3></div> 
+            <div id="paid_games"><h3>Paid games</h3></div>
+
+                {% if not owned_games %}
+                <p>You don't have any games yet, please buy some to be able to play. Here are some from our offer!</p><br>
+                {% endif %}
+
+                <br>
+                <fieldset>
+
+                <legend><strong> Your games </strong> </legend>
+                <table>
+                    <tr>
+                        <th>Picture</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Price(EUR)</th>
+                        <th>Game</th>
+                    </tr>
+                    {% for game in list_of_games %}
+                    <tr>
+                        <td width="5%" align="center">{{game.picture}}</td>
+                        <td width="10%" align="center">{{game.name}}</td>
+                        <td width="15%" align="center">{{game.category}}</td>
+                        <td width="5%" align="center">{{game.price}}</td>
+                        <td width="10%" align="center"><a href="/game_info/{{game.id}}">Game info</a></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                </fieldset>
+                <!--
               <div id="pop">Car Race<br> <img src="home.png" width="30%">    <img src="players.png" width="30%"></div>
               <div id="pop">Sports<br> <img src="home.png" width="30%">    <img src="players.png" width="30%"></div>
               <div id="pop">Puzzle<br> <img src="home.png" width="30%">    <img src="players.png" width="30%"></div>
               <div id="pop">Action<br> <img src="home.png" width="30%">    <img src="players.png" width="30%"></div>
+              -->
             </div>
            <div id="main_games"> 
             <div id="stat"><h3>Game Statistics</h3></div>
@@ -71,5 +115,6 @@
           
 
       </body>
+
 </html>
       

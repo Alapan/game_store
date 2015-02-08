@@ -12,12 +12,13 @@
                     Gladiators 
               </div>
               <div id="body">
-   				 <p>Success! you can now play the game you bought. <a href="{% url 'gamestore: player_homepage' %}"> click here </a>to go back to your profile</p>
+   				 <p>Success! you can now play {{game.name}} you bought</p>
+                     <a href="{% url 'gamestore: player_homepage' %}"> click here </a>to go back to your profile</p>
     		  </div>
               <div style="clear:all"></div>
               <div id="footer">
                   CopyRight © Gladiators 2015, all rights reserved.
                </div> 
-    </div>   
+    </div>
 </body>
 </html>

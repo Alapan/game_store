@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <p>Game {{ name }} information page</p>
+
+    <p>Name: {{ name }}</p>
+    <p>Category: {{ category }}</p>
+    <p>Price: {{ price }}</p>
+
+    {% if have == True %}
+        <p><a href="{% url 'gamestore: load_game' %}">Go to game.</a></p><br>
+    {% else %}
+        <button onclick="window.location='/payment/start_buy/{{ id }}'">Buy {{ name }}</button>
+    {% endif %}
+</body>
+</html>
