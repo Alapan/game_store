@@ -2,7 +2,7 @@
 <html>
     <title></title>
     <body>
-        <h3>All Games</h3>
+        <h3>Category {{category_name}}</h3>
         <button onclick="window.location='/playerhome'">Home</button><br><br>
 
         <button onclick="window.location='/category/all'">All games</button>
@@ -12,7 +12,6 @@
         <button onclick="window.location='/category/racing'">Racing</button>
         <button onclick="window.location='/category/sports'">Sports</button>
         <br><br>
-
 
 
         <form action="/search/" method="post">{% csrf_token %}
@@ -25,7 +24,7 @@
         <br>
         <fieldset>
 
-		<legend><strong> All games </strong> </legend>
+		<legend><strong> {{category_name}} games </strong> </legend>
 		<table>
 			<tr>
                 <th>Picture</th>

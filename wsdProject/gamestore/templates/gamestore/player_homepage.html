@@ -5,11 +5,13 @@
         <h3>Player homepage</h3>
 	    <p>Welcome, {{user.get_username}}</p></br>
 
-        <button onclick="window.location='/gamestore/all.html'">All games</button>
-        <button onclick="window.location='/gamestore/.html'">All games</button>
-        <button onclick="window.location='/gamestore/all.html'">All games</button>
-        <button onclick="window.location='/gamestore/all.html'">All games</button>
-        <button onclick="window.location='/gamestore/all.html'">All games</button>
+        <button onclick="window.location='/category/all'">All games</button>
+        <button onclick="window.location='/category/adventure'">Adventure</button>
+        <button onclick="window.location='/category/football'">Football</button>
+        <button onclick="window.location='/category/puzzle'">Puzzle</button>
+        <button onclick="window.location='/category/racing'">Racing</button>
+        <button onclick="window.location='/category/sports'">Sports</button>
+        <br><br>
 
 
         <form action="/search/" method="post">{% csrf_token %}

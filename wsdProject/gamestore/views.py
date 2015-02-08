@@ -150,9 +150,18 @@ def home(request):
 def playerhome(request):
 
 	if request.user.is_authenticated():
-		playerobj = request.user
-		list_of_games = Games.objects.filter(player=playerobj)
-		return render_to_response('gamestore/player_homepage.html', context_instance=RequestContext(request, {'list_of_games': list_of_games}))
+		userobj = User.objects.get(pk=request.user.id)
+		owned_games = list()
+
+		for s in Scores.objects.filter(player=userobj):
+			owned_games.append(s.game)
+
+		if owned_games:
+			list_of_games = owned_games
+			return render_to_response('gamestore/player_homepage.html',context_instance=RequestContext(request, {'list_of_games':list_of_games, 'owned_games': owned_games}))
+		else:
+			list_of_games = Games.objects.all()
+			return render_to_response('gamestore/player_homepage.html',context_instance=RequestContext(request, {'list_of_games':list_of_games, 'owned_games': owned_games}))
 
 
 #game info page
@@ -236,6 +245,23 @@ def cancel_view(request):
 def error_view(request):
 
 	return render_to_response('gamestore/payment/error.html')
+
+
+#search for games
+def search_view(request):
+
+	return render_to_response('gamestore/search.html')
+
+def all_view(request):
+
+	list_of_games = Games.objects.all()
+	return render_to_response('gamestore/category/all.html',context_instance=RequestContext(request, {'list_of_games':list_of_games}))
+
+def category_view(request, category_name):
+
+	capital_name = category_name.title()
+	list_of_games = Games.objects.filter(category=capital_name)
+	return render_to_response('gamestore/category.html', {'list_of_games': list_of_games, 'category_name': capital_name})
 
 
 #a game is added by a developer
