@@ -103,13 +103,16 @@
 						You are now playing <strong>{{game.name}}</strong>
 						<a href="/loadhighscores/{{game.id}}"> View high scores</a>
 					</p><br>
-					<iframe id="encoder_iframe" height=75% width="50%" src="{% url 'gamestore: testgame' %}"></iframe>
+					<iframe id="encoder_iframe" height=75% width="50%" src="{{game.url}}"></iframe>
 					<br>
 					<br>
 					<strong>Last score: </strong>&nbsp;
                         		<span id="scores"></span><br><br>
 					<strong>Game state:</strong>
                         		<div id="gamestate"></div>
+					<br>
+					<br>
+					<a href="/playerhome/"> Go back to your homepage </a>
 				</p>
 				<br>
 			</div>

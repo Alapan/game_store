@@ -26,20 +26,14 @@ import datetime
 
 def signup(request):
 	# User clicks on 'Sign up' link on homepage. This returns the registration page
-	c = {}
-	c.update(csrf(request))
 	return render_to_response('gamestore/registration.html',c,context_instance=RequestContext(request))
 
 def newlogin(request):
 	# After successfully registering, the user logins in from the home page.
-	c = {}
-	c.update(csrf(request))
 	return render_to_response('gamestore/home.html',c,context_instance=RequestContext(request))
 
 # register a new user as player or developer
 def registration(request):
-	c = {}
-	c.update(csrf(request))
 	# a boolean value for telling the template if the registration was successful or not
 	registered = False
 	# if it is HTTP POST, form data have to be processed
@@ -87,8 +81,6 @@ The Gladiators team'''
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def login_view(request):
 
-	c={}
-	c.update(csrf(request))
 	username = request.POST.get('username',False)
 	password = request.POST.get('password',False)
 	usertype = request.POST.get('usertype',False)
@@ -109,21 +101,21 @@ def login_view(request):
 
 			if owned_games:
 				list_of_games = owned_games
-				return render_to_response('gamestore/player_homepage.html',c ,context_instance=RequestContext(request, {'list_of_games':list_of_games, 'owned_games': owned_games}))
+				return render_to_response('gamestore/player_homepage.html',context_instance=RequestContext(request, {'list_of_games':list_of_games, 'owned_games': owned_games}))
 			else:
 				list_of_games = Games.objects.all()
-				return render_to_response('gamestore/player_homepage.html',c ,context_instance=RequestContext(request, {'list_of_games':list_of_games, 'owned_games': owned_games}))
-		#if user is a developer, load developer homepage
+				return render_to_response('gamestore/player_homepage.html',context_instance=RequestContext(request, {'list_of_games':list_of_games, 'owned_games': owned_games}))
+		#if user is a developer, load developer homepage 1
 		elif usertype == 'developer' and user.usertypes.usertype == usertype:
 			list_of_games = Games.objects.filter(developer=user)
 			return render_to_response('gamestore/developer_homepage.html',context_instance=RequestContext(request, {'list_of_games':list_of_games}))
 		#user exists but incorrect type entered
 		else:
-			return render_to_response('gamestore/usertype_error.html',c)
+			return render_to_response('gamestore/usertype_error.html',context_instance=RequestContext(request))
 
 	else:
 		#Redirect to login page, as login is incorrect
-		return render_to_response('gamestore/home.html',c)
+		return render_to_response('gamestore/loginerror.html',context_instance=RequestContext(request))
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def logout_view(request):
@@ -134,7 +126,7 @@ def logout_view(request):
 	#request.session.flush()
 	#request.user = AnonymousUser
 	#Redirect to logout page
-	return render_to_response('gamestore/logout.html')
+	return render_to_response('gamestore/logout.html', context_instance=RequestContext(request))
 
 
 #go back to developer homepage displaying the updated inventory
@@ -146,9 +138,7 @@ def devhome(request):
 
 #load home page
 def home(request):
-	c={}
-	c.update(csrf(request))
-	return render_to_response('gamestore/home.html',c)
+	return render_to_response('gamestore/home.html',context_instance=RequestContext(request))
 
 #go back to player homepage
 def playerhome(request):

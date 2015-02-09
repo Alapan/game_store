@@ -12,7 +12,7 @@
     <p>Price: {{ price }}</p>
 
     {% if have == True %}
-        <p><a href="{% url 'gamestore: load_game' %}">Go to game.</a></p><br>
+        <p><a href="/loadgame/{{ id }}">Go to game.</a></p><br>
     {% else %}
         <button onclick="window.location='/payment/start_buy/{{ id }}'">Buy {{ name }}</button>
     {% endif %}
