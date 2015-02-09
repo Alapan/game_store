@@ -21,16 +21,17 @@ from rest_framework.response import Response
 import json
 import time
 import datetime
+import base64
 
 # Create your views here.
 
 def signup(request):
 	# User clicks on 'Sign up' link on homepage. This returns the registration page
-	return render_to_response('gamestore/registration.html',c,context_instance=RequestContext(request))
+	return render_to_response('gamestore/registration.html',context_instance=RequestContext(request))
 
 def newlogin(request):
 	# After successfully registering, the user logins in from the home page.
-	return render_to_response('gamestore/home.html',c,context_instance=RequestContext(request))
+	return render_to_response('gamestore/home.html',context_instance=RequestContext(request))
 
 # register a new user as player or developer
 def registration(request):
@@ -45,6 +46,7 @@ def registration(request):
 			user = user_data.save()
 			#hash the password and save
 			user.set_password(user.password)
+			user.is_active = False
 			user.save()
 			#registered = True
 			profile = user_form.save(commit=False)
@@ -66,10 +68,14 @@ def registration(request):
 
 # send email to a new user after successful registration
 def sendmail(user):
+
+	conf_code = "%s:::%s"%(user.username, user.password)
 	subject = 'Registration confirmation mail'
 	message = 'Dear ' + user.first_name + ''',
 
 Thank you for registering on our website!
+
+Your can verify your account by clicking on this link: http://localhost:8000/verify/''' + conf_code + '''
 
 Best regards,
 The Gladiators team'''
@@ -78,7 +84,23 @@ The Gladiators team'''
 	recipient_list.append(user.email)
 	send_mail(subject, message, from_email, recipient_list, fail_silently=False)
 
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+
+def verify(request, conf_code):
+	#conf_code = request.GET['conf']
+	print(conf_code + "THIS")
+	username, password = conf_code.split(':::')
+	user = User.objects.filter(username=username, password=password)
+	if user is not None:
+		user.update(is_active = True)
+		print(user[0].is_active)
+
+	return HttpResponseRedirect('/')
+
+def verificationerror(request):
+	return render_to_response('gamestore/verification_error.html')
+
+
+#@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def login_view(request):
 
 	username = request.POST.get('username',False)
@@ -88,27 +110,19 @@ def login_view(request):
 
 	#password was correctly matched against the username, thus valid user object is returned
 	if user is not None:
-		login(request,user)
-
-		userobj = User.objects.get(pk=request.user.id)
+		print(user.username)
+		print(user.is_active)
+		if user.is_active:
+			login(request,user)
+		else:
+			return HttpResponseRedirect('/verificationerror/')
 
 		#if user is a player, load player homepage
 		if usertype == 'player' and user.usertypes.usertype == usertype:
-			owned_games = list()
-
-			for s in Scores.objects.filter(player=userobj):
-				owned_games.append(s.game)
-
-			if owned_games:
-				list_of_games = owned_games
-				return render_to_response('gamestore/player_homepage.html',context_instance=RequestContext(request, {'list_of_games':list_of_games, 'owned_games': owned_games}))
-			else:
-				list_of_games = Games.objects.all()
-				return render_to_response('gamestore/player_homepage.html',context_instance=RequestContext(request, {'list_of_games':list_of_games, 'owned_games': owned_games}))
+			return HttpResponseRedirect('/playerhome/')
 		#if user is a developer, load developer homepage 1
 		elif usertype == 'developer' and user.usertypes.usertype == usertype:
-			list_of_games = Games.objects.filter(developer=user)
-			return render_to_response('gamestore/developer_homepage.html',context_instance=RequestContext(request, {'list_of_games':list_of_games}))
+			return HttpResponseRedirect('/devhome/')
 		#user exists but incorrect type entered
 		else:
 			return render_to_response('gamestore/usertype_error.html',context_instance=RequestContext(request))
@@ -133,12 +147,24 @@ def logout_view(request):
 def devhome(request):
 
 	if request.user.is_authenticated():
-		list_of_games = Games.objects.filter(developer=request.user)
-		return render_to_response('gamestore/developer_homepage.html',context_instance=RequestContext(request, {'list_of_games':list_of_games}))
+
+		if request.user.usertypes.usertype=="player":
+			return render_to_response('gamestore/player_homepage.html')
+		else:
+			list_of_games = Games.objects.filter(developer=request.user)
+			return render_to_response('gamestore/developer_homepage.html',context_instance=RequestContext(request, {'list_of_games':list_of_games}))
 
 #load home page
 def home(request):
-	return render_to_response('gamestore/home.html',context_instance=RequestContext(request))
+
+	if request.user.is_anonymous:
+		return render_to_response('gamestore/home.html',context_instance=RequestContext(request))
+	else:
+		if request.user.usertypes.usertype=='player':
+			return HttpResponseRedirect('/playerhome/')
+		else:
+			return HttpResponseRedirect('/devhome/')
+
 
 #go back to player homepage
 def playerhome(request):
@@ -254,7 +280,7 @@ def search_view(request):
 			if game_name.find(search_term) != -1:
 				list_of_games.append(g)
 
-	return render_to_response('gamestore/search.html', {'search_term': search_term, 'list_of_games': list_of_games})
+	return render_to_response('gamestore/search.html',context_instance=RequestContext(request, {'search_term': search_term, 'list_of_games': list_of_games}))
 
 def all_view(request):
 
@@ -265,7 +291,7 @@ def category_view(request, category_name):
 
 	capital_name = category_name.title()
 	list_of_games = Games.objects.filter(category=capital_name)
-	return render_to_response('gamestore/category.html', {'list_of_games': list_of_games, 'category_name': capital_name})
+	return render_to_response('gamestore/category.html', context_instance=RequestContext(request, {'list_of_games': list_of_games, 'category_name': capital_name}))
 
 
 #a game is added by a developer

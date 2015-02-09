@@ -10,17 +10,22 @@ class UserData(forms.ModelForm):
 		fields = ('first_name','last_name','username', 'email', 'password')
 
 class UserForm(forms.ModelForm):
-        CHOICES = (
-                ('player','Player',),('developer','Developer')
-        )
+		CHOICES = (
+				('player','Player',),('developer','Developer')
+		)
 
-        usertype = forms.ChoiceField(widget=forms.Select(),choices=CHOICES, required=True, label='User type ')
-        class Meta:
-                model = Usertypes
-                fields = ('usertype',)
+		usertype = forms.ChoiceField(widget=forms.Select(),choices=CHOICES, required=True, label='User type ')
+		class Meta:
+				model = Usertypes
+				fields = ('usertype',)
 
 class GameForm(forms.ModelForm):
 
+	CHOICES = (
+				('Adventure','Adventure',),('Football','Football'),('Puzzle', 'Puzzle'),('Racing', 'Racing'), ('Sports','Sports')
+		)
+
+	category = forms.ChoiceField(widget=forms.Select(),choices=CHOICES, required=True, label='Category')
 	class Meta:
 		model = Games
 		fields = ('name','category','url','price')

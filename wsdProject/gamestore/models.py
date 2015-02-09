@@ -3,7 +3,7 @@ from django.db import models
 
 class Usertypes(models.Model):
 	user = models.OneToOneField(User)
-	usertype = models.TextField()                   
+	usertype = models.TextField()
 
 	def __unicode__(self):
 		return self.user_name

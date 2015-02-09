@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     url(r'^category/all/', gamestore.views.all_view, name=' all'),
     url(r'^category/(\w+)/', gamestore.views.category_view, name=' category'),
     url(r'^playerhome/', gamestore.views.playerhome, name=' player_homepage'),
+    url(r'^verify/(\w+)/', gamestore.views.verify, name=' verify'),
 
 	url(r'^signup/$', gamestore.views.signup, name=' register_url'),
 	#url(r'^game/', gamestore.views.playerhomepage, name= 'player_homepage '),
