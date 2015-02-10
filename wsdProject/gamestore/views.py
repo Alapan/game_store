@@ -97,7 +97,8 @@ def verify(request, conf_code):
 	return HttpResponseRedirect('/')
 
 def verificationerror(request):
-	return render_to_response('gamestore/verification_error.html')
+
+	return render_to_response('gamestore/verification_error.html',context_instance=RequestContext(request, {'user': request.user}))
 
 
 #@cache_control(no_cache=True, must_revalidate=True, no_store=True)
@@ -110,10 +111,10 @@ def login_view(request):
 
 	#password was correctly matched against the username, thus valid user object is returned
 	if user is not None:
-		print(user.username)
-		print(user.is_active)
+		#check if the user that tries to log in is already active or not
 		if user.is_active:
 			login(request,user)
+		#if not notify the user that the verification step is still necessary to be able to log in
 		else:
 			return HttpResponseRedirect('/verificationerror/')
 
