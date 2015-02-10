@@ -143,16 +143,22 @@ def logout_view(request):
 	return render_to_response('gamestore/logout.html', context_instance=RequestContext(request))
 
 
-#go back to developer homepage displaying the updated inventory
+#go to developer homepage displaying the updated inventory
 def devhome(request):
 
 	if request.user.is_authenticated():
 
+		# if a player types in /devhome/ in the address bar, redirect him to player homepage
 		if request.user.usertypes.usertype=="player":
-			return render_to_response('gamestore/player_homepage.html')
+			return HttpResponseRedirect('/playerhome/')
+		# load developer homepage with details
 		else:
 			list_of_games = Games.objects.filter(developer=request.user)
 			return render_to_response('gamestore/developer_homepage.html',context_instance=RequestContext(request, {'list_of_games':list_of_games}))
+
+	# if a user types /devhome/ in the address bar without logging in, redirect him to login page
+	else:
+		return HttpResponseRedirect('/')
 
 #load home page
 def home(request):
@@ -166,22 +172,34 @@ def home(request):
 			return HttpResponseRedirect('/devhome/')
 
 
-#go back to player homepage
+#go to player homepage
 def playerhome(request):
 
 	if request.user.is_authenticated():
-		userobj = User.objects.get(pk=request.user.id)
-		owned_games = list()
 
-		for s in Scores.objects.filter(player=userobj):
-			owned_games.append(s.game)
+		# if user is player, load player homepage with details
+		if request.user.usertypes.usertype == 'player':
+			userobj = User.objects.get(pk=request.user.id)
+			owned_games = list()
+			
+			# query games for this player
+			for s in Scores.objects.filter(player=userobj):
+				owned_games.append(s.game)
 
-		if owned_games:
-			list_of_games = owned_games
-			return render_to_response('gamestore/player_homepage.html',context_instance=RequestContext(request, {'list_of_games':list_of_games, 'owned_games': owned_games}))
+			if owned_games:
+				list_of_games = owned_games
+				return render_to_response('gamestore/player_homepage.html',context_instance=RequestContext(request, {'list_of_games':list_of_games, 'owned_games': owned_games}))
+			else:
+				list_of_games = Games.objects.all()
+				return render_to_response('gamestore/player_homepage.html',context_instance=RequestContext(request, {'list_of_games':list_of_games, 'owned_games': owned_games}))
+		# if user is developer and enters /playerhome/ in the address bar, redirect him to developer homepage
 		else:
-			list_of_games = Games.objects.all()
-			return render_to_response('gamestore/player_homepage.html',context_instance=RequestContext(request, {'list_of_games':list_of_games, 'owned_games': owned_games}))
+			return HttpResponseRedirect('/devhome/')
+
+	# if user types in /playerhome/ in the address bar without logging in, redirect him to homepage
+	else:
+
+		return HttpResponseRedirect('/')
 
 
 #game info page
