@@ -25,13 +25,16 @@ import base64
 
 # Create your views here.
 
+
 def signup(request):
 	# User clicks on 'Sign up' link on homepage. This returns the registration page
 	return render_to_response('gamestore/registration.html',context_instance=RequestContext(request))
 
+
 def newlogin(request):
 	# After successfully registering, the user logins in from the home page.
 	return render_to_response('gamestore/home.html',context_instance=RequestContext(request))
+
 
 # register a new user as player or developer
 def registration(request):
