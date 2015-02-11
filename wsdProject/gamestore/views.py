@@ -109,7 +109,7 @@ def login_view(request):
 
 	username = request.POST.get('username',False)
 	password = request.POST.get('password',False)
-	usertype = request.POST.get('usertype',False)
+	#usertype = request.POST.get('developer',False)
 	user = authenticate(username=username,password=password)
 
 	#password was correctly matched against the username, thus valid user object is returned
@@ -122,10 +122,10 @@ def login_view(request):
 			return HttpResponseRedirect('/verificationerror/')
 
 		#if user is a player, load player homepage
-		if usertype == 'player' and user.usertypes.usertype == usertype:
+		if  user.usertypes.developer == False:
 			return HttpResponseRedirect('/playerhome/')
 		#if user is a developer, load developer homepage 1
-		elif usertype == 'developer' and user.usertypes.usertype == usertype:
+		elif user.usertypes.developer == True:
 			return HttpResponseRedirect('/devhome/')
 		#user exists but incorrect type entered
 		else:
@@ -153,7 +153,7 @@ def devhome(request):
 	if request.user.is_authenticated():
 
 		# if a player types in /devhome/ in the address bar, redirect him to player homepage
-		if request.user.usertypes.usertype=="player":
+		if request.user.usertypes.developer==False:
 			return HttpResponseRedirect('/playerhome/')
 		# load developer homepage with details
 		else:
@@ -170,7 +170,7 @@ def home(request):
 	if request.user.is_anonymous:
 		return render_to_response('gamestore/home.html',context_instance=RequestContext(request))
 	else:
-		if request.user.usertypes.usertype=='player':
+		if request.user.usertypes.developer==False:
 			return HttpResponseRedirect('/playerhome/')
 		else:
 			return HttpResponseRedirect('/devhome/')
@@ -182,7 +182,7 @@ def playerhome(request):
 	if request.user.is_authenticated():
 
 		# if user is player, load player homepage with details
-		if request.user.usertypes.usertype == 'player':
+		if request.user.usertypes.developer == False:
 			userobj = User.objects.get(pk=request.user.id)
 			owned_games = list()
 			

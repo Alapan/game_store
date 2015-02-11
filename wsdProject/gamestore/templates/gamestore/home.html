@@ -4,8 +4,8 @@
             <title>Home</title>
 			      {% load staticfiles %} 
             <link rel="stylesheet" type="text/css" href="{% static 'gamestore/home.css'%}" />
-			<link href="{{ STATIC_URL }}django_facebook/css/facebook.css" type="text/css" rel="stylesheet" media="all" />
-			{% include 'django_facebook/_facebook_js.html' %}
+			<!--<link href="{{ STATIC_URL }}django_facebook/css/facebook.css" type="text/css" rel="stylesheet" media="all" /> -->
+			{#% include 'django_facebook/_facebook_js.html' %#}
             <meta charset="utf-8" />
           </head>
           <body>
@@ -38,7 +38,8 @@
                      <br><br>
                     <label for="password">Password</label>
                     <input id="password" type="password" name="password"/>&nbsp;
-                    <br><br>         
+                    <br><br>
+                  <!--
                     <label for="usertype">Login as: </label>
                     <select id="usertype" name="usertype">
                       <option value=""></option>
@@ -46,8 +47,9 @@
                       <option value="developer">Developer</option>
                       <option></option>
                     </select></br></br>
+                -->
                     <input type="submit" name="submit" value="Login"/>&nbsp;</br></br>
-					<a href="{% url 'facebook_connect' %}?facebook_login=1" >Login with facebook</a>
+					<!--<a href="{#% url 'facebook_connect' %#}?facebook_login=1" >Login with facebook</a> -->
     
                   <br><br><br>
                     Don't have an account? <a href="{% url 'gamestore: register_url' %}">Sign up</a>

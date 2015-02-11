@@ -45,7 +45,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'gamestore',
-    'django_facebook',
+#    'django_facebook',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -57,22 +57,23 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.debug',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.media',
-    'django.core.context_processors.static',
-    'django.core.context_processors.tz',
-    'django.core.context_processors.request',
-    'django.contrib.messages.context_processors.messages',
-    'django_facebook.context_processors.facebook',
-)
-AUTHENTICATION_BACKENDS = (
-    'django_facebook.auth_backends.FacebookBackend',
-    'django.contrib.auth.backends.ModelBackend',
-)
-AUTH_PROFILE_MODULE = 'django_facebook.FacebookProfile',
+
+#TEMPLATE_CONTEXT_PROCESSORS = (
+#    'django.contrib.auth.context_processors.auth',
+#    'django.core.context_processors.debug',
+#    'django.core.context_processors.i18n',
+#    'django.core.context_processors.media',
+#    'django.core.context_processors.static',
+#    'django.core.context_processors.tz',
+#    'django.core.context_processors.request',
+#    'django.contrib.messages.context_processors.messages',
+#    'django_facebook.context_processors.facebook',
+#)
+#AUTHENTICATION_BACKENDS = (
+#    'django_facebook.auth_backends.FacebookBackend',
+#    'django.contrib.auth.backends.ModelBackend',
+#)
+#AUTH_PROFILE_MODULE = 'django_facebook.FacebookProfile',
 
 # Django console backend for e-mail
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -81,10 +82,10 @@ ROOT_URLCONF = 'wsdProject.urls'
 
 WSGI_APPLICATION = 'wsdProject.wsgi.application'
 
-FACEBOOK_APP_ID= '642071779255664'
-FACEBOOK_APP_SECRET='210b190eda807f802213aa06b97d16f8'
-FACEBOOK_EXTENDED_PERMISSIONS =['email']
-LOGIN_REDIRECT_URL='/'
+#FACEBOOK_APP_ID= '642071779255664'
+#FACEBOOK_APP_SECRET='210b190eda807f802213aa06b97d16f8'
+#FACEBOOK_EXTENDED_PERMISSIONS =['email']
+#LOGIN_REDIRECT_URL='/'
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 

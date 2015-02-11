@@ -11,13 +11,13 @@ class UserData(forms.ModelForm):
 
 class UserForm(forms.ModelForm):
 		CHOICES = (
-				('player','Player',),('developer','Developer')
+				(False,'Player',),(True,'Developer')
 		)
 
-		usertype = forms.ChoiceField(widget=forms.Select(),choices=CHOICES, required=True, label='User type ')
+		developer = forms.ChoiceField(widget=forms.Select(),choices=CHOICES, required=True, label='User type ')
 		class Meta:
 				model = Usertypes
-				fields = ('usertype',)
+				fields = ('developer',)
 
 class GameForm(forms.ModelForm):
 

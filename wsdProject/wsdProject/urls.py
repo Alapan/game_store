@@ -6,7 +6,7 @@ urlpatterns = patterns('',
 	# Examples:
 	# url(r'^$', 'wsdProject.views.home', name='home'),
 	# url(r'^blog/', include('blog.urls')),
-	url(r'^facebook/', include('django_facebook.urls')),
+	#url(r'^facebook/', include('django_facebook.urls')),
 	url(r'^payment/start_buy/(\d{1,4})/', 'gamestore.views.start_buy_view'),
 	url(r'^payment/success/', 'gamestore.views.success_view'),
 	url(r'^payment/cancel/', 'gamestore.views.cancel_view'),

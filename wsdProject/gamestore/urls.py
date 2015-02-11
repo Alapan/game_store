@@ -18,7 +18,7 @@ urlpatterns = patterns('',
     url(r'^category/(\w+)/', gamestore.views.category_view, name=' category'),
     url(r'^playerhome/', gamestore.views.playerhome, name=' player_homepage'),
     url(r'^verify/(\w+)/', gamestore.views.verify, name=' verify'),
-	url(r'^facebook/', include('django_facebook.urls')),
+	#url(r'^facebook/', include('django_facebook.urls')),
 	url(r'^help/','gamestore.views.help'),
 	url(r'^about/','gamestore.views.about'),
 
