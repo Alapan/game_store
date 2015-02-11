@@ -1,10 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
+	 {% load staticfiles %} 
+        <link rel="stylesheet" type="text/css" href="{% static 'gamestore/home.css'%}" />
+            
     <meta charset="UTF-8">
-    <title></title>
+    <title>error</title>
 </head>
 <body>
-    <p>VERIFICATION ERROR! Please verify your account first to be able to log in!</p>
+	 <div id="container">
+              <div id="header">
+                      <div id="glad"> <h2> Gladiators online games</h2> </div>
+					      <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a></div>
+					      <div id="body">
+					      	<p>VERIFICATION ERROR! Please verify your account first to be able to log in!</p>
+					      </div>
+					  </div>
+    
 </body>
 </html>

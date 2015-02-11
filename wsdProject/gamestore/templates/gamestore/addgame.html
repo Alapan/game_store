@@ -7,10 +7,11 @@
             <meta charset="utf-8" />
     </head>
     <body>
-        <div id="container">
+         <div id="container">
               <div id="header">
-                    Gladiators 
-              </div>
+                      <div id="glad"> <h2> Gladiators online games</h2> </div>
+                          <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a>
+                      </div>
               <div id="body">
                 <div id="right"></div>
         <h3>Add a new game</h3>
@@ -26,7 +27,7 @@
 	{% endif %}
 	<br>
     </div>
-    </div>
+    
                 <div style="clear:all"></div>
                 <div id="footer">
                   CopyRight © Gladiators 2015, all rights reserved.

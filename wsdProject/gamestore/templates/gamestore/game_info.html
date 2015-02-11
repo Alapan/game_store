@@ -1,20 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
+   {% load staticfiles %} 
+        <link rel="stylesheet" type="text/css" href="{% static 'gamestore/home.css'%}" />
+            
     <meta charset="UTF-8">
     <title></title>
 </head>
 <body>
-    <p>Game {{ name }} information page</p>
-
-    <p>Name: {{ name }}</p>
-    <p>Category: {{ category }}</p>
-    <p>Price: {{ price }}</p>
-
+    <div id="container">
+              <div id="header">
+                      <div id="glad"> <h2> Gladiators online games</h2> </div>
+                          <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a>
+                      </div>
+              <div id="body">
+                <p><h2>Game {{ name }} information page</h2></p>
+               <h3> <table id="info">
+                  <tr bgcolor="#FF9999" >
+                  <th>Name</th> 
+                  <th>Category</th>
+                  <th>Price</th>
+                </tr>
+                  <tr bgcolor="#99CC00" >
+                <td>{{ name }}</td>
+                <td>{{ category }}</td>
+                <td>{{ price }}</td>
+              </tr>
+            </table></h3>
     {% if have == True %}
         <p><a href="/loadgame/{{ id }}">Go to game.</a></p><br>
     {% else %}
         <button onclick="window.location='/payment/start_buy/{{ id }}'">Buy {{ name }}</button>
     {% endif %}
+</div>
+ <div style="clear:all"></div>
+                      <div id="footer">
+                          CopyRight © Gladiators 2015, all rights reserved.
+                      </div> 
+</div>
 </body>
 </html>

@@ -1,8 +1,20 @@
 <!DOCTYPE html>
 <html>
-    <title></title>
-    <body>
-        <h3>Search results for {{search_term}}</h3>
+<head lang="en">
+	 {% load staticfiles %} 
+        <link rel="stylesheet" type="text/css" href="{% static 'gamestore/home.css'%}" />
+            
+    <meta charset="UTF-8">
+    <title>success</title>
+</head>
+<body>
+	 <div id="container">
+              <div id="header">
+                      <div id="glad"> <h2> Gladiators online games</h2> </div>
+					      <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a></div>
+					      <div id="body">
+					      	
+					      	    <h3>Search results for {{search_term}}</h3>
         <button onclick="window.location='/playerhome'">Home</button><br><br>
 
         <button onclick="window.location='/category/all'">All games</button>
@@ -48,5 +60,8 @@
         <form action="/logout/" method="post">{% csrf_token %}
             <input type="submit" value="Logout" />
         </form>
-    </body>
+					      </div>
+					  </div>
+    
+</body>
 </html>

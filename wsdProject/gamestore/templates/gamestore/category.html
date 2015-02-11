@@ -1,17 +1,27 @@
 <!DOCTYPE html>
 <html>
-    <title></title>
-    <body>
-        <h3>Category {{category_name}}</h3>
-        <button onclick="window.location='/playerhome'">Home</button><br><br>
-
-        <button onclick="window.location='/category/all'">All games</button>
-        <button onclick="window.location='/category/adventure'">Adventure</button>
-        <button onclick="window.location='/category/football'">Football</button>
-        <button onclick="window.location='/category/puzzle'">Puzzle</button>
-        <button onclick="window.location='/category/racing'">Racing</button>
-        <button onclick="window.location='/category/sports'">Sports</button>
-        <br><br>
+<head>
+            <title>Home</title>
+			      {% load staticfiles %} 
+            <link rel="stylesheet" type="text/css" href="{% static 'gamestore/home.css'%}" />
+            <meta charset="utf-8" />
+          </head>
+<body>
+	<div id="container">
+              <div id="header">
+                      <div id="glad"> <h2> Gladiators online games</h2> </div>
+					      <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a>
+					  </div>
+   				<div id="body"> 
+   				<h3>Category {{category_name}}</h3>
+        <ul id="menu"> <li><button id="lnk" onclick="window.location='/playerhome'">Home   </button></li>
+                
+                <li><button id="lnk" onclick="window.location='/category/all'">All games</button></li>
+               <li> <button id="lnk" onclick="window.location='/category/adventure'">Adventure</button></li>
+               <li> <button id="lnk" onclick="window.location='/category/football'">Football</button></li>
+                <li><button id="lnk" onclick="window.location='/category/puzzle'">Puzzle</button></li>
+                <li><button id="lnk" onclick="window.location='/category/racing'">Racing</button></li>
+                <li><button id="lnk" onclick="window.location='/category/sports'">Sports</button></li></ul>
 
 
         <form action="/search/" method="post">{% csrf_token %}
@@ -47,6 +57,14 @@
 
         <form action="/logout/" method="post">{% csrf_token %}
             <input type="submit" value="Logout" />
-        </form>
+        </form></div> 
+   			</div>
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+    <title></title>
+    <body>
+        
     </body>
 </html>

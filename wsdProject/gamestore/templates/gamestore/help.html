@@ -1,0 +1,54 @@
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <title>help</title>
+			      {% load staticfiles %} 
+            <link rel="stylesheet" type="text/css" href="{% static 'gamestore/home.css'%}" />
+            <meta charset="utf-8" />
+          </head>
+          <body>
+            <div id="container">
+              <div id="header">
+                      <div id="glad"> <h2> Gladiators online games</h2> </div>
+                          <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a>
+                      </div>
+              <div id="body">
+                <div id="category"><h3><ul id="menu">
+                  
+                  <li><a href="{% url 'gamestore: home' %}">Home</a></li>
+                  <li><a href="{% url 'gamestore: home' %}">About</a></li>
+                  </ul></h3>
+                </div>
+                              
+                <p>  gladiatos online game help</p>
+                <p>
+                  Note that in this website all players must be registed and logged in to play a game.
+
+                 <h3> Players</h3>
+                  <li>players can only play games they paid for.</li>
+                  <li> click home above to login .</li>
+                  <li>remember to choose as "players" to login</li>
+                  <li>click sign up to register as new</li>
+                  <li>after loggin in</li>
+                      <li>click "play game" to playe a game</li>
+                      <li>click "buy game" to buy a game </li>
+                     <li>use the search button to type in and search for games.</li>
+                      <li>logout button is found in the bottom of the page.</li>
+                     </p>
+                     <h3> Developers</h3>
+                      <p>
+                        <li>click "edit game" to edit game</li>
+                     <li>click " delet game" to delet game</li>
+                     <li> click "statistics" to view game statistics . it will be </li>
+                      displayed below the table</li>
+                      <li>logout button is found in the bottom of the page.</li>
+                    </p>
+              </div>
+                <div style="clear:all"></div>
+                <div id="footer">
+                  CopyRight © Gladiators 2015, all rights reserved.
+                </div> 
+            </div>       
+          </body>
+        </html>
+                

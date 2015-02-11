@@ -10,10 +10,15 @@ min-height:100%;
 #header {
    
   background-color: orange;
+    font-family: "Gill Sans", sans-serif;
+  
   color: black;
-  font-family: "Gill Sans", sans-serif;
-     font-size: 250%;
-  padding:3%;
+padding: 1%;
+
+
+}
+#glad{
+  text-align: center;
 }
 #body {
  background-color: gold;
@@ -21,6 +26,7 @@ min-height:100%;
  text-align: center;
 
 }
+
 ul#menu li {
   display: inline;
 
@@ -51,6 +57,13 @@ ul#menu li {
     margin: 1%;
     border-style: solid;
     border-radius:15%;
+    }
+    #info{
+    
+    width: 40%;
+   border-style: solid;
+    border-radius:1%;
+    margin-left: 30%;
     }
   #login{
     padding: 1%;
@@ -88,9 +101,11 @@ ul#menu li {
       width:50%;
       margin: 1%;
       position: absolute;
-      
-
     }
+    #lnk{
+background:none;border:none;
+      }
+      
     #main_games{
 
      width:80%;

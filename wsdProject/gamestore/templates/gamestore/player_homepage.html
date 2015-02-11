@@ -8,37 +8,32 @@
       </head>
       <body>
         <div id="container">
-          <div id="header">
-            Gladiators 
-          </div>
+              <div id="header">
+                      <div id="glad"> <h2> Gladiators online games</h2> </div>
+                          <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a>
+                      </div>
           <div id="body">
             <div id="category"><h3><ul id="menu">
-                <button onclick="window.location='/playerhome'">Home</button><br><br>
+                
 
-                <button onclick="window.location='/category/all'">All games</button>
-                <button onclick="window.location='/category/adventure'">Adventure</button>
-                <button onclick="window.location='/category/football'">Football</button>
-                <button onclick="window.location='/category/puzzle'">Puzzle</button>
-                <button onclick="window.location='/category/racing'">Racing</button>
-                <button onclick="window.location='/category/sports'">Sports</button>
+                <li><button id="lnk" onclick="window.location='/playerhome'">Home   </button></li>
+                
+                <li><button id="lnk" onclick="window.location='/category/all'">All games</button></li>
+               <li> <button id="lnk" onclick="window.location='/category/adventure'">Adventure</button></li>
+               <li> <button id="lnk" onclick="window.location='/category/football'">Football</button></li>
+                <li><button id="lnk" onclick="window.location='/category/puzzle'">Puzzle</button></li>
+                <li><button id="lnk" onclick="window.location='/category/racing'">Racing</button></li>
+                <li><button id="lnk" onclick="window.location='/category/sports'">Sports</button></li>
+                
                 <br><br>
-                <!--
-                <li><a href="category/all.html"></a>All Games</li>
-              <li><a href="category/adventure.html"></a>Adventure</li>
-              <li><a href="category/racing.html">Car Race</a></li>
-              <li><a href="category/sports.html">Sports</a></li>
-              <li><a href="category/puzzle.html">Puzzle</a></li>
-              <li><a href="category/action.html">Action</a></li>
-              <li><a href="help.html">Help</a></li>
-              <li><a href="about.html">About</a></li>
-              -->
+                
               </ul></h3>
             </div>  
 
             <div id="srch">
                 <form id='search' action="/search/" method="post">{% csrf_token %}
                     <label for="textsearch">Search for games</label>
-                    <input id="textsearch" type="text" name="textsearch" value="  type to search games  "/><br>
+                    <input id="textsearch" type="text" name="textsearch" value="Type here  "/><br>
 
                     <input type="submit" name="submit" value="Search"/>
 		        </form>
@@ -53,7 +48,7 @@
 
                   
             <div id="paid">         
-            <div id="paid_games"><h3>Paid games</h3></div>
+            <div id="paid_games">
 
                 {% if not owned_games %}
                 <p>You don't have any games yet, please buy some to be able to play. Here are some from our offer!</p><br>

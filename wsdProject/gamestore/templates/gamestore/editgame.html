@@ -8,8 +8,9 @@
     <body>
         <div id="container">
               <div id="header">
-                    Gladiators 
-              </div>
+                      <div id="glad"> <h2> Gladiators online games</h2> </div>
+                          <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a>
+                      </div>
               <div id="body">
                         <h3>Modify a game</h3>
                         <p>Logged-in user: {{user.get_username}}</p></br>

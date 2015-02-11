@@ -7,14 +7,16 @@
 		</head>
 		<body>
 				<div id="container">
-		              <div id="header">
-		                    Gladiators 
-		              </div>
+              <div id="header">
+                      <div id="glad"> <h2> Gladiators online games</h2> </div>
+					      <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a>
+					  </div>
 		              <div id="body">
 							<form method="post">{% csrf_token %}
 		    				Are you sure you want to delete "{{ object }}" ?
 		    				<input type="submit" value="Submit" />
 							</form>
+							<a href="{% url 'gamestore: home' %}">click here to cancel and go back</a>
 					  </div>
 					     <div style="clear:all"></div>
 		              <div id="footer">

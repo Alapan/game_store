@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
+     {% load staticfiles %} 
+        <link rel="stylesheet" type="text/css" href="{% static 'gamestore/home.css'%}" />
+            
     <meta charset="UTF-8">
-    <title></title>
+    <title>success</title>
 </head>
 <body>
-
-    <form action="http://payments.webcourse.niksula.hut.fi/pay/" method="POST">{% csrf_token %}
+     <div id="container">
+              <div id="header">
+                      <div id="glad"> <h2> Gladiators online games</h2> </div>
+                          <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a></div>
+                          <div id="body">
+                            <form action="http://payments.webcourse.niksula.hut.fi/pay/" method="POST">{% csrf_token %}
     <input type="hidden" name="pid" value="{{ pid }}" />
     <input type="hidden" name="sid" value="{{ sid }}" />
     <input type="hidden" name="success_url"
@@ -21,6 +28,8 @@
     <input type="text" id="id_amount" name="amount" value="{{ amount }}" />
     <input type="submit" value="Start Payment"/>
 </form>
-
+                          </div>
+                      </div>
+    
 </body>
 </html>

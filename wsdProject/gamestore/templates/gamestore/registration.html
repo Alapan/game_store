@@ -14,9 +14,10 @@
       </head>
       <body>
         <div id="container">
-          <div id="header">
-            Gladiators 
-          </div>
+              <div id="header">
+                      <div id="glad"> <h2> Gladiators online games</h2> </div>
+                          <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a>
+                      </div>
           <div id="body">
            {% if registered %}
       <strong>Thank you for registering!</strong>

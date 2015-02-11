@@ -1,6 +1,9 @@
 <!DOCTYPE html> <html>
 	<head>
-		<title>High scores page</title>
+			 {% load staticfiles %} 
+        <link rel="stylesheet" type="text/css" href="{% static 'gamestore/home.css'%}" />
+            
+    	<title>High scores page</title>
 		<meta charset="utf-8">
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 		<script>
@@ -29,6 +32,12 @@
   		</script>
 	</head>
 	<body>
+		<div id="container">
+              <div id="header">
+                      <div id="glad"> <h2> Gladiators online games</h2> </div>
+                          <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a>
+                      </div>
+                      <div id="body">
 		<h3> High scores for game {{game.name}}</h3>
 		<p>
 			<strong>Player: {{player.username}}</strong>&nbsp;<br>
@@ -41,4 +50,11 @@
 			<a href="/loadgame/{{game.id}}">Return to game.</a>
 		</p>
 		<br>
+					</div>
+	<div style="clear:all"></div>
+                <div id="footer">
+                  CopyRight © Gladiators 2015, all rights reserved.
+                </div> 
+
+	</div>
 	</body> </html>

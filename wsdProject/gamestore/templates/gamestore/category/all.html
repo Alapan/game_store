@@ -1,21 +1,34 @@
 <!DOCTYPE html>
 <html>
-    <title></title>
+	<head>
+            <title>all games</title>
+			      {% load staticfiles %} 
+            <link rel="stylesheet" type="text/css" href="{% static 'gamestore/home.css'%}" />
+            <meta charset="utf-8" />
+          </head>
+    
     <body>
-        <h3>All Games</h3>
-        <button onclick="window.location='/playerhome'">Home</button><br><br>
+   <div id="container">
+              <div id="header">
+                      <div id="glad"> <h2> Gladiators online games</h2> </div>
+                <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a></div>
+                <div id="body">
+                	<div id="category"><h3><ul id="menu">
+                
 
-        <button onclick="window.location='/category/all'">All games</button>
-        <button onclick="window.location='/category/adventure'">Adventure</button>
-        <button onclick="window.location='/category/football'">Football</button>
-        <button onclick="window.location='/category/puzzle'">Puzzle</button>
-        <button onclick="window.location='/category/racing'">Racing</button>
-        <button onclick="window.location='/category/sports'">Sports</button>
-        <br><br>
-
-
-
-        <form action="/search/" method="post">{% csrf_token %}
+                <li><button id="lnk" onclick="window.location='/playerhome'">Home   </button></li>
+                
+                <li><button id="lnk" onclick="window.location='/category/all'">All games</button></li>
+               <li> <button id="lnk" onclick="window.location='/category/adventure'">Adventure</button></li>
+               <li> <button id="lnk" onclick="window.location='/category/football'">Football</button></li>
+                <li><button id="lnk" onclick="window.location='/category/puzzle'">Puzzle</button></li>
+                <li><button id="lnk" onclick="window.location='/category/racing'">Racing</button></li>
+                <li><button id="lnk" onclick="window.location='/category/sports'">Sports</button></li>
+                
+                <br><br>
+                
+              </ul></h3>  </div>
+              <form action="/search/" method="post">{% csrf_token %}
 			<label for="textsearch">Search for games</label>
 		    <input id="textsearch" type="text" name="textsearch"/>
 
@@ -49,5 +62,16 @@
         <form action="/logout/" method="post">{% csrf_token %}
             <input type="submit" value="Logout" />
         </form>
-    </body>
+
+                  
+                </div>
+
+              <div style="clear:all"></div>
+              <div id="footer">
+                  CopyRight © Gladiators 2015, all rights reserved.
+               </div>
+            </div>
+    
+</body>
+    
 </html>

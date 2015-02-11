@@ -83,7 +83,10 @@ The Gladiators team'''
 	recipient_list = []
 	recipient_list.append(user.email)
 	send_mail(subject, message, from_email, recipient_list, fail_silently=False)
-
+def help(request):
+	return render_to_response('gamestore/help.html')
+def about(request):
+	return render_to_response('gamestore/about.html')
 
 def verify(request, conf_code):
 	#conf_code = request.GET['conf']
