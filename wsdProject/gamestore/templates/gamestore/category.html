@@ -55,10 +55,13 @@
 		</table>
 	    </fieldset>
 
+        {% if logged_in == True %}
         <form action="/logout/" method="post">{% csrf_token %}
             <input type="submit" value="Logout" />
-        </form></div> 
-   			</div>
+        </form>
+        {% endif %}
+		</div>
+     </div>
 </body>
 </html>
 <!DOCTYPE html>

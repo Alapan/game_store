@@ -223,17 +223,20 @@ def game_info_view(request, id):
 
 	game = Games.objects.get(pk=id)
 
-	gameobj = Games.objects.get(pk=game.id)
-	userobj = User.objects.get(pk=request.user.id)
+	have = False
+	buyable = False
 
-	scoreobj = Scores.objects.filter(game=gameobj, player=userobj)
+	if request.user.is_authenticated and not request.user.is_anonymous:
+		userobj = User.objects.get(pk=request.user.id)
 
-	if scoreobj:
-		have = True
-	else:
-		have = False
+		scoreobj = Scores.objects.filter(game=game, player=userobj)
 
-	return render_to_response('gamestore/game_info.html', {'id': game.id, 'name': game.name, 'description': game.description, 'price': game.price, 'category': game.category, 'have': have})
+		if scoreobj:
+			have = True
+		else:
+			buyable = True
+
+	return render_to_response('gamestore/game_info.html', {'id': game.id, 'name': game.name, 'description': game.description, 'price': game.price, 'category': game.category, 'have': have, 'buyable': buyable})
 
 
 # start buying a game
@@ -304,6 +307,10 @@ def error_view(request):
 # search for games
 def search_view(request):
 
+	logged_in = False
+	if not request.user.is_anonymous and request.user.is_authenticated:
+		logged_in = True
+
 	if request.method == 'POST':
 		search_term = request.POST['textsearch'].lower()
 		all_games = Games.objects.all()
@@ -314,20 +321,28 @@ def search_view(request):
 			if game_name.find(search_term) != -1:
 				list_of_games.append(g)
 
-	return render_to_response('gamestore/search.html',context_instance=RequestContext(request, {'search_term': search_term, 'list_of_games': list_of_games}))
+	return render_to_response('gamestore/search.html',context_instance=RequestContext(request, {'search_term': search_term, 'list_of_games': list_of_games, 'logged_in': logged_in}))
 
 
 def all_view(request):
 
+	logged_in = False
+	if request.user.is_anonymous == False and request.user.is_authenticated:
+		logged_in = True
+
 	list_of_games = Games.objects.all()
-	return render_to_response('gamestore/category/all.html',context_instance=RequestContext(request, {'list_of_games':list_of_games}))
+	return render_to_response('gamestore/category/all.html',context_instance=RequestContext(request, {'list_of_games':list_of_games, 'logged_in': logged_in}))
 
 
 def category_view(request, category_name):
 
+	logged_in = False
+	if not request.user.is_anonymous and request.user.is_authenticated:
+		logged_in = True
+
 	capital_name = category_name.title()
 	list_of_games = Games.objects.filter(category=capital_name)
-	return render_to_response('gamestore/category.html', context_instance=RequestContext(request, {'list_of_games': list_of_games, 'category_name': capital_name}))
+	return render_to_response('gamestore/category.html', context_instance=RequestContext(request, {'list_of_games': list_of_games, 'category_name': capital_name, 'logged_in': logged_in}))
 
 
 # a game is added by a developer

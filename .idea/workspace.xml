@@ -2,19 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="50beaef3-6081-4bb7-849f-980f1a877513" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wsdProject/gamestore/static/gamestore/action1.JPG" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wsdProject/gamestore/static/gamestore/action2.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wsdProject/gamestore/static/gamestore/adv1.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wsdProject/gamestore/static/gamestore/adv2.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wsdProject/gamestore/static/gamestore/carace1.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wsdProject/gamestore/static/gamestore/carace2.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wsdProject/gamestore/static/gamestore/puz1.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wsdProject/gamestore/static/gamestore/puz2.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wsdProject/gamestore/static/gamestore/sport1.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wsdProject/gamestore/static/gamestore/sport2.jpg" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wsdProject/db.sqlite3" afterPath="$PROJECT_DIR$/wsdProject/db.sqlite3" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/category/all.html" afterPath="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/category/all.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/category.html" afterPath="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/category.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/game_info.html" afterPath="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/game_info.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/home.html" afterPath="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/home.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wsdProject/gamestore/models.py" afterPath="$PROJECT_DIR$/wsdProject/gamestore/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/search.html" afterPath="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/search.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wsdProject/gamestore/urls.py" afterPath="$PROJECT_DIR$/wsdProject/gamestore/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wsdProject/gamestore/views.py" afterPath="$PROJECT_DIR$/wsdProject/gamestore/views.py" />
     </list>
     <ignored path="new_check.iws" />
@@ -40,41 +34,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="player_homepage.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/player_homepage.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-16.25" vertical-offset="630" max-vertical-offset="1695">
-              <caret line="68" column="51" selection-start-line="68" selection-start-column="20" selection-end-line="68" selection-end-column="51" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="success.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/payment/success.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.5" vertical-offset="0" max-vertical-offset="450">
-              <caret line="4" column="83" selection-start-line="4" selection-start-column="83" selection-end-line="4" selection-end-column="83" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="testgame.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/testgame.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1740">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2216" max-vertical-offset="7590">
-              <caret line="181" column="66" selection-start-line="181" selection-start-column="66" selection-end-line="181" selection-end-column="66" />
+            <state vertical-scroll-proportion="0.21241379" vertical-offset="4781" max-vertical-offset="7815">
+              <caret line="329" column="76" selection-start-line="329" selection-start-column="76" selection-end-line="329" selection-end-column="76" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -82,52 +46,88 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="game_info.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/game_info.html">
+      <file leaf-file-name="search.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/search.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.049928673" vertical-offset="25" max-vertical-offset="750">
-              <caret line="4" column="79" selection-start-line="4" selection-start-column="79" selection-end-line="4" selection-end-column="79" />
+            <state vertical-scroll-proportion="-21.708334" vertical-offset="364" max-vertical-offset="1110">
+              <caret line="59" column="8" selection-start-line="59" selection-start-column="8" selection-end-line="65" selection-end-column="11" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="user_homepage.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/user_homepage.html">
+      <file leaf-file-name="highscores.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/highscores.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state vertical-scroll-proportion="-1.875" vertical-offset="0" max-vertical-offset="990">
+              <caret line="3" column="79" selection-start-line="3" selection-start-column="79" selection-end-line="3" selection-end-column="79" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="usertype_error.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/usertype_error.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="1140">
-              <caret line="5" column="83" selection-start-line="5" selection-start-column="83" selection-end-line="5" selection-end-column="83" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="verification_error.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/verification_error.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.5" vertical-offset="0" max-vertical-offset="390">
-              <caret line="4" column="79" selection-start-line="4" selection-start-column="79" selection-end-line="4" selection-end-column="79" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/models.py">
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/urls.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
-              <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+              <caret line="28" column="4" selection-start-line="28" selection-start-column="4" selection-end-line="28" selection-end-column="4" />
+              <folding>
+                <element signature="e#0#51#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="game_info.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/game_info.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-21.083334" vertical-offset="34" max-vertical-offset="795">
+              <caret line="36" column="66" selection-start-line="36" selection-start-column="66" selection-end-line="36" selection-end-column="66" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wsdProject/wsdProject/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="720">
+              <caret line="23" column="4" selection-start-line="23" selection-start-column="4" selection-end-line="23" selection-end-column="38" />
+              <folding>
+                <element signature="e#0#51#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="game.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/game.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="50.791668" vertical-offset="1294" max-vertical-offset="1995">
+              <caret line="5" column="79" selection-start-line="5" selection-start-column="79" selection-end-line="5" selection-end-column="79" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="category.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/category.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-21.083334" vertical-offset="439" max-vertical-offset="1185">
+              <caret line="63" column="11" selection-start-line="63" selection-start-column="11" selection-end-line="63" selection-end-column="11" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="all.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/category/all.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-16.708334" vertical-offset="529" max-vertical-offset="1290">
+              <caret line="62" column="34" selection-start-line="62" selection-start-column="34" selection-end-line="62" selection-end-column="34" />
+              <folding>
+                <element signature="n#style#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -135,8 +135,8 @@
       <file leaf-file-name="home.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/home.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-16.708334" vertical-offset="514" max-vertical-offset="1215">
-              <caret line="61" column="28" selection-start-line="61" selection-start-column="28" selection-end-line="61" selection-end-column="28" />
+            <state vertical-scroll-proportion="-8.75" vertical-offset="0" max-vertical-offset="1260">
+              <caret line="14" column="48" selection-start-line="14" selection-start-column="44" selection-end-line="14" selection-end-column="48" />
               <folding />
             </state>
           </provider>
@@ -155,13 +155,11 @@
         <option value="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/category/puzzle.html" />
         <option value="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/category/category.html" />
         <option value="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/verify.html" />
-        <option value="$PROJECT_DIR$/wsdProject/gamestore/urls.py" />
         <option value="$PROJECT_DIR$/wsdProject/wsdProject/urls.py" />
         <option value="$PROJECT_DIR$/wsdProject/wsdProject/settings.py" />
         <option value="$PROJECT_DIR$/wsdProject/gamestore/forms.py" />
         <option value="$PROJECT_DIR$/wsdProject/gamestore/static/gamestore/home.css" />
         <option value="$PROJECT_DIR$/wsdProject/gamestore/static/gamestore/home2.css" />
-        <option value="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/category/all.html" />
         <option value="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/payment/cancel.html" />
         <option value="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/payment/error.html" />
         <option value="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/payment/start_buy.html" />
@@ -169,23 +167,25 @@
         <option value="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/about.html" />
         <option value="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/account_disabled.html" />
         <option value="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/addgame.html" />
-        <option value="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/category.html" />
         <option value="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/developer_homepage.html" />
         <option value="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/editgame.html" />
         <option value="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/game.html" />
         <option value="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/game_confirm_delete.html" />
-        <option value="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/game_info.html" />
         <option value="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/help.html" />
         <option value="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/highscores.html" />
         <option value="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/loginerror.html" />
         <option value="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/logout.html" />
         <option value="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/player_homepage.html" />
         <option value="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/registration.html" />
-        <option value="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/search.html" />
         <option value="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/usertype_error.html" />
         <option value="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/verification_error.html" />
         <option value="$PROJECT_DIR$/wsdProject/gamestore/models.py" />
         <option value="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/home.html" />
+        <option value="$PROJECT_DIR$/wsdProject/gamestore/urls.py" />
+        <option value="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/game_info.html" />
+        <option value="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/search.html" />
+        <option value="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/category.html" />
+        <option value="$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/category/all.html" />
         <option value="$PROJECT_DIR$/wsdProject/gamestore/views.py" />
       </list>
     </option>
@@ -341,6 +341,36 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="payment" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="new_check" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="new_check" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wsdProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gamestore" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gamestore" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="category" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -651,16 +681,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="7230">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="390" max-vertical-offset="570">
@@ -806,26 +826,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wsdProject/wsdProject/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.777778" vertical-offset="0" max-vertical-offset="720">
-          <caret line="23" column="38" selection-start-line="23" selection-start-column="38" selection-end-line="23" selection-end-column="38" />
-          <folding>
-            <element signature="e#0#51#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="615">
-          <caret line="20" column="5" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
-          <folding>
-            <element signature="e#0#51#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/wsdProject/wsdProject/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="265" max-vertical-offset="1935">
@@ -841,13 +841,6 @@
           <folding>
             <element signature="e#0#43#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/category/all.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.125" vertical-offset="0" max-vertical-offset="1245">
-          <caret line="5" column="83" selection-start-line="5" selection-start-column="83" selection-end-line="5" selection-end-column="83" />
         </state>
       </provider>
     </entry>
@@ -896,14 +889,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/category.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.125" vertical-offset="0" max-vertical-offset="1140">
-          <caret line="5" column="83" selection-start-line="5" selection-start-column="83" selection-end-line="5" selection-end-column="83" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/developer_homepage.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-3.125" vertical-offset="0" max-vertical-offset="1905">
@@ -912,42 +897,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/editgame.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.125" vertical-offset="0" max-vertical-offset="615">
-          <caret line="5" column="87" selection-start-line="5" selection-start-column="87" selection-end-line="5" selection-end-column="87" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/game.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.125" vertical-offset="0" max-vertical-offset="1995">
-          <caret line="5" column="79" selection-start-line="5" selection-start-column="79" selection-end-line="5" selection-end-column="79" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/game_confirm_delete.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.125" vertical-offset="0" max-vertical-offset="495">
-          <caret line="5" column="87" selection-start-line="5" selection-start-column="87" selection-end-line="5" selection-end-column="87" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/help.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-3.125" vertical-offset="0" max-vertical-offset="885">
           <caret line="5" column="83" selection-start-line="5" selection-start-column="83" selection-end-line="5" selection-end-column="83" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/highscores.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.875" vertical-offset="0" max-vertical-offset="990">
-          <caret line="3" column="79" selection-start-line="3" selection-start-column="79" selection-end-line="3" selection-end-column="79" />
           <folding />
         </state>
       </provider>
@@ -982,14 +935,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="165" max-vertical-offset="735">
           <caret line="11" column="79" selection-start-line="11" selection-start-column="79" selection-end-line="11" selection-end-column="79" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/search.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="1080">
-          <caret line="4" column="79" selection-start-line="4" selection-start-column="79" selection-end-line="4" selection-end-column="79" />
           <folding />
         </state>
       </provider>
@@ -1050,29 +995,115 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/home.html">
+    <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/static/gamestore/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.708334" vertical-offset="514" max-vertical-offset="1215">
-          <caret line="61" column="28" selection-start-line="61" selection-start-column="28" selection-end-line="61" selection-end-column="28" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1496" max-vertical-offset="2610">
+          <caret line="120" column="28" selection-start-line="120" selection-start-column="28" selection-end-line="120" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/views.py">
+    <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/game_confirm_delete.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2216" max-vertical-offset="7590">
-          <caret line="181" column="66" selection-start-line="181" selection-start-column="66" selection-end-line="181" selection-end-column="66" />
+        <state vertical-scroll-proportion="-3.125" vertical-offset="0" max-vertical-offset="495">
+          <caret line="5" column="87" selection-start-line="5" selection-start-column="87" selection-end-line="5" selection-end-column="87" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/editgame.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.125" vertical-offset="0" max-vertical-offset="615">
+          <caret line="5" column="87" selection-start-line="5" selection-start-column="87" selection-end-line="5" selection-end-column="87" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/highscores.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.875" vertical-offset="0" max-vertical-offset="990">
+          <caret line="3" column="79" selection-start-line="3" selection-start-column="79" selection-end-line="3" selection-end-column="79" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.75" vertical-offset="0" max-vertical-offset="1260">
+          <caret line="14" column="48" selection-start-line="14" selection-start-column="44" selection-end-line="14" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wsdProject/wsdProject/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="720">
+          <caret line="23" column="4" selection-start-line="23" selection-start-column="4" selection-end-line="23" selection-end-column="38" />
           <folding>
-            <element signature="e#0#35#0" expanded="true" />
+            <element signature="e#0#51#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
+          <caret line="28" column="4" selection-start-line="28" selection-start-column="4" selection-end-line="28" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#51#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/search.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-21.708334" vertical-offset="364" max-vertical-offset="1110">
+          <caret line="59" column="8" selection-start-line="59" selection-start-column="8" selection-end-line="65" selection-end-column="11" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/game_info.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.049928673" vertical-offset="25" max-vertical-offset="750">
-          <caret line="4" column="79" selection-start-line="4" selection-start-column="79" selection-end-line="4" selection-end-column="79" />
+        <state vertical-scroll-proportion="-21.083334" vertical-offset="34" max-vertical-offset="795">
+          <caret line="36" column="66" selection-start-line="36" selection-start-column="66" selection-end-line="36" selection-end-column="66" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/game.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="50.791668" vertical-offset="1294" max-vertical-offset="1995">
+          <caret line="5" column="79" selection-start-line="5" selection-start-column="79" selection-end-line="5" selection-end-column="79" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/category.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-21.083334" vertical-offset="439" max-vertical-offset="1185">
+          <caret line="63" column="11" selection-start-line="63" selection-start-column="11" selection-end-line="63" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/templates/gamestore/category/all.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-16.708334" vertical-offset="529" max-vertical-offset="1290">
+          <caret line="62" column="34" selection-start-line="62" selection-start-column="34" selection-end-line="62" selection-end-column="34" />
+          <folding>
+            <element signature="n#style#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wsdProject/gamestore/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.21241379" vertical-offset="4781" max-vertical-offset="7815">
+          <caret line="329" column="76" selection-start-line="329" selection-start-column="76" selection-end-line="329" selection-end-column="76" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -31,8 +31,11 @@
             </table></h3>
     {% if have == True %}
         <p><a href="/loadgame/{{ id }}">Go to game.</a></p><br>
-    {% else %}
+    {% elif buyable == True %}
         <button onclick="window.location='/payment/start_buy/{{ id }}'">Buy {{ name }}</button>
+    {% else %}
+        <p>You have to log in or register first to buy a game!</p>
+        <a href="{% url 'gamestore: home' %}"><p>Home</p>
     {% endif %}
 </div>
  <div style="clear:all"></div>

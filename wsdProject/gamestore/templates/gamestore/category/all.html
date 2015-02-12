@@ -59,12 +59,15 @@
 		</table>
 	    </fieldset>
 
-        <form action="/logout/" method="post">{% csrf_token %}
-            <input type="submit" value="Logout" />
-        </form>
+        {% if logged_in == True %}
+                    <p>{{logged_in}}</p>
+            <form action="/logout/" method="post">{% csrf_token %}
+                <input type="submit" value="Logout" />
+            </form>
+        {% endif %}
 
                   
-                </div>
+            </div>
 
               <div style="clear:all"></div>
               <div id="footer">
