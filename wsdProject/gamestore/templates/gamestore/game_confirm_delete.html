@@ -1,27 +1,55 @@
 <!DOCTYPE html>
 <html>
-		<head>
-				<title>Confirm game deletion</title>
-				{% load staticfiles %} 
-		        <link rel="stylesheet" type="text/css" href="{% static 'gamestore/style.css'%}" />
-		</head>
-		<body>
-				<div id="container">
-              <div id="header">
-                      <div id="glad"> <h2> Gladiators online games</h2> </div>
-					      <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a>
-					  </div>
-		              <div id="body">
-							<form method="post">{% csrf_token %}
-		    				Are you sure you want to delete "{{ object }}" ?
-		    				<input type="submit" value="Submit" />
-							</form>
-							<a href="{% url 'gamestore: home' %}">click here to cancel and go back</a>
-					  </div>
-					     <div style="clear:all"></div>
-		              <div id="footer">
-		                  CopyRight © Gladiators 2015, all rights reserved.
-		              </div> 
-		        </div>     
-		</body>
+    <head>
+            <title>Confirm game deletion</title>
+            {% load staticfiles %}
+            <link rel="stylesheet" type="text/css" href="{% static 'gamestore/style.css'%}" />
+    </head>
+    <body>
+        <div class="content">
+            <div class="top_block title">
+              <div class="content">
+
+                <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a></div>
+                <div id="glad"> <h2> Gladiators online games</h2></div>
+
+            </div>
+            <div class="background left">
+            </div>
+            <div class="left_block left">
+              <div class="content">
+
+
+              </div>
+            </div>
+            <div class="background right">
+            </div>
+            <div class="right_block right">
+              <div class="content">
+                    <br><br>
+                           <img src="hab.jpg" width="40%"><br>
+                    <div id="name"> <h2>{{user.get_username}}</h2> </div>
+                    <br>
+
+              </div>
+            </div>
+            <div class="background main">
+            </div>
+            <div class="center_block main">
+                <div class="content">
+                    <form method="post">{% csrf_token %}
+                        <p>Are you sure you want to delete "{{ object }}" ?</p>
+                        <input type="submit" value="Submit" />
+                    </form>
+                    <a href="{% url 'gamestore: home' %}">Cancel</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom_block footer">
+            <div class="content">
+                CopyRight © Gladiators 2015, all rights reserved.
+            </div>
+        </div>
+    </body>
 </html>

@@ -63,7 +63,7 @@ html, body {
   width: 161px;
   background-color: GoldenRod;
   margin-top: 70px;
-  margin-bottom: 70px;
+  margin-bottom: 70px; 
 }
 
 .left {
@@ -138,28 +138,4 @@ ul#menu li {
     margin-right: 1%;
     position:relative;
     border-right-style: solid;
-  }
-
-  #pop_container{
-    margin-left: 15%;
-    margin-right: 5%;
-    width: 50%;
-    position:relative;
-    padding-bottom: 5%;
-
-
         }
-  #pop{
-    float: left;
-    width: 100%;
-    margin: 1%;
-    border-style: solid;
-    border-radius:15%;
-    }
-    #desc{
-float: left;
-    }
-    #photo{
-      float: left;
-      width: 30%;
-    }

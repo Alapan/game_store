@@ -2,37 +2,64 @@
 <html>
     <head>
     <title>Add a new game</title>
-    {% load staticfiles %} 
+        {% load staticfiles %}
         <link rel="stylesheet" type="text/css" href="{% static 'gamestore/style.css'%}" />
-            <meta charset="utf-8" />
+        <meta charset="utf-8" />
     </head>
     <body>
-         <div id="container">
-              <div id="header">
-                      <div id="glad"> <h2> Gladiators online games</h2> </div>
-                          <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a>
-                      </div>
-              <div id="body">
-                <div id="right"></div>
-        <h3>Add a new game</h3>
-        <p>Logged-in user: {{user.get_username}}</p></br>
-	{% if saved %}
-        <strong>Game successfully added!</strong>
-	<a href="{% url 'gamestore: dev_home' %}">Return to your homepage.</a><br />
-        {% else %}
-        <form action="/addgame/" method="post">{% csrf_token %}
-                {{ form.as_p }}
-                <input type="submit" name="submit" value="Add game"/>
-        </form>
-	{% endif %}
-	<br>
-    </div>
-    
-                <div style="clear:all"></div>
-                <div id="footer">
-                  CopyRight © Gladiators 2015, all rights reserved.
-                </div> 
+         <div class="content">
+            <div class="top_block title">
+              <div class="content">
+
+                <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a></div>
+                <div id="glad"> <h2> Gladiators online games</h2></div>
+
             </div>
+            <div class="background left">
+            </div>
+            <div class="left_block left">
+              <div class="content">
+
+
+              </div>
+            </div>
+            <div class="background right">
+            </div>
+            <div class="right_block right">
+              <div class="content">
+                    <br><br>
+                           <img src="hab.jpg" width="40%"><br>
+                    <div id="name"> <h2>{{user.get_username}}</h2> </div>
+                    <br>
+
+              </div>
+            </div>
+            <div class="background main">
+            </div>
+            <div class="center_block main">
+                <div class="content">
+                    <div id="right"></div>
+                    <h3>Add a new game</h3>
+                    <p>Logged-in user: {{user.get_username}}</p></br>
+                    {% if saved %}
+                    <strong>Game successfully added!</strong>
+                    <a href="{% url 'gamestore: dev_home' %}">Return to your homepage.</a><br />
+                    {% else %}
+                    <form action="/addgame/" method="post">{% csrf_token %}
+                        {{ form.as_p }}
+                        <input type="submit" name="submit" value="Add game"/>
+                    </form>
+                    {% endif %}
+                    <br>
+                </div>
+            </div>
+         </div>
+    
+        <div class="bottom_block footer">
+            <div class="content">
+                CopyRight © Gladiators 2015, all rights reserved.
+            </div>
+        </div>
     </body>
 </html>
 

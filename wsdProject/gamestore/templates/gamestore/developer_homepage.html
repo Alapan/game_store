@@ -1,121 +1,148 @@
 <!DOCTYPE html>
 <html>
-        <head>
-            <title>Developer homepage</title>
-            {% load staticfiles %} 
-            <link rel="stylesheet" type="text/css" href="{% static 'gamestore/style.css'%}" />
-            <meta charset="utf-8" />      
-            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-            <script>
-              $(document).ready(function(){
-                $(".stats").click(function(){
-                  var game = $(this);
-                  var id = game.attr('id');
-                  var csrftoken = getCookie('csrftoken');
-                  $.ajax({
-                    type : "POST",
-                    url : "/gamestats/",
-                    data : {'id': id, 'csrfmiddlewaretoken': csrftoken},
-                    dataType : "json", 
-                    success : function(data){
-                      var tableData = '<table>';
-                      var total = 0;
-                      tableData += '<th>' + "Date of buying" + '</th>';
-                      tableData += '<th>' + "Number of players buying this game" + '</th>';
-                      $.each(data, function(key, value){
-                        tableData += '<tr>';
-                        tableData += '<td width="20%" align="center">' + key + '</td>';
-                        tableData += '<td width="20%" align="center">' + value + '</td>';
-                        tableData += '</tr>';
-                        total += value;
-                      });
-                      tableData += '<tr><td>' + "Total sales: " + total + '</td></tr>';
-                      tableData += '</table>';
-                      $('#tabledata').html(tableData);
-                    }
+    <head>
+        <title>Developer homepage</title>
+        {% load staticfiles %}
+        <link rel="stylesheet" type="text/css" href="{% static 'gamestore/style.css'%}" />
+        <meta charset="utf-8" />
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script>
+          $(document).ready(function(){
+            $(".stats").click(function(){
+              var game = $(this);
+              var id = game.attr('id');
+              var csrftoken = getCookie('csrftoken');
+              $.ajax({
+                type : "POST",
+                url : "/gamestats/",
+                data : {'id': id, 'csrfmiddlewaretoken': csrftoken},
+                dataType : "json",
+                success : function(data){
+                  var tableData = '<table>';
+                  var total = 0;
+                  tableData += '<th>' + "Date of buying" + '</th>';
+                  tableData += '<th>' + "Number of players buying this game" + '</th>';
+                  $.each(data, function(key, value){
+                    tableData += '<tr>';
+                    tableData += '<td width="20%" align="center">' + key + '</td>';
+                    tableData += '<td width="20%" align="center">' + value + '</td>';
+                    tableData += '</tr>';
+                    total += value;
                   });
-                  event.preventDefault(); 
-                });
+                  tableData += '<tr><td>' + "Total sales: " + total + '</td></tr>';
+                  tableData += '</table>';
+                  $('#tabledata').html(tableData);
+                }
               });
-              function getCookie(name) {
-                    var cookieValue = null;
-                    if (document.cookie && document.cookie != '') {
-                        var cookies = document.cookie.split(';');
-                        for (var i = 0; i < cookies.length; i++) {
-                              var cookie = jQuery.trim(cookies[i]);
-                              // check if  cookie string begin with the name wanted
-                              if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                                  break;
-                              }
-                        }
+              event.preventDefault();
+            });
+          });
+          function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie != '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                          var cookie = jQuery.trim(cookies[i]);
+                          // check if  cookie string begin with the name wanted
+                          if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                              break;
+                          }
                     }
-                    return cookieValue;
-              } 
-          </script>
-        </head>
-        <body>
-            <div id="container">
-              <div id="header">
-                      <div id="glad"> <h2> Gladiators online games</h2> </div>
-                <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a>
-            </div>
-              <div id="body">
-          
-                <p><h3>Welcome, {{user.get_username}}</h3></p></br>
-              <fieldset>
-                <legend><strong> Games in your inventory</strong> </legend>
-                <table>
-                  <tr bgcolor="#CC6600">
-                    <th>Game ID</th>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Username</th>
-                    <th>URL</th>
-                    <th>Price(EUR)</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
+                }
+                return cookieValue;
+          }
+      </script>
+    </head>
+    <body>
+        <div class="content">
+            <div class="top_block title">
+              <div class="content">
 
-                  </tr>
-                  {% for game in list_of_games %}
-                  <tr bgcolor="#FF9933">
-                    <td width="5%" align="center">{{game.id}}</td>
-                    <td width="10%" align="center">{{game.name}}</td>
-                    <td width="15%" align="center">{{game.category}}</td>
-                    <td width="15%" align="center">{{game.developer.username}}</td>
-                    <td width="20%" align="center">{{game.url}}</td>
-                    <td width="5%" align="center">{{game.price}}</td>
-                    <td width="10%" align="center"><button class="stats" id="{{game.id}}"> View game statistics</button></td>
-                    <td width="10%" align="center"><a href="/editgame/{{game.id}}"> Edit</a></td>
-                    <td width="10%" align="center"><a href="/delete/{{game.id}}"> Delete this game</a></td>
-                  </tr>
-                {% endfor %}
-                </table>
-              </fieldset>              
-                <br>
-                <div id="stat">
-                <a href="{% url 'gamestore: add' %}"> Add new game</a> 
-                <br><br>
-                
-                    <div id="main_games"> 
-                              <h3>Game Statistics</h3>
-                              <div id="tabledata"></div>       
-                          
+                <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a></div>
+                <div id="glad"> <h2> Gladiators online games</h2></div>
+
+            </div>
+            <div class="background left">
+            </div>
+            <div class="left_block left">
+              <div class="content">
+
+
+              </div>
+            </div>
+            <div class="background right">
+            </div>
+            <div class="right_block right">
+              <div class="content">
+                    <br><br>
+                           <img src="hab.jpg" width="40%"><br>
+                    <div id="name"> <h2>{{user.get_username}}</h2> </div>
+                    <br>
+
+              </div>
+            </div>
+            <div class="background main">
+            </div>
+            <div class="center_block main">
+                <div class="content">
+
+                    <p><h3>Welcome, {{user.get_username}}</h3></p></br>
+                    <fieldset>
+                        <legend><strong> Games in your inventory</strong> </legend>
+                            <table>
+                                <tr bgcolor="#CC6600">
+                                    <th>Game ID</th>
+                                    <th>Name</th>
+                                    <th>Category</th>
+                                    <th>Username</th>
+                                    <th>URL</th>
+                                    <th>Price(EUR)</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+
+                                {% for game in list_of_games %}
+                                <tr bgcolor="#FF9933">
+                                    <td width="5%" align="center">{{game.id}}</td>
+                                    <td width="10%" align="center">{{game.name}}</td>
+                                    <td width="15%" align="center">{{game.category}}</td>
+                                    <td width="15%" align="center">{{game.developer.username}}</td>
+                                    <td width="20%" align="center">{{game.url}}</td>
+                                    <td width="5%" align="center">{{game.price}}</td>
+                                    <td width="10%" align="center"><button class="stats" id="{{game.id}}"> View game statistics</button></td>
+                                    <td width="10%" align="center"><a href="/editgame/{{game.id}}"> Edit</a></td>
+                                    <td width="10%" align="center"><a href="/delete/{{game.id}}"> Delete this game</a></td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                    </fieldset>
+                    <br>
+
+                    <div id="stat">
+                    <a href="{% url 'gamestore: add' %}"> Add new game</a>
+                    <br><br>
+
+                        <div id="main_games">
+                                  <h3>Game Statistics</h3>
+                                  <div id="tabledata"></div>
+
+                        </div>
                     </div>
+
+                    <form action="/logout/" method="post">{% csrf_token %}
+                        <input type="submit" value="Logout" />
+                    </form>
                 </div>
-                <form action="/logout/" method="post">{% csrf_token %}
-                      <input type="submit" value="Logout" />
-                      </form>
+            </div>
         </div>
 
-                        <div style="clear:all"></div>       
-                        
-                        <div id="footer">
-                          CopyRight © Gladiators 2015, all rights reserved.
-                        </div>
-                      </div>
-
-      </body>
+        <div class="bottom_block footer">
+            <div class="content">
+                CopyRight © Gladiators 2015, all rights reserved.
+            </div>
+        </div>
+    </body>
 </html>
       

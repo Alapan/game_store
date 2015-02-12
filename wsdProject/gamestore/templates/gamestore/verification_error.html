@@ -1,21 +1,46 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
-	 {% load staticfiles %} 
-        <link rel="stylesheet" type="text/css" href="{% static 'gamestore/style.css'%}" />
-            
-    <meta charset="UTF-8">
-    <title>error</title>
-</head>
-<body>
-	 <div id="container">
-              <div id="header">
-                      <div id="glad"> <h2> Gladiators online games</h2> </div>
-					      <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a></div>
-					      <div id="body">
-					      	<p>VERIFICATION ERROR! Please verify your account first to be able to log in!</p>
-					      </div>
-					  </div>
-    
-</body>
+    <head lang="en">
+         {% load staticfiles %}
+            <link rel="stylesheet" type="text/css" href="{% static 'gamestore/style.css'%}" />
+
+        <meta charset="UTF-8">
+        <title>error</title>
+    </head>
+    <body>
+        <div class="content">
+            <div class="top_block title">
+                <div class="content">
+                    <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a>
+                </div>
+
+                <div id="glad"> <h2> Gladiators online games</h2></div>
+
+            </div>
+            <div class="background left"></div>
+            <div class="left_block left">
+                <div class="content"></div>
+            </div>
+
+            <div class="background right"></div>
+
+            <div class="right_block right">
+                <div class="content"></div>
+            </div>
+
+            <div class="background main"></div>
+
+            <div class="center_block main">
+                <div class="content">
+                    <p>VERIFICATION ERROR! Please verify your account first to be able to log in!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom_block footer">
+            <div class="content">
+                CopyRight © Gladiators 2015, all rights reserved.
+            </div>
+        </div>
+    </body>
 </html>

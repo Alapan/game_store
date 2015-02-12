@@ -1,73 +1,117 @@
 <!DOCTYPE html>
 <html>
-<head>
-            <title>Home</title>
-			      {% load staticfiles %} 
-            <link rel="stylesheet" type="text/css" href="{% static 'gamestore/style.css'%}" />
-            <meta charset="utf-8" />
-          </head>
-<body>
-	<div id="container">
-              <div id="header">
-                      <div id="glad"> <h2> Gladiators online games</h2> </div>
-					      <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a>
-					  </div>
-   				<div id="body"> 
-   				<h3>Category {{category_name}}</h3>
-        <ul id="menu"> <li><button id="lnk" onclick="window.location='/playerhome'">Home   </button></li>
-                
-                <li><button id="lnk" onclick="window.location='/category/all'">All games</button></li>
-               <li> <button id="lnk" onclick="window.location='/category/adventure'">Adventure</button></li>
-               <li> <button id="lnk" onclick="window.location='/category/football'">Football</button></li>
-                <li><button id="lnk" onclick="window.location='/category/puzzle'">Puzzle</button></li>
-                <li><button id="lnk" onclick="window.location='/category/racing'">Racing</button></li>
-                <li><button id="lnk" onclick="window.location='/category/sports'">Sports</button></li></ul>
-
-
-        <form action="/search/" method="post">{% csrf_token %}
-			<label for="textsearch">Search for games</label>
-		    <input id="textsearch" type="text" name="textsearch"/>
-
-			<input type="submit" name="submit" value="Search"/>
-		</form>
-
-        <br>
-        <fieldset>
-
-		<legend><strong> {{category_name}} games </strong> </legend>
-		<table>
-			<tr>
-                <th>Picture</th>
-				<th>Name</th>
-				<th>Category</th>
-				<th>Price(EUR)</th>
-                <th>Game</th>
-			</tr>
-			{% for game in list_of_games %}
-			<tr>
-				<td width="5%" align="center">{{game.picture}}</td>
-				<td width="10%" align="center">{{game.name}}</td>
-				<td width="15%" align="center">{{game.category}}</td>
-				<td width="5%" align="center">{{game.price}}</td>
-				<td width="10%" align="center"><a href="/game_info/{{game.id}}"> Go to game</a></td>
-			</tr>
-		    {% endfor %}
-		</table>
-	    </fieldset>
-
-        {% if logged_in == True %}
-        <form action="/logout/" method="post">{% csrf_token %}
-            <input type="submit" value="Logout" />
-        </form>
-        {% endif %}
-		</div>
-     </div>
-</body>
-</html>
-<!DOCTYPE html>
-<html>
-    <title></title>
+    <head>
+        <title>Home</title>
+        {% load staticfiles %}
+        <link rel="stylesheet" type="text/css" href="{% static 'gamestore/style.css'%}" />
+        <meta charset="utf-8" />
+    </head>
     <body>
-        
+        <div class="content">
+            <div class="top_block title">
+              <div class="content">
+
+                <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a></div>
+                <div id="glad"> <h2> Gladiators online games</h2></div>
+
+            </div>
+            <div class="background left">
+            </div>
+            <div class="left_block left">
+              <div class="content">
+
+
+              </div>
+            </div>
+            <div class="background right">
+            </div>
+            <div class="right_block right">
+                <div class="content">
+                    {% if logged_in == True %}
+                        <img src="hab.jpg" width="40%"><br>
+                        <div id="name"> <h2>{{user.get_username}}</h2> </div>
+                        <br>
+                    {% else %}
+                        <div id="login">
+                            <form action="/login/" method="post">{% csrf_token %}
+                                <label for="username">Username</label>
+                                <input id="username" type="text" name="username">&nbsp;
+                                <br><br>
+                                <label for="password">Password</label>
+                                <input id="password" type="password" name="password"/>&nbsp;
+                                <br><br>
+                                <input type="submit" name="submit" value="Login"/>&nbsp;</br></br>
+                                <!--<a href="{#% url 'facebook_connect' %#}?facebook_login=1" >Login with facebook</a> -->
+
+                                <br><br><br>
+                                <p>Don't have an account? <a href="{% url 'gamestore: register_url' %}">Sign up</a></p>
+                                <br><br>
+                            </form>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="background main">
+            </div>
+            <div class="center_block main">
+                <div class="content">
+                    <ul id="menu">
+                        <li><button id="lnk" onclick="window.location='/playerhome'">Home   </button></li>
+
+                        <li><button id="lnk" onclick="window.location='/category/all'">All games</button></li>
+                        <li><button id="lnk" onclick="window.location='/category/adventure'">Adventure</button></li>
+                        <li><button id="lnk" onclick="window.location='/category/football'">Football</button></li>
+                        <li><button id="lnk" onclick="window.location='/category/puzzle'">Puzzle</button></li>
+                        <li><button id="lnk" onclick="window.location='/category/racing'">Racing</button></li>
+                        <li><button id="lnk" onclick="window.location='/category/sports'">Sports</button></li>
+                    </ul>
+
+                    <h3>Category {{category_name}}</h3>
+
+                    <form action="/search/" method="post">{% csrf_token %}
+                        <label for="textsearch">Search for games</label>
+                        <input id="textsearch" type="text" name="textsearch"/>
+
+                        <input type="submit" name="submit" value="Search"/>
+                    </form>
+
+                    <br>
+                    <fieldset>
+
+                    <legend><strong> {{category_name}} games </strong> </legend>
+                    <table>
+                        <tr>
+                            <th>Picture</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Price(EUR)</th>
+                            <th>Game</th>
+                        </tr>
+                        {% for game in list_of_games %}
+                        <tr>
+                            <td width="5%" align="center">{{game.picture}}</td>
+                            <td width="10%" align="center">{{game.name}}</td>
+                            <td width="15%" align="center">{{game.category}}</td>
+                            <td width="5%" align="center">{{game.price}}</td>
+                            <td width="10%" align="center"><a href="/game_info/{{game.id}}"> Go to game</a></td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    </fieldset>
+
+                    {% if logged_in == True %}
+                    <form action="/logout/" method="post">{% csrf_token %}
+                        <input type="submit" value="Logout" />
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom_block footer">
+            <div class="content">
+                CopyRight © Gladiators 2015, all rights reserved.
+            </div>
+        </div>
     </body>
 </html>

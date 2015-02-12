@@ -1,25 +1,53 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
- 	        {% load staticfiles %} 
-            <link rel="stylesheet" type="text/css" href="{% static 'gamestore/style.css'%}" />
-            <meta charset="UTF-8">
-            <title>Buying game Success</title>
-</head>
-<body>
-	<div id="container">
-              
-              <div id="header">
-                      <div id="glad"> <h2> Gladiators online games</h2> </div>
+    <head lang="en">
+        {% load staticfiles %}
+        <link rel="stylesheet" type="text/css" href="{% static 'gamestore/style.css'%}" />
+        <meta charset="UTF-8">
+        <title>Buying game Success</title>
+    </head>
+    <body>
+        <div class="content">
+            <div class="top_block title">
+              <div class="content">
+
                 <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a></div>
-              <div id="body">
-   				 <p>Success! you can now play {{game.name}} you bought</p>
-                     <a href="{% url 'gamestore: player_homepage' %}"> click here </a>to go back to your profile</p>
-    		  </div>
-              <div style="clear:all"></div>
-              <div id="footer">
-                  CopyRight © Gladiators 2015, all rights reserved.
-               </div> 
-    </div>
-</body>
+                <div id="glad"> <h2> Gladiators online games</h2></div>
+
+            </div>
+            <div class="background left">
+            </div>
+            <div class="left_block left">
+              <div class="content">
+
+
+              </div>
+            </div>
+            <div class="background right">
+            </div>
+            <div class="right_block right">
+              <div class="content">
+                    <br><br>
+                           <img src="hab.jpg" width="40%"><br>
+                    <div id="name"> <h2>{{user.get_username}}</h2> </div>
+                    <br>
+
+              </div>
+            </div>
+            <div class="background main">
+            </div>
+            <div class="center_block main">
+                <div class="content">
+                    <p>Success! you can now play {{game.name}} you bought</p>
+                    <a href="{% url 'gamestore: player_homepage' %}"> Click here </a>to go back to your profile</p>
+    		    </div>
+            </div>
+        </div>
+
+        <div class="bottom_block footer">
+            <div class="content">
+                CopyRight © Gladiators 2015, all rights reserved.
+            </div>
+        </div>
+    </body>
 </html>

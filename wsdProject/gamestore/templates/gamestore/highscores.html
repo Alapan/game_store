@@ -32,29 +32,57 @@
   		</script>
 	</head>
 	<body>
-		<div id="container">
-              <div id="header">
-                      <div id="glad"> <h2> Gladiators online games</h2> </div>
-                          <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a>
-                      </div>
-                      <div id="body">
-		<h3> High scores for game {{game.name}}</h3>
-		<p>
-			<strong>Player: {{player.username}}</strong>&nbsp;<br>
-			<input type="hidden" id="gameid" value="{{game.id}}"><id>
-			<br>
-			<br>
-                        <div id="highscores"></div>
-			<br>
-			<br>
-			<a href="/loadgame/{{game.id}}">Return to game.</a>
-		</p>
-		<br>
-					</div>
-	<div style="clear:all"></div>
-                <div id="footer">
-                  CopyRight © Gladiators 2015, all rights reserved.
-                </div> 
+        <div class="content">
+            <div class="top_block title">
+              <div class="content">
 
-	</div>
-	</body> </html>
+                <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a></div>
+                <div id="glad"> <h2> Gladiators online games</h2></div>
+
+            </div>
+            <div class="background left">
+            </div>
+            <div class="left_block left">
+              <div class="content">
+
+
+              </div>
+            </div>
+            <div class="background right">
+            </div>
+            <div class="right_block right">
+              <div class="content">
+                    <br><br>
+                           <img src="hab.jpg" width="40%"><br>
+                    <div id="name"> <h2>{{user.get_username}}</h2> </div>
+                    <br>
+
+              </div>
+            </div>
+            <div class="background main">
+            </div>
+            <div class="center_block main">
+                <div class="content">
+                    <h3> High scores for game {{game.name}}</h3>
+                    <p>
+                        <strong>Player: {{player.username}}</strong>&nbsp;<br>
+                        <input type="hidden" id="gameid" value="{{game.id}}">
+                        <br>
+                        <br>
+                                    <div id="highscores"></div>
+                        <br>
+                        <br>
+                        <a href="/loadgame/{{game.id}}">Return to game.</a>
+                    </p>
+                    <br>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom_block footer">
+            <div class="content">
+                CopyRight © Gladiators 2015, all rights reserved.
+            </div>
+        </div>
+	</body>
+</html>
