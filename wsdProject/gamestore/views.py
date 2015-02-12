@@ -179,9 +179,10 @@ def devhome(request):
 def home(request):
 
 	if request.user.is_anonymous:
-		return render_to_response('gamestore/home.html',context_instance=RequestContext(request))
+		top_games = Games.objects.all().order_by('sold_copies')[:5]
+		return render_to_response('gamestore/home.html',context_instance=RequestContext(request, {'top_games': top_games}))
 	else:
-		if request.user.usertypes.developer==False:
+		if request.user.usertypes.developer == False:
 			return HttpResponseRedirect('/playerhome/')
 		else:
 			return HttpResponseRedirect('/devhome/')
@@ -281,6 +282,8 @@ def success_view(request):
 		else:
 			bought_game = Scores(game=gameobj, player=userobj, registration_date=datetime.datetime.now())
 			bought_game.save()
+			gameobj.sold_copies += 1
+			gameobj.save()
 			return render_to_response('gamestore/payment/success.html', {'pid': pid, 'ref': ref, 'checksum': checksum, 'game': gameobj})
 	else:
 		return render_to_response('gamestore/payment/error.html')

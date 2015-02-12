@@ -39,15 +39,6 @@
                     <label for="password">Password</label>
                     <input id="password" type="password" name="password"/>&nbsp;
                     <br><br>
-                  <!--
-                    <label for="usertype">Login as: </label>
-                    <select id="usertype" name="usertype">
-                      <option value=""></option>
-                      <option value="player">Player</option>
-                      <option value="developer">Developer</option>
-                      <option></option>
-                    </select></br></br>
-                -->
                     <input type="submit" name="submit" value="Login"/>&nbsp;</br></br>
 					<!--<a href="{#% url 'facebook_connect' %#}?facebook_login=1" >Login with facebook</a> -->
     
@@ -55,30 +46,25 @@
                     Don't have an account? <a href="{% url 'gamestore: register_url' %}">Sign up</a>
                     <br><br>                    
                   </form>
-                  
+
                 </div>
                 <div id="pop_container">
-                  Poplar games
+                <h2>Popular games</h2>
+                {% for game in top_games %}
                   <div id="pop">
-                   <br> <div id="photo"><img src ="{% static 'gamestore/carace1.png'%} " width="60%"></div>
-                        <div id="desc">{{ name }}name <br>
-                {{ description }}desk<br>
-                {{ category }}cat<br>
-                {{ price }}pric</div>
+                   <br>
+                        <div id="photo">
 
+                            <img src ="{% static 'gamestore/'|add:game.category|add:'.png' %}" width="60%">
 
+                        </div>
+                        <div id="desc">
+                            {{ game.name }}<br>
+                            {{ game.description }}<br>
+                            {{ game.category }}<br>
+                            {{ game.price }}</div>
                    </div>
-                  <!--<div id="pop">Car Race<br> <img src ="{% static 'gamestore/carace1.png'%} " width="30%"> <img src ="{% static 'gamestore/carace2.jpg'%} "width="30%"></div>
-                  <div id="pop">Sports<br> <img src ="{% static 'gamestore/sport1.jpg'%} " width="30%"> <img src ="{% static 'gamestore/sport2.jpg'%} "width="30%"></div>
-                  <div id="pop">Puzzle<br> <img src ="{% static 'gamestore/puz1.jpg'%} " width="30%"> <img src ="{% static 'gamestore/puz2.jpg'%} "width="30%"></div>
-                  <div id="pop">Action<br> <img src ="{% static 'gamestore/action1.jpg'%} " width="30%"> <img src ="{% static 'gamestore/action2.jpg'%} "width="30%"></div>
-                </div>     
-                  
-                <div id="main_games"> 
-                  <div id="recent">Most Popular games<br><img src ="{% static 'gamestore/action1.jpg'%} " width="30%">    <img src ="{% static 'gamestore/sport2.jpg'%} "width="30%"></div>
-                  <div id="recent">Recently added games<br><img src ="{% static 'gamestore/adv2.jpg'%} "width="35%">     <img src ="{% static 'gamestore/sport2.jpg'%} "width="30%"></div>
-                  <div id="recent">Free games<br><img src ="{% static 'gamestore/action1.jpg'%} " width="30%">    <img src ="{% static 'gamestore/sport2.jpg'%} "width="30%"></div>
-                </div> -->
+                {% endfor %}
               </div>
                 <div style="clear:all"></div>
                 <div id="footer">

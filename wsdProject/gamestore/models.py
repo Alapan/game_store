@@ -15,6 +15,7 @@ class Games(models.Model):
 	developer = models.ForeignKey(User)
 	description = models.CharField(max_length=250, default='description goes here')
 	price = models.FloatField()
+	sold_copies = models.PositiveIntegerField(default=0)
 
 	def __unicode__(self):
 		return self.name
