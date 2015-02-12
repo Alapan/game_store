@@ -9,7 +9,7 @@
 </style>
         <title>Registration</title>
 		{% load staticfiles %} 
-        <link rel="stylesheet" type="text/css" href="{% static 'gamestore/home.css'%}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'gamestore/style.css'%}" />
         <meta charset="utf-8" />
       </head>
       <body>
@@ -20,8 +20,8 @@
                       </div>
           <div id="body">
            {% if registered %}
-      <strong>Thank you for registering!</strong>
-      <a href="{% url 'gamestore: new_login' %}">Return to the homepage and login.</a><br />
+      <strong>Thank you for registering! <br> You must validate your account before you can log in. <br> Check your inbox for the validation link!</strong> <br>
+      <a href="{% url 'gamestore: new_login' %}">Return to homepage</a><br />
           {% else %}
       <h3>Sign up on our website!</h3>
       <form id="user_form" action="/registration/" method="post">{% csrf_token %}

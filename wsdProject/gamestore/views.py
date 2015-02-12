@@ -19,20 +19,18 @@ from gamestore.serializers import ScoreSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 import json
-import time
 import datetime
-import base64
-
-# Create your views here.
 
 
+# User clicks on 'Sign up' link on homepage. This returns the registration page
 def signup(request):
-	# User clicks on 'Sign up' link on homepage. This returns the registration page
+
 	return render_to_response('gamestore/registration.html',context_instance=RequestContext(request))
 
 
+# After successfully registering, the user logins in from the home page.
 def newlogin(request):
-	# After successfully registering, the user logins in from the home page.
+
 	return render_to_response('gamestore/home.html',context_instance=RequestContext(request))
 
 
@@ -69,6 +67,7 @@ def registration(request):
 	# render the template depending on the context
 	return render_to_response('gamestore/registration.html',{'user_data': user_data, 'user_form': user_form, 'registered': registered},context_instance=RequestContext(request))
 
+
 # send email to a new user after successful registration
 def sendmail(user):
 
@@ -86,11 +85,19 @@ The Gladiators team'''
 	recipient_list = []
 	recipient_list.append(user.email)
 	send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+
+
+# help page
 def help(request):
 	return render_to_response('gamestore/help.html')
+
+
+# about page
 def about(request):
 	return render_to_response('gamestore/about.html')
 
+
+# verifying the user account based on the username and hashed password sent to the user in e-mail
 def verify(request, conf_code):
 	#conf_code = request.GET['conf']
 	print(conf_code + "THIS")
@@ -102,47 +109,47 @@ def verify(request, conf_code):
 
 	return HttpResponseRedirect('/')
 
+
+# if the verification is not successful for some reason or the user is not yet verified
 def verificationerror(request):
 
 	return render_to_response('gamestore/verification_error.html',context_instance=RequestContext(request, {'user': request.user}))
 
 
-#@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+# @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def login_view(request):
 
 	username = request.POST.get('username',False)
 	password = request.POST.get('password',False)
-	#usertype = request.POST.get('developer',False)
+	# usertype = request.POST.get('developer',False)
 	user = authenticate(username=username,password=password)
 
-	#password was correctly matched against the username, thus valid user object is returned
+	# password was correctly matched against the username, thus valid user object is returned
 	if user is not None:
-		#check if the user that tries to log in is already active or not
+		# check if the user that tries to log in is already active or not
 		if user.is_active:
 			login(request,user)
-		#if not notify the user that the verification step is still necessary to be able to log in
+		# if not notify the user that the verification step is still necessary to be able to log in
 		else:
 			return HttpResponseRedirect('/verificationerror/')
 
-		#if user is a player, load player homepage
+		# if user is a player, load player homepage
 		if  user.usertypes.developer == False:
 			return HttpResponseRedirect('/playerhome/')
-		#if user is a developer, load developer homepage 1
+		# if user is a developer, load developer homepage 1
 		elif user.usertypes.developer == True:
 			return HttpResponseRedirect('/devhome/')
-		#user exists but incorrect type entered
+		# user exists but incorrect type entered
 		else:
 			return render_to_response('gamestore/usertype_error.html',context_instance=RequestContext(request))
 
 	else:
-		#Redirect to login page, as login is incorrect
+		# Redirect to login page, as login is incorrect
 		return render_to_response('gamestore/loginerror.html',context_instance=RequestContext(request))
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def logout_view(request):
 
-	#c={}
-	#c.update(csrf(request))
 	logout(request)
 	#request.session.flush()
 	#request.user = AnonymousUser
@@ -150,7 +157,7 @@ def logout_view(request):
 	return render_to_response('gamestore/logout.html', context_instance=RequestContext(request))
 
 
-#go to developer homepage displaying the updated inventory
+# go to developer homepage displaying the updated inventory
 def devhome(request):
 
 	if request.user.is_authenticated():
@@ -167,7 +174,8 @@ def devhome(request):
 	else:
 		return HttpResponseRedirect('/')
 
-#load home page
+
+# load home page
 def home(request):
 
 	if request.user.is_anonymous:
@@ -179,7 +187,7 @@ def home(request):
 			return HttpResponseRedirect('/devhome/')
 
 
-#go to player homepage
+# go to player homepage
 def playerhome(request):
 
 	if request.user.is_authenticated():
@@ -209,7 +217,7 @@ def playerhome(request):
 		return HttpResponseRedirect('/')
 
 
-#game info page
+# game info page
 def game_info_view(request, id):
 
 	game = Games.objects.get(pk=id)
@@ -224,13 +232,11 @@ def game_info_view(request, id):
 	else:
 		have = False
 
-	return render_to_response('gamestore/game_info.html', {'id': game.id, 'name': game.name, 'price': game.price, 'category': game.category, 'have': have})
+	return render_to_response('gamestore/game_info.html', {'id': game.id, 'name': game.name, 'description': game.description, 'price': game.price, 'category': game.category, 'have': have})
 
 
-#start buying a game
+# start buying a game
 def start_buy_view(request, game_id):
-	c={}
-	c.update(csrf(request))
 
 	game = Games.objects.get(pk=game_id)
 
@@ -246,7 +252,7 @@ def start_buy_view(request, game_id):
 	return render_to_response('gamestore/payment/start_buy.html', {'pid': pid, 'sid': sid, 'amount': amount, 'checksum': checksum})
 
 
-#successful payment
+# successful payment
 def success_view(request):
 
 	pid = request.GET['pid']
@@ -261,17 +267,17 @@ def success_view(request):
 
 	user_id, game_id = pid.split('_')
 
-	#check if the payment was really successful
+	# check if the payment was really successful
 	if got_checksum == checksum:
 		gameobj = Games.objects.get(pk=game_id)
 		userobj = User.objects.get(pk=user_id)
 
 		scoreobj = Scores.objects.filter(game=gameobj, player=userobj)
 
-		#if for some reason the user already have that game, error
+		# if for some reason the user already have that game, error
 		if scoreobj:
 			return render_to_response('gamestore/payment/error.html')
-		#if the user does not have the game, save it to the Scores table
+		# if the user does not have the game, save it to the Scores table
 		else:
 			bought_game = Scores(game=gameobj, player=userobj, registration_date=datetime.datetime.now())
 			bought_game.save()
@@ -280,19 +286,19 @@ def success_view(request):
 		return render_to_response('gamestore/payment/error.html')
 
 
-#canceled payment
+# canceled payment
 def cancel_view(request):
 
 	return render_to_response('gamestore/payment/cancel.html')
 
 
-#error in payment
+# error in payment
 def error_view(request):
 
 	return render_to_response('gamestore/payment/error.html')
 
 
-#search for games
+# search for games
 def search_view(request):
 
 	if request.method == 'POST':
@@ -307,10 +313,12 @@ def search_view(request):
 
 	return render_to_response('gamestore/search.html',context_instance=RequestContext(request, {'search_term': search_term, 'list_of_games': list_of_games}))
 
+
 def all_view(request):
 
 	list_of_games = Games.objects.all()
 	return render_to_response('gamestore/category/all.html',context_instance=RequestContext(request, {'list_of_games':list_of_games}))
+
 
 def category_view(request, category_name):
 
@@ -319,7 +327,7 @@ def category_view(request, category_name):
 	return render_to_response('gamestore/category.html', context_instance=RequestContext(request, {'list_of_games': list_of_games, 'category_name': capital_name}))
 
 
-#a game is added by a developer
+# a game is added by a developer
 def addgame(request):
 
 	saved = False
@@ -337,7 +345,8 @@ def addgame(request):
 
 	return render_to_response('gamestore/addgame.html',{'form': form, 'saved': saved},context_instance=RequestContext(request))
 
-#called when a game is modified on the developer homepage
+
+# called when a game is modified on the developer homepage
 def editgame(request,id):
 
 	game = Games.objects.get(pk=id)
@@ -358,7 +367,8 @@ def editgame(request,id):
 
 	return render_to_response('gamestore/editgame.html',{'game': game,'form': form, 'saved': saved},context_instance=RequestContext(request))
 
-#delete a game on the developer homepage
+
+# delete a game on the developer homepage
 def deletegame(request, id, template_name='gamestore/game_confirm_delete.html'):
 	game = get_object_or_404(Games, pk=id)
 	if request.method=='POST':
@@ -366,12 +376,14 @@ def deletegame(request, id, template_name='gamestore/game_confirm_delete.html'):
 		return redirect('/devhome/')
 	return render(request, template_name, {'object':game})
 
+
 # load game.html with appropriate game iframe
 def loadgame(request, id):
 
 	player = request.user
 	game = Games.objects.get(pk=id)
 	return render_to_response('gamestore/game.html',{'player': player, 'game': game}, context_instance=RequestContext(request))
+
 
 # display game statistics on the developer homepage
 def gamestats(request):
@@ -401,12 +413,12 @@ def gamestats(request):
 		json_stats = json.dumps(datedict)
 		return HttpResponse(json_stats,content_type='application/json')
 
+
 # open high scores page
 def loadhighscores(request, id):
 	player = request.user
 	game = get_object_or_404(Games, pk=id)
 	return render_to_response('gamestore/highscores.html',{'player': player, 'game': game},context_instance=RequestContext(request))
-
 
 
 # display high scores in the high scores page
@@ -422,6 +434,7 @@ def highscores(request, id):
 		return Response(serializer.data)
 
 
+# save game state
 def savegamestate(request):
 
 	if request.method=='POST' and request.is_ajax:
@@ -458,6 +471,7 @@ def savegamestate(request):
 		json_state=json.dumps(gamestate)
 		print(json_state)
 		return HttpResponse(json_state, content_type='application/json')
+
 
 # LOAD_REQUEST by the game is handled by this view
 def loadgamestate(request):

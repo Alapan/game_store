@@ -2,7 +2,7 @@
 <html>
 <head lang="en">
    {% load staticfiles %} 
-        <link rel="stylesheet" type="text/css" href="{% static 'gamestore/home.css'%}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'gamestore/style.css'%}" />
             
     <meta charset="UTF-8">
     <title></title>
@@ -17,12 +17,14 @@
                 <p><h2>Game {{ name }} information page</h2></p>
                <h3> <table id="info">
                   <tr bgcolor="#FF9999" >
-                  <th>Name</th> 
+                  <th>Name</th>
+                  <th>Description</th>
                   <th>Category</th>
                   <th>Price</th>
                 </tr>
                   <tr bgcolor="#99CC00" >
                 <td>{{ name }}</td>
+                <td>{{ description }}</td>
                 <td>{{ category }}</td>
                 <td>{{ price }}</td>
               </tr>

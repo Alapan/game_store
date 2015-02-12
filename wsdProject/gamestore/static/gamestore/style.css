@@ -12,7 +12,7 @@ min-height:100%;
   background-color: orange;
     font-family: "Gill Sans", sans-serif;
   
-  color: black;
+  color: white;
 padding: 1%;
 
 
@@ -69,7 +69,7 @@ ul#menu li {
     padding: 1%;
     float:right;
     margin-right: 1%;
-    width:25%;
+    width:100%;
     border-style: solid;
     background-color: GoldenRod;
     border-radius:15%;
@@ -103,7 +103,7 @@ ul#menu li {
       position: absolute;
     }
     #lnk{
-background:none;border:none;
+        background:none;border:none;
       }
       
     #main_games{

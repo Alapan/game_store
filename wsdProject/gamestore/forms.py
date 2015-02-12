@@ -28,4 +28,4 @@ class GameForm(forms.ModelForm):
 	category = forms.ChoiceField(widget=forms.Select(),choices=CHOICES, required=True, label='Category')
 	class Meta:
 		model = Games
-		fields = ('name','category','url','price')
+		fields = ('name','category','description','url','price')

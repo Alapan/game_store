@@ -13,6 +13,7 @@ class Games(models.Model):
 	category = models.CharField(max_length=100)
 	url = models.URLField()
 	developer = models.ForeignKey(User)
+	description = models.CharField(max_length=250, default='description goes here')
 	price = models.FloatField()
 
 	def __unicode__(self):
