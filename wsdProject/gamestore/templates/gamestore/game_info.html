@@ -56,7 +56,7 @@
             </div>
             <div class="center_block main">
                 <div class="content">
-                    <p><h2>Game {{ name }} information page</h2></p>
+                    <h2>Game {{ name }} information page</h2>
                     <h3><table id="info">
                         <tr bgcolor="#FF9999" >
                           <th>Name</th>
@@ -78,7 +78,7 @@
                         <button onclick="window.location='/payment/start_buy/{{ id }}'">Buy {{ name }}</button>
                     {% else %}
                         <p>You have to log in or register first to buy a game!</p>
-                        <a href="{% url 'gamestore: home' %}"><p>Home</p>
+                        <p><a href="{% url 'gamestore: home' %}">Home</a></p>
                     {% endif %}
                 </div>
             </div>

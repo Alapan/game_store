@@ -221,12 +221,15 @@ def playerhome(request):
 # game info page
 def game_info_view(request, id):
 
+	logged_in = False
+
 	game = Games.objects.get(pk=id)
 
 	have = False
 	buyable = False
 
 	if request.user.is_authenticated() and not request.user.is_anonymous():
+		logged_in = True
 		userobj = User.objects.get(pk=request.user.id)
 
 		scoreobj = Scores.objects.filter(game=game, player=userobj)
@@ -236,7 +239,9 @@ def game_info_view(request, id):
 		else:
 			buyable = True
 
-	return render_to_response('gamestore/game_info.html', {'id': game.id, 'name': game.name, 'description': game.description, 'price': game.price, 'category': game.category, 'have': have, 'buyable': buyable})
+		return render_to_response('gamestore/game_info.html', {'id': game.id, 'name': game.name, 'description': game.description, 'price': game.price, 'category': game.category, 'have': have, 'buyable': buyable, 'logged_in': logged_in, 'user': userobj})
+	else:
+		return render_to_response('gamestore/game_info.html', {'id': game.id, 'name': game.name, 'description': game.description, 'price': game.price, 'category': game.category, 'have': have, 'buyable': buyable, 'logged_in': logged_in})
 
 
 # start buying a game
@@ -253,7 +258,7 @@ def start_buy_view(request, game_id):
 	m = md5(checksum_str.encode("ascii"))
 	checksum = m.hexdigest()
 
-	return render_to_response('gamestore/payment/start_buy.html', {'pid': pid, 'sid': sid, 'amount': amount, 'checksum': checksum})
+	return render_to_response('gamestore/payment/start_buy.html', {'pid': pid, 'sid': sid, 'amount': amount, 'checksum': checksum, 'user': request.user})
 
 
 # successful payment
