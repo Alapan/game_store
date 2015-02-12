@@ -178,7 +178,7 @@ def devhome(request):
 # load home page
 def home(request):
 
-	if request.user.is_anonymous:
+	if request.user.is_anonymous():
 		top_games = Games.objects.all().order_by('sold_copies')[:5]
 		return render_to_response('gamestore/home.html',context_instance=RequestContext(request, {'top_games': top_games}))
 	else:
@@ -226,7 +226,7 @@ def game_info_view(request, id):
 	have = False
 	buyable = False
 
-	if request.user.is_authenticated and not request.user.is_anonymous:
+	if request.user.is_authenticated() and not request.user.is_anonymous():
 		userobj = User.objects.get(pk=request.user.id)
 
 		scoreobj = Scores.objects.filter(game=game, player=userobj)
@@ -308,7 +308,7 @@ def error_view(request):
 def search_view(request):
 
 	logged_in = False
-	if not request.user.is_anonymous and request.user.is_authenticated:
+	if not request.user.is_anonymous() and request.user.is_authenticated():
 		logged_in = True
 
 	if request.method == 'POST':
@@ -327,7 +327,7 @@ def search_view(request):
 def all_view(request):
 
 	logged_in = False
-	if request.user.is_anonymous == False and request.user.is_authenticated:
+	if not request.user.is_anonymous() and request.user.is_authenticated():
 		logged_in = True
 
 	list_of_games = Games.objects.all()
@@ -337,7 +337,7 @@ def all_view(request):
 def category_view(request, category_name):
 
 	logged_in = False
-	if not request.user.is_anonymous and request.user.is_authenticated:
+	if not request.user.is_anonymous() and request.user.is_authenticated():
 		logged_in = True
 
 	capital_name = category_name.title()
