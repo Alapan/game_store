@@ -29,8 +29,8 @@
             </div>
             <div class="right_block right">
                 <div class="content">
-                    <div id="login">
-                        <strong>Username or password is incorrect</strong>
+                    <div id="pad">
+                        <strong>Username or password is incorrect</strong><br>
                         <form action="/login/" method="post">{% csrf_token %}
                             <label for="username">Username</label>
                             <input id="username" type="text" name="username">&nbsp;

@@ -53,9 +53,15 @@
             <div class="right_block right">
               <div class="content">
                     <br><br>
-                           <img src="hab.jpg" width="40%"><br>
+                <div id="pad">
+                    <br><br>
+                    <img src="hab.jpg" width="40%"><br>
                     <div id="name"> <h2>{{user.get_username}}</h2> </div>
-                    <br>
+                    <br><br> <br><br><br><br><br> <br>
+                    <form action="/logout/" method="post">{% csrf_token %}
+                          <input type="submit" value="Logout" />
+                      </form>
+                    </div>
 
               </div>
             </div>
@@ -63,6 +69,7 @@
             </div>
             <div class="center_block main">
                 <div class="content">
+                    <div id="category">
                     <h3> High scores for game {{game.name}}</h3>
                     <p>
                         <strong>Player: {{player.username}}</strong>&nbsp;<br>
@@ -75,6 +82,7 @@
                         <a href="/loadgame/{{game.id}}">Return to game.</a>
                     </p>
                     <br>
+                </div>
                 </div>
             </div>
 

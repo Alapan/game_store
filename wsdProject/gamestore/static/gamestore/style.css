@@ -51,8 +51,8 @@ html, body {
 .title {
   width: 100%;
   height: 10%;
-  
-  background-color: orange;
+  border-bottom: solid;
+  background-color: GoldenRod;
 }
 
 
@@ -64,6 +64,7 @@ html, body {
   background-color: GoldenRod;
   margin-top: 70px;
   margin-bottom: 70px;
+  border-bottom: solid;
 }
 
 .left {
@@ -80,6 +81,7 @@ html, body {
   background-color: GoldenRod;
   margin-top: 70px;
   margin-bottom: 70px; 
+  border-bottom: solid;
 
 }
 
@@ -87,6 +89,7 @@ html, body {
   height: auto;
   width: 225px;
   padding-bottom: 70px;
+
   
 }
 
@@ -163,3 +166,17 @@ float: left;
       float: left;
       width: 30%;
     }
+    #pad{
+    padding-left: 5%;
+    padding-top: 7%;
+    padding-right: 1%;
+    
+    }
+    #category{
+      padding-left: 5%;
+      padding-right: 1%;
+    }
+    #mid{
+      text-align: center;
+    }
+    

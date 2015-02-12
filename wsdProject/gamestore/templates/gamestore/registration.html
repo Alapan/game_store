@@ -36,6 +36,7 @@
 
             <div class="center_block main">
                 <div class="content">
+                    <div id="pad">
                     {% if registered %}
                         <strong>Thank you for registering! <br> You must validate your account before you can log in. <br> Check your inbox for the validation link!</strong> <br>
                         <a href="{% url 'gamestore: new_login' %}">Return to homepage</a><br />
@@ -48,6 +49,7 @@
                         </form>
                     {% endif %}
                 </div>
+            </div>
             </div>
         </div>
 

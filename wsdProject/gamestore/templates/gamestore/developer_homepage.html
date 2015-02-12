@@ -75,10 +75,15 @@
             </div>
             <div class="right_block right">
               <div class="content">
+                    <div id="pad">
                     <br><br>
-                           <img src="hab.jpg" width="40%"><br>
+                    <img src="hab.jpg" width="40%"><br>
                     <div id="name"> <h2>{{user.get_username}}</h2> </div>
-                    <br>
+                    <br><br> <br><br><br><br><br> <br>
+                    <form action="/logout/" method="post">{% csrf_token %}
+                          <input type="submit" value="Logout" />
+                      </form>
+                    </div>
 
               </div>
             </div>
@@ -86,7 +91,7 @@
             </div>
             <div class="center_block main">
                 <div class="content">
-
+                  <div id="category">
                     <p><h3>Welcome, {{user.get_username}}</h3></p></br>
                     <fieldset>
                         <legend><strong> Games in your inventory</strong> </legend>
@@ -131,9 +136,7 @@
                         </div>
                     </div>
 
-                    <form action="/logout/" method="post">{% csrf_token %}
-                        <input type="submit" value="Logout" />
-                    </form>
+                    </div>
                 </div>
             </div>
 

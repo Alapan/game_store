@@ -1,24 +1,69 @@
-        <!DOCTYPE html>
-        <html>
-          <head>
-            <title>about</title>
-			      {% load staticfiles %} 
-            <link rel="stylesheet" type="text/css" href="{% static 'gamestore/style.css'%}" />
-            <meta charset="utf-8" />
-          </head>
-          <body>
-            <div id="container">
-              <div id="header">
-                      <div id="glad"> <h2> Gladiators online games</h2> </div>
-                          <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a>
-                      </div>
-              <div id="body">
-                <div id="category"><h3><ul id="menu">
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        {% load staticfiles %}
+        <link rel="stylesheet" type="text/css" href="{% static 'gamestore/style.css'%}" />
+
+        <meta charset="UTF-8">
+        <title>About</title>
+    </head>
+    <body>
+        <div class="content">
+            <div class="top_block title">
+              <div class="content">
+
+                <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a></div>
+                <div id="glad"> <h2> Gladiators online games</h2></div>
+
+            </div>
+            <div class="background left">
+            </div>
+            <div class="left_block left">
+              <div class="content">
+
+
+              </div>
+            </div>
+            <div class="background right">
+            </div>
+            <div class="right_block right">
+                <div class="content">
+                  <div id="pad">
+                    {% if logged_in == True %}
+                        <img src="hab.jpg" width="40%"><br>
+                        <div id="name"> <h2>{{user.get_username}}</h2> </div>
+                        <br>
+                    {% else %}
+                        
+                            <form action="/login/" method="post">{% csrf_token %}
+                                <label for="username">Username</label>
+                                <input id="username" type="text" name="username">&nbsp;
+                                <br><br>
+                                <label for="password">Password</label>
+                                <input id="password" type="password" name="password"/>&nbsp;
+                                <br><br>
+                                <input type="submit" name="submit" value="Login"/>&nbsp;</br></br>
+                                <!--<a href="{#% url 'facebook_connect' %#}?facebook_login=1" >Login with facebook</a> -->
+
+                                <br><br><br>
+                                <p>Don't have an account? <a href="{% url 'gamestore: register_url' %}">Sign up</a></p>
+                                <br><br>
+                            </form>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="background main">
+            </div>
+            <div class="center_block main">
+                <div class="content">
+                  <div id="pad">
+                    <h3><ul id="menu">
                   
                   <li><a href="{% url 'gamestore: home' %}">Home</a></li>
                   <li><a href="{% url 'gamestore: home' %}">Help</a></li>
                   </ul></h3>
-                </div>
+                <div id="mid">
                      <h3>  Gladiators online Game website is in Aalto University
                        created by :
                        <li>Alapan Mukherjee</li>
@@ -27,12 +72,17 @@
 
                           January,2015.     
              
+                </div>
               </div>
-                <div style="clear:all"></div>
-                <div id="footer">
-                  CopyRight © Gladiators 2015, all rights reserved.
-                </div> 
-            </div>       
-          </body>
-        </html>
-                
+            </div>
+
+            <div class="bottom_block footer">
+                <div class="content">
+                    CopyRight © Gladiators 2015, all rights reserved.
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
+        

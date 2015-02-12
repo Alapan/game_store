@@ -26,12 +26,13 @@
 
             <div class="right_block right">
                 <div class="content">
+                <div id="pad">
                     {% if logged_in == True %}
                         <img src="hab.jpg" width="40%"><br>
                         <div id="name"> <h2>{{user.get_username}}</h2> </div>
                         <br>
                     {% else %}
-                        <div id="login">
+                        
                             <form action="/login/" method="post">{% csrf_token %}
                                 <label for="username">Username</label>
                                 <input id="username" type="text" name="username">&nbsp;
@@ -46,26 +47,37 @@
                                 <p>Don't have an account? <a href="{% url 'gamestore: register_url' %}">Sign up</a></p>
                                 <br><br>
                             </form>
-                        </div>
+                       
+                        
+                    {% endif %}
+                    {% if logged_in == True %}
+                    <br><br> <br><br><br><br><br> <br>
+                    <form action="/logout/" method="post">{% csrf_token %}
+                        <input type="submit" value="Logout" />
+                    </form>
                     {% endif %}
                 </div>
             </div>
+        </div>
 
             <div class="background main"></div>
 
             <div class="center_block main">
                 <div class="content">
-                    <h3>Search results for {{search_term}}</h3>
-                    <button onclick="window.location='/playerhome'">Home</button><br><br>
+                    
+                   <div class="content">
+                    <ul id="menu">
+                        <li><button id="lnk" onclick="window.location='/playerhome'">Home   </button></li>
 
-                    <button onclick="window.location='/category/all'">All games</button>
-                    <button onclick="window.location='/category/adventure'">Adventure</button>
-                    <button onclick="window.location='/category/football'">Football</button>
-                    <button onclick="window.location='/category/puzzle'">Puzzle</button>
-                    <button onclick="window.location='/category/racing'">Racing</button>
-                    <button onclick="window.location='/category/sports'">Sports</button>
-                    <br><br>
-
+                        <li><button id="lnk" onclick="window.location='/category/all'">All games</button></li>
+                        <li><button id="lnk" onclick="window.location='/category/adventure'">Adventure</button></li>
+                        <li><button id="lnk" onclick="window.location='/category/football'">Football</button></li>
+                        <li><button id="lnk" onclick="window.location='/category/puzzle'">Puzzle</button></li>
+                        <li><button id="lnk" onclick="window.location='/category/racing'">Racing</button></li>
+                        <li><button id="lnk" onclick="window.location='/category/sports'">Sports</button></li>
+                    </ul>
+                    <div id="category">
+                    
 
                     <form action="/search/" method="post">{% csrf_token %}
                         <label for="textsearch">Search for games</label>
@@ -73,6 +85,7 @@
 
                         <input type="submit" name="submit" value="Search"/>
                     </form>
+            
                     <br>
 
                     <fieldset>
@@ -98,11 +111,8 @@
                         </table>
                     </fieldset>
 
-                    {% if logged_in == True %}
-                    <form action="/logout/" method="post">{% csrf_token %}
-                        <input type="submit" value="Logout" />
-                    </form>
-                    {% endif %}
+                    
+                </div>
                 </div>
             </div>
 

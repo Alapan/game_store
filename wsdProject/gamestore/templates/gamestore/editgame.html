@@ -26,10 +26,15 @@
             </div>
             <div class="right_block right">
               <div class="content">
+                    <div id="pad">
                     <br><br>
-                           <img src="hab.jpg" width="40%"><br>
+                    <img src="hab.jpg" width="40%"><br>
                     <div id="name"> <h2>{{user.get_username}}</h2> </div>
-                    <br>
+                    <br><br> <br><br><br><br><br> <br>
+                    <form action="/logout/" method="post">{% csrf_token %}
+                          <input type="submit" value="Logout" />
+                      </form>
+                    </div>
 
               </div>
             </div>
@@ -37,6 +42,7 @@
             </div>
             <div class="center_block main">
                 <div class="content">
+                    <div id="category">
                     <h3>Modify a game</h3>
                     <p>Logged-in user: {{user.get_username}}</p></br>
                     {% if saved %}
@@ -49,6 +55,7 @@
                     </form>
                     {% endif %}
                     <br>
+                </div>
                 </div>
             </div>
 

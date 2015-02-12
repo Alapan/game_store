@@ -25,13 +25,17 @@
 
               <div class="right_block right">
                   <div class="content">
-                      <br><br>
-                      <img src="hab.jpg" width="40%"><br>
-                      <div id="name"> <h2>{{user.get_username}}</h2> </div>
-                    <br>
-
-                  </div>
+                       <div id="pad">
+                    <br><br>
+                    <img src="hab.jpg" width="40%"><br>
+                    <div id="name"> <h2>{{user.get_username}}</h2> </div>
+                    <br><br> <br><br><br><br><br> <br>
+                    <form action="/logout/" method="post">{% csrf_token %}
+                          <input type="submit" value="Logout" />
+                      </form>
+                    </div>
               </div>
+            </div>
 
               <div class="background main"></div>
 
@@ -56,12 +60,14 @@
                           </form><br>
 
                       </ul>
+                      <div id="category">
 
                       {% if not owned_games %}
                       <p>You don't have any games yet, please buy some to be able to play. Here are some from our offer!</p><br>
                       {% endif %}
 
                       <br>
+                      
                       <fieldset>
                           <legend><strong> Your games </strong> </legend>
                           <table>
@@ -83,10 +89,9 @@
                               {% endfor %}
                           </table>
                       </fieldset>
+                    </div>
 
-                      <form action="/logout/" method="post">{% csrf_token %}
-                          <input type="submit" value="Logout" />
-                      </form>
+                      
 
                   </div>
               </div>
