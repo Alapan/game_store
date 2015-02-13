@@ -373,6 +373,7 @@ def search_view(request):
 	if not request.user.is_anonymous() and request.user.is_authenticated():
 		logged_in = True
 
+	is_result = False
 	if request.method == 'POST':
 		search_term = request.POST['textsearch'].lower()
 		all_games = Games.objects.all()
@@ -382,11 +383,12 @@ def search_view(request):
 			game_name = ''.join(g.name.split()).lower()
 			if game_name.find(search_term) != -1:
 				list_of_games.append(g)
+				is_result = True
 
 	if logged_in:
-		return render_to_response('gamestore/search.html',context_instance=RequestContext(request, {'search_term': search_term, 'list_of_games': list_of_games, 'logged_in': logged_in, 'is_developer': request.user.usertypes.developer}))
+		return render_to_response('gamestore/search.html',context_instance=RequestContext(request, {'search_term': search_term, 'list_of_games': list_of_games, 'is_result': is_result, 'logged_in': logged_in, 'is_developer': request.user.usertypes.developer}))
 	else:
-		return render_to_response('gamestore/search.html',context_instance=RequestContext(request, {'search_term': search_term, 'list_of_games': list_of_games, 'logged_in': logged_in}))
+		return render_to_response('gamestore/search.html',context_instance=RequestContext(request, {'search_term': search_term, 'list_of_games': list_of_games, 'is_result': is_result, 'logged_in': logged_in}))
 
 
 def all_view(request):
