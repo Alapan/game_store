@@ -100,23 +100,23 @@
                     <br>
                     <fieldset>
 
-                    <legend><strong> {{category_name}} games </strong> </legend>
-                    <table>
-                       <tr bgcolor="#CC6600">
-                            <th>Name</th>
-                            <th>Category</th>
-                            <th>Price(EUR)</th>
-                            <th>Game</th>
-                        </tr>
-                        {% for game in list_of_games %}
-                        <tr bgcolor="#FF9933">
-                            <td width="10%" align="center">{{game.name}}</td>
-                            <td width="15%" align="center">{{game.category}}</td>
-                            <td width="5%" align="center">{{game.price}}</td>
-                            <td width="10%" align="center"><a href="/game_info/{{game.id}}"> Go to game</a></td>
-                        </tr>
-                        {% endfor %}
-                    </table>
+                        <legend><strong> {{category_name}} games </strong> </legend>
+                            <table>
+                                  <tr bgcolor="#b8860b">
+                                      <th>Name</th>
+                                      <th>Category</th>
+                                      <th>Price(EUR)</th>
+                                      <th>Game</th>
+                                  </tr>
+                                  {% for game in list_of_games %}
+                                  <tr bgcolor="#bdb76b">
+                                      <td width="10%" align="center">{{game.name}}</td>
+                                      <td width="15%" align="center">{{game.category}}</td>
+                                      <td width="5%" align="center">{{game.price}}</td>
+                                      <td width="10%" align="center"><a href="/game_info/{{game.id}}">Game info</a></td>
+                                  </tr>
+                                  {% endfor %}
+                              </table>
                     </fieldset>
 
                     </div>

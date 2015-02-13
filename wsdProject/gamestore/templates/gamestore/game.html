@@ -166,15 +166,14 @@
             </div>
             <div class="center_block main">
                 <div class="content">
-
-                    <p>
-                        <strong>Player: {{player.username}}</strong>&nbsp;<br>
+                    <div id="category">
                         <input type="hidden" id="playerid" name="playerid" value="{{player.id}}"/><br>
                         <p>
                             You are now playing <strong>{{game.name}}</strong>
+                            <br><br>
                             <a href="/loadhighscores/{{game.id}}"> View high scores</a>
                         </p><br>
-                        <iframe id="encoder_iframe" height=75% width="50%" src="{{game.url}}"></iframe>
+                        <iframe id="encoder_iframe" height=300px width="80%" src="{{game.url}}"></iframe>
                         <br>
                         <br>
                         <strong>Last score: </strong>&nbsp;
@@ -183,9 +182,7 @@
                                     <div id="gamestate"></div>
                         <br>
                         <br>
-                        <a href="/playerhome/"> Go back to your homepage </a>
-                    </p>
-                    <br>
+                    </div>
 			    </div>
             </div>
 
