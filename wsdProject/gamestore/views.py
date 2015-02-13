@@ -14,7 +14,7 @@ from django.contrib.auth.models import User
 from gamestore.forms import UserData, UserForm, GameForm
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404,redirect
+from django.shortcuts import redirect
 from gamestore.serializers import ScoreSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -29,7 +29,7 @@ def signup(request):
 
 
 def notfound(request):
-	return render_to_response('gamestore/404.html')
+	return render_to_response('gamestore/404.html',context_instance=RequestContext(request))
 
 # register a new user as player or developer
 def registration(request):
@@ -62,7 +62,7 @@ def registration(request):
 		user_form = UserForm()
 
 	# render the template depending on the context
-	return render_to_response('gamestore/registration.html',{'user_data': user_data, 'user_form': user_form, 'registered': registered},context_instance=RequestContext(request))
+	return render_to_response('gamestore/registration.html',context_instance=RequestContext(request, {'user_data': user_data, 'user_form': user_form, 'registered': registered}))
 
 
 # send email to a new user after successful registration
@@ -128,12 +128,12 @@ def editprofile(request, username):
 
 # help page
 def help(request):
-	return render_to_response('gamestore/help.html')
+	return render_to_response('gamestore/help.html',context_instance=RequestContext(request))
 
 
 # about page
 def about(request):
-	return render_to_response('gamestore/about.html')
+	return render_to_response('gamestore/about.html',context_instance=RequestContext(request))
 
 
 # verifying the user account based on the username and hashed password sent to the user in e-mail
@@ -265,7 +265,7 @@ def game_info_view(request, id):
 	# check if the game object actually exists or not
 	game = Games.objects.filter(pk=id)
 	if not game:
-		return render_to_response('gamestore/404.html')
+		return render_to_response('gamestore/404.html',context_instance=RequestContext(request))
 	else:
 		game = Games.objects.get(pk=id)
 		have = False
@@ -304,7 +304,7 @@ def start_buy_view(request, game_id):
 
 		return render_to_response('gamestore/payment/start_buy.html', context_instance=RequestContext(request,{'pid': pid, 'sid': sid, 'amount': amount, 'checksum': checksum, 'user': request.user}))
 	else:
-		return render_to_response('gamestore/404.html')
+		return render_to_response('gamestore/404.html',context_instance=RequestContext(request))
 
 
 # successful payment
@@ -332,7 +332,7 @@ def success_view(request):
 
 			# if for some reason the user already have that game, error
 			if scoreobj:
-				return render_to_response('gamestore/payment/error.html')
+				return render_to_response('gamestore/payment/error.html',context_instance=RequestContext(request))
 			# if the user does not have the game, save it to the Scores table
 			else:
 				bought_game = Scores(game=gameobj, player=userobj, registration_date=datetime.datetime.now())
@@ -341,21 +341,21 @@ def success_view(request):
 				gameobj.save()
 				return render_to_response('gamestore/payment/success.html', {'pid': pid, 'ref': ref, 'checksum': checksum, 'game': gameobj})
 		else:
-			return render_to_response('gamestore/payment/error.html')
+			return render_to_response('gamestore/payment/error.html',context_instance=RequestContext(request))
 	else:
-		return render_to_response('gamestore/404.html')
+		return render_to_response('gamestore/404.html',context_instance=RequestContext(request))
 
 
 # canceled payment
 def cancel_view(request):
 
-	return render_to_response('gamestore/payment/cancel.html')
+	return render_to_response('gamestore/payment/cancel.html',context_instance=RequestContext(request))
 
 
 # error in payment
 def error_view(request):
 
-	return render_to_response('gamestore/payment/error.html')
+	return render_to_response('gamestore/payment/error.html',context_instance=RequestContext(request))
 
 
 # search for games
@@ -418,7 +418,7 @@ def addgame(request):
 
 		return render_to_response('gamestore/addgame.html',{'form': form, 'saved': saved},context_instance=RequestContext(request))
 	else:
-		return render_to_response('gamestore/404.html')
+		return render_to_response('gamestore/404.html',context_instance=RequestContext(request))
 
 
 # called when a game is modified on the developer homepage
@@ -443,7 +443,7 @@ def editgame(request,id):
 
 		return render_to_response('gamestore/editgame.html',{'game': game,'form': form, 'saved': saved},context_instance=RequestContext(request))
 	else:
-		return render_to_response('gamestore/404.html')
+		return render_to_response('gamestore/404.html',context_instance=RequestContext(request))
 
 # delete a game on the developer homepage
 def deletegame(request, id, template_name='gamestore/game_confirm_delete.html'):
@@ -454,7 +454,7 @@ def deletegame(request, id, template_name='gamestore/game_confirm_delete.html'):
 			return redirect('/devhome/')
 		return render(request, template_name, {'object':game})
 	else:
-		return render_to_response('gamestore/404.html')
+		return render_to_response('gamestore/404.html',context_instance=RequestContext(request))
 
 
 # load game.html with appropriate game iframe
@@ -464,7 +464,7 @@ def loadgame(request, id):
 		game = Games.objects.get(pk=id)
 		return render_to_response('gamestore/game.html',{'player': player, 'game': game}, context_instance=RequestContext(request))
 	else:
-		return render_to_response('gamestore/404.html')
+		return render_to_response('gamestore/404.html',context_instance=RequestContext(request))
 
 # display game statistics on the developer homepage
 def gamestats(request):
@@ -502,7 +502,7 @@ def loadhighscores(request, id):
 		game = Games.objects.get(pk=id)
 		return render_to_response('gamestore/highscores.html',{'player': player, 'game': game},context_instance=RequestContext(request))
 	else:
-		return render_to_response('gamestore/404.html')
+		return render_to_response('gamestore/404.html',context_instance=RequestContext(request))
 
 # display high scores in the high scores page
 @api_view(['GET'])
@@ -517,7 +517,7 @@ def highscores(request, id):
 			serializer = ScoreSerializer(scoreobj[0])
 			return Response(serializer.data)
 	else:
-		return render_to_response('gamestore/404.html')
+		return render_to_response('gamestore/404.html',context_instance=RequestContext(request))
 
 
 # save game state
