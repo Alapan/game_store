@@ -33,7 +33,8 @@
                           <li><button id="lnk" onclick="window.location='/category/puzzle'">Puzzle</button></li><br>
                           <li><button id="lnk" onclick="window.location='/category/racing'">Racing</button></li><br>
                           <li><button id="lnk" onclick="window.location='/category/sports'">Sports</button></li><br>
-                      
+                          <li><button id="lnk" onclick="window.location='/help'">Help</button></li><br>
+                          <li><button id="lnk" onclick="window.location='/about'">About</button></li>
 
                     </ul>
                 </div>
@@ -43,14 +44,17 @@
 
             <div class="right_block right">
                 <div class="content">
-                <div id="pad">
-                    {% if logged_in == True %}
-                        <img src="hab.jpg" width="40%"><br>
-                        <div id="name"> <h2>{{user.get_username}}</h2> </div>
-                        <br>
-                        <a href="/editprofile/{{user.get_username}}/"> Update your profile</a>
-                    {% else %}
-                        
+                    <div id="pad">
+                        {% if logged_in == True %}
+                            <img src ="{% static 'gamestore/User.png'%} " width="40%"><br>
+                            <div id="name"> <h2>Hi there, {{user.get_username}}</h2> </div>
+                            {% if is_developer %}
+                                <a href="/devhome">Developer home</a>
+                            {% endif %}
+
+                            <br><br>
+                            <a href="/editprofile/{{user.get_username}}/"> Update your profile</a>
+                        {% else %}
                             <form action="/login/" method="post">{% csrf_token %}
                                 <label for="username">Username</label>
                                 <input id="username" type="text" name="username">&nbsp;
@@ -65,63 +69,55 @@
                                 <p>Don't have an account? <a href="{% url 'gamestore: register_url' %}">Sign up</a></p>
                                 <br><br>
                             </form>
-                       
-                        
-                    {% endif %}
-                    {% if logged_in == True %}
-                    <br><br> <br><br><br><br><br> <br>
-                    <form action="/logout/" method="post">{% csrf_token %}
-                        <input type="submit" value="Logout" />
-                    </form>
-                    {% endif %}
+                        {% endif %}
+                        {% if logged_in == True %}
+                            <br><br> <br><br><br><br><br> <br>
+                            <form action="/logout/" method="post">{% csrf_token %}
+                                <input type="submit" value="Logout" />
+                            </form>
+                        {% endif %}
+                     </div>
                 </div>
             </div>
-        </div>
 
             <div class="background main"></div>
 
             <div class="center_block main">
                 <div class="content">
-                    
-                   <div class="content">
                     <div id="search">
-                <form action="/search/" method="post">{% csrf_token %}
-                    <label for="textsearch">Search for games</label>
-                    <input id="textsearch" type="text" name="textsearch"/>
+                        <form action="/search/" method="post">{% csrf_token %}
+                            <label for="textsearch">Search for games</label>
+                            <input id="textsearch" type="text" name="textsearch"/>
 
-                    <input type="submit" name="submit" value="Search"/>
-                </form>
-                   
+                            <input type="submit" name="submit" value="Search"/>
+                        </form>
+                    </div>
+
                     <div id="category">                  
 
-            
-                    <br>
+                        <br>
 
-                    <fieldset>
-                        <legend><strong> Search result for {{search_term}} </strong> </legend>
+                        <fieldset>
+                            <legend><strong> Search result for {{search_term}} </strong> </legend>
 
-                        <table>
-                            <tr>
-                                <th>Picture</th>
-                                <th>Name</th>
-                                <th>Category</th>
-                                <th>Price(EUR)</th>
-                                <th>Game</th>
-                            </tr>
-                            {% for game in list_of_games %}
-                            <tr>
-                                <td width="5%" align="center">{{game.picture}}</td>
-                                <td width="10%" align="center">{{game.name}}</td>
-                                <td width="15%" align="center">{{game.category}}</td>
-                                <td width="5%" align="center">{{game.price}}</td>
-                                <td width="10%" align="center"><a href="/game_info/{{game.id}}"> Go to game</a></td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                    </fieldset>
-
-                    
-                </div>
+                            <table>
+                                <tr bgcolor="#CC6600">
+                                    <th>Name</th>
+                                    <th>Category</th>
+                                    <th>Price(EUR)</th>
+                                    <th>Game</th>
+                                </tr>
+                                {% for game in list_of_games %}
+                                 <tr bgcolor="#FF9933">
+                                    <td width="10%" align="center">{{game.name}}</td>
+                                    <td width="15%" align="center">{{game.category}}</td>
+                                    <td width="5%" align="center">{{game.price}}</td>
+                                    <td width="10%" align="center"><a href="/game_info/{{game.id}}"> Go to game</a></td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        </fieldset>
+                    </div>
                 </div>
             </div>
 

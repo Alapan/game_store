@@ -116,7 +116,8 @@
                           <li><button id="lnk" onclick="window.location='/category/puzzle'">Puzzle</button></li><br>
                           <li><button id="lnk" onclick="window.location='/category/racing'">Racing</button></li><br>
                           <li><button id="lnk" onclick="window.location='/category/sports'">Sports</button></li><br>
-                      
+                          <li><button id="lnk" onclick="window.location='/help'">Help</button></li><br>
+                          <li><button id="lnk" onclick="window.location='/about'">About</button></li>
 
                     </ul>
 
@@ -125,13 +126,41 @@
             <div class="background right">
             </div>
             <div class="right_block right">
-              <div class="content">
-                    <br><br>
-                           <img src="hab.jpg" width="40%"><br>
-                    <div id="name"> <h2>{{user.get_username}}</h2> </div>
-                    <br>
+                <div class="content">
+                    <div id="pad">
+                        {% if logged_in == True %}
+                            <img src ="{% static 'gamestore/User.png'%} " width="40%"><br>
+                            <div id="name"> <h2>Hi there, {{user.get_username}}</h2> </div>
+                            {% if is_developer %}
+                                <a href="/devhome">Developer home</a>
+                            {% endif %}
 
-              </div>
+                            <br><br>
+                            <a href="/editprofile/{{user.get_username}}/"> Update your profile</a>
+                        {% else %}
+                            <form action="/login/" method="post">{% csrf_token %}
+                                <label for="username">Username</label>
+                                <input id="username" type="text" name="username">&nbsp;
+                                <br><br>
+                                <label for="password">Password</label>
+                                <input id="password" type="password" name="password"/>&nbsp;
+                                <br><br>
+                                <input type="submit" name="submit" value="Login"/>&nbsp;</br></br>
+                                <!--<a href="{#% url 'facebook_connect' %#}?facebook_login=1" >Login with facebook</a> -->
+
+                                <br><br><br>
+                                <p>Don't have an account? <a href="{% url 'gamestore: register_url' %}">Sign up</a></p>
+                                <br><br>
+                            </form>
+                        {% endif %}
+                        {% if logged_in == True %}
+                            <br><br> <br><br><br><br><br> <br>
+                            <form action="/logout/" method="post">{% csrf_token %}
+                                <input type="submit" value="Logout" />
+                            </form>
+                        {% endif %}
+                     </div>
+                </div>
             </div>
             <div class="background main">
             </div>

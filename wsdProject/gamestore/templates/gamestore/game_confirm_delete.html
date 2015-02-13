@@ -31,17 +31,9 @@
             <div class="background right">
             </div>
             <div class="right_block right">
-              <div class="content">
-                    <div id="pad">
-                    <br><br>
-                    <img src="hab.jpg" width="40%"><br>
-                    <div id="name"> <h2>{{user.get_username}}</h2> </div>
-                    <br><br> <br><br><br><br><br> <br>
-                    <form action="/logout/" method="post">{% csrf_token %}
-                          <input type="submit" value="Logout" />
-                      </form>
-                    </div>
-              </div>
+                <div class="content">
+                    
+                </div>
             </div>
             <div class="background main">
             </div>
@@ -54,7 +46,7 @@
                         <input type="submit" value="Submit" />
                     </form>
                     <br><br>
-                    <a href="{% url 'gamestore: home' %}">Cancel</a>
+                    <a href="/devhome">Cancel</a>
                 </div>
             </div>
             </div>

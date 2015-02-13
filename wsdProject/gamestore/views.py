@@ -129,12 +129,26 @@ def editprofile(request, username):
 
 # help page
 def help(request):
-	return render_to_response('gamestore/help.html',context_instance=RequestContext(request))
+	logged_in = False
+	if not request.user.is_anonymous() and request.user.is_authenticated():
+		logged_in = True
+
+	if logged_in:
+		return render_to_response('gamestore/help.html',context_instance=RequestContext(request, {'logged_in': logged_in, 'is_developer': request.user.usertypes.developer}))
+	else:
+		return render_to_response('gamestore/help.html',context_instance=RequestContext(request))
 
 
 # about page
 def about(request):
-	return render_to_response('gamestore/about.html',context_instance=RequestContext(request))
+	logged_in = False
+	if not request.user.is_anonymous() and request.user.is_authenticated():
+		logged_in = True
+
+	if logged_in:
+		return render_to_response('gamestore/about.html',context_instance=RequestContext(request, {'logged_in': logged_in, 'is_developer': request.user.usertypes.developer}))
+	else:
+		return render_to_response('gamestore/about.html',context_instance=RequestContext(request))
 
 
 # verifying the user account based on the username and hashed password sent to the user in e-mail
@@ -192,14 +206,14 @@ def logout_view(request):
 # go to developer homepage displaying the updated inventory
 def devhome(request):
 
-	if request.user.is_authenticated():
-		# if a player types in /devhome/ in the address bar, redirect him to player homepage
+	if request.user.is_authenticated() and not request.user.is_anonymous():
+		# if a player types in /devhome/ in the address bar with no developer rights, redirect him to player homepage
 		if request.user.usertypes.developer==False:
 			return HttpResponseRedirect('/playerhome/')
 		# load developer homepage with details
 		else:
 			list_of_games = Games.objects.filter(developer=request.user)
-			return render_to_response('gamestore/developer_homepage.html',context_instance=RequestContext(request, {'list_of_games':list_of_games}))
+			return render_to_response('gamestore/developer_homepage.html',context_instance=RequestContext(request, {'list_of_games':list_of_games, 'logged_in': True, 'is_developer': True}))
 
 	# if a user types /devhome/ in the address bar without logging in, redirect him to login page
 	else:
@@ -263,7 +277,7 @@ def game_info_view(request, id):
 			else:
 				buyable = True
 
-			return render_to_response('gamestore/game_info.html',context_instance=RequestContext(request, {'id': game.id, 'name': game.name, 'description': game.description, 'price': game.price, 'category': game.category, 'have': have, 'buyable': buyable, 'logged_in': logged_in, 'user': userobj}))
+			return render_to_response('gamestore/game_info.html',context_instance=RequestContext(request, {'id': game.id, 'name': game.name, 'description': game.description, 'price': game.price, 'category': game.category, 'have': have, 'buyable': buyable, 'logged_in': logged_in, 'user': userobj, 'is_developer': request.user.usertypes.developer}))
 		else:
 			return render_to_response('gamestore/game_info.html',context_instance=RequestContext(request, {'id': game.id, 'name': game.name, 'description': game.description, 'price': game.price, 'category': game.category, 'have': have, 'buyable': buyable, 'logged_in': logged_in}))
 
@@ -283,7 +297,7 @@ def start_buy_view(request, game_id):
 		m = md5(checksum_str.encode("ascii"))
 		checksum = m.hexdigest()
 
-		return render_to_response('gamestore/payment/start_buy.html', context_instance=RequestContext(request,{'pid': pid, 'sid': sid, 'amount': amount, 'checksum': checksum, 'user': request.user}))
+		return render_to_response('gamestore/payment/start_buy.html', context_instance=RequestContext(request,{'pid': pid, 'sid': sid, 'amount': amount, 'checksum': checksum, 'user': request.user, 'logged_in': True, 'is_developer': request.user.usertypes.developer}))
 	else:
 		return render_to_response('gamestore/404.html',context_instance=RequestContext(request))
 
@@ -320,23 +334,35 @@ def success_view(request):
 				bought_game.save()
 				gameobj.sold_copies += 1
 				gameobj.save()
-				return render_to_response('gamestore/payment/success.html', {'pid': pid, 'ref': ref, 'checksum': checksum, 'game': gameobj})
+				return render_to_response('gamestore/payment/success.html', {'pid': pid, 'ref': ref, 'checksum': checksum, 'game': gameobj, 'user': request.user, 'logged_in': True, 'is_developer': request.user.usertypes.developer})
 		else:
-			return render_to_response('gamestore/payment/error.html',context_instance=RequestContext(request))
+			return render_to_response('gamestore/payment/error.html',context_instance=RequestContext(request, {'logged_in': True, 'is_developer': request.user.usertypes.developer}))
 	else:
 		return render_to_response('gamestore/404.html',context_instance=RequestContext(request))
 
 
 # canceled payment
 def cancel_view(request):
+	logged_in = False
+	if not request.user.is_anonymous() and request.user.is_authenticated():
+		logged_in = True
 
-	return render_to_response('gamestore/payment/cancel.html',context_instance=RequestContext(request))
+	if logged_in:
+		return render_to_response('gamestore/payment/cancel.html',context_instance=RequestContext(request, {'logged_in': True, 'is_developer': request.user.usertypes.developer}))
+	else:
+		return render_to_response('gamestore/payment/cancel.html',context_instance=RequestContext(request))
 
 
 # error in payment
 def error_view(request):
+	logged_in = False
+	if not request.user.is_anonymous() and request.user.is_authenticated():
+		logged_in = True
 
-	return render_to_response('gamestore/payment/error.html',context_instance=RequestContext(request))
+	if logged_in:
+		return render_to_response('gamestore/payment/error.html',context_instance=RequestContext(request, {'logged_in': True, 'is_developer': request.user.usertypes.developer}))
+	else:
+		return render_to_response('gamestore/payment/error.html',context_instance=RequestContext(request))
 
 
 # search for games
@@ -356,7 +382,10 @@ def search_view(request):
 			if game_name.find(search_term) != -1:
 				list_of_games.append(g)
 
-	return render_to_response('gamestore/search.html',context_instance=RequestContext(request, {'search_term': search_term, 'list_of_games': list_of_games, 'logged_in': logged_in}))
+	if logged_in:
+		return render_to_response('gamestore/search.html',context_instance=RequestContext(request, {'search_term': search_term, 'list_of_games': list_of_games, 'logged_in': logged_in, 'is_developer': request.user.usertypes.developer}))
+	else:
+		return render_to_response('gamestore/search.html',context_instance=RequestContext(request, {'search_term': search_term, 'list_of_games': list_of_games, 'logged_in': logged_in}))
 
 
 def all_view(request):
@@ -366,7 +395,10 @@ def all_view(request):
 		logged_in = True
 
 	list_of_games = Games.objects.all()
-	return render_to_response('gamestore/category/all.html',context_instance=RequestContext(request, {'list_of_games':list_of_games, 'logged_in': logged_in}))
+	if logged_in:
+		return render_to_response('gamestore/category/all.html',context_instance=RequestContext(request, {'list_of_games':list_of_games, 'logged_in': logged_in, 'is_developer': request.user.usertypes.developer}))
+	else:
+		return render_to_response('gamestore/category/all.html',context_instance=RequestContext(request, {'list_of_games':list_of_games, 'logged_in': logged_in}))
 
 
 def category_view(request, category_name):
@@ -377,7 +409,10 @@ def category_view(request, category_name):
 
 	capital_name = category_name.title()
 	list_of_games = Games.objects.filter(category=capital_name)
-	return render_to_response('gamestore/category.html', context_instance=RequestContext(request, {'list_of_games': list_of_games, 'category_name': capital_name, 'logged_in': logged_in}))
+	if logged_in:
+		return render_to_response('gamestore/category.html', context_instance=RequestContext(request, {'list_of_games': list_of_games, 'category_name': capital_name, 'logged_in': logged_in, 'is_developer': request.user.usertypes.developer}))
+	else:
+		return render_to_response('gamestore/category.html', context_instance=RequestContext(request, {'list_of_games': list_of_games, 'category_name': capital_name, 'logged_in': logged_in}))
 
 
 # a game is added by a developer
@@ -397,7 +432,7 @@ def addgame(request):
 		else:
 			form = GameForm()
 
-		return render_to_response('gamestore/addgame.html',{'form': form, 'saved': saved},context_instance=RequestContext(request))
+		return render_to_response('gamestore/addgame.html',{'form': form, 'saved': saved, 'logged_in': True, 'is_developer': True},context_instance=RequestContext(request))
 	else:
 		return render_to_response('gamestore/404.html',context_instance=RequestContext(request))
 
@@ -422,7 +457,7 @@ def editgame(request,id):
 				initial = { 'name' : game.name, 'category' : game.category, 'url' : game.url, 'price' : game.price }
 			)
 
-		return render_to_response('gamestore/editgame.html',{'game': game,'form': form, 'saved': saved},context_instance=RequestContext(request))
+		return render_to_response('gamestore/editgame.html',{'game': game,'form': form, 'saved': saved, 'logged_in': True, 'is_developer': True},context_instance=RequestContext(request))
 	else:
 		return render_to_response('gamestore/404.html',context_instance=RequestContext(request))
 
@@ -443,7 +478,7 @@ def loadgame(request, id):
 	if request.user.is_authenticated() and not request.user.is_anonymous():
 		player = request.user
 		game = Games.objects.get(pk=id)
-		return render_to_response('gamestore/game.html',{'player': player, 'game': game}, context_instance=RequestContext(request))
+		return render_to_response('gamestore/game.html',{'player': player, 'game': game, 'logged_in': True, 'is_developer': request.user.usertypes.developer}, context_instance=RequestContext(request))
 	else:
 		return render_to_response('gamestore/404.html',context_instance=RequestContext(request))
 
@@ -481,7 +516,7 @@ def loadhighscores(request, id):
 	if request.user.is_authenticated() and not request.user.is_anonymous():
 		player = request.user
 		game = Games.objects.get(pk=id)
-		return render_to_response('gamestore/highscores.html',{'player': player, 'game': game},context_instance=RequestContext(request))
+		return render_to_response('gamestore/highscores.html',{'player': player, 'game': game, 'logged_in': True, 'is_developer': request.user.usertypes.developer},context_instance=RequestContext(request))
 	else:
 		return render_to_response('gamestore/404.html',context_instance=RequestContext(request))
 
