@@ -30,6 +30,7 @@
             <div class="right_block right">
                 <div class="content">
                     <div id="pad">
+                        <p>{{message}}</p>
                         <form action="/login/" method="post">{% csrf_token %}
                             <label for="username">Username</label>
                             <input id="username" type="text" name="username">&nbsp;
@@ -70,8 +71,6 @@
                     </form>
                     </div>
 
-
-                    <p>{{message}}</p>
 
                     <div id="pop_container">
                         <h2>Popular games</h2>

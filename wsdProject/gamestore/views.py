@@ -18,6 +18,7 @@ from django.shortcuts import redirect
 from gamestore.serializers import ScoreSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.core.urlresolvers import reverse
 import json
 import datetime
 
@@ -172,28 +173,23 @@ def login_view(request):
 		else:
 			return HttpResponseRedirect('/verificationerror/')
 
-		# if user is a player, load player homepage
-		if  user.usertypes.developer == False:
-			return HttpResponseRedirect('/playerhome/')
-		# if user is a developer, load developer homepage 1
-		elif user.usertypes.developer == True:
-			return HttpResponseRedirect('/devhome/')
-		# user exists but incorrect type entered
-		else:
-			return render_to_response('gamestore/usertype_error.html',context_instance=RequestContext(request))
+		# no matter what is the usertype of the user, player home is rendered
+		return HttpResponseRedirect('/playerhome/')
+
 
 	else:
 		# Redirect to login page, as login is incorrect
-		return render_to_response('gamestore/loginerror.html',context_instance=RequestContext(request))
+		top_games = Games.objects.all().order_by('sold_copies')[:5]
+		message = "Username or password is incorrect!"
+		return render_to_response('gamestore/home.html',context_instance=RequestContext(request, {'top_games': top_games, 'message': message}))
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def logout_view(request):
 
 	logout(request)
-	#request.session.flush()
-	#request.user = AnonymousUser
-	#Redirect to logout page
-	return render_to_response('gamestore/logout.html', context_instance=RequestContext(request))
+	top_games = Games.objects.all().order_by('sold_copies')[:5]
+	message = "You have successfully logged out!"
+	return render_to_response('gamestore/home.html',context_instance=RequestContext(request, {'top_games': top_games, 'message': message}))
 
 
 # go to developer homepage displaying the updated inventory
