@@ -5,11 +5,11 @@
         <link rel="stylesheet" type="text/css" href="{% static 'gamestore/style.css'%}" />
 
         <meta charset="UTF-8">
-        <title>About</title>
+        <title>Page not found</title>
     </head>
     <body>
         <div class="content">
-            <div class="top_block title">
+           <div class="top_block title">
               <div class="content">
 
                 <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a></div>
@@ -58,22 +58,18 @@
             <div class="center_block main">
                 <div class="content">
                   <div id="pad">
-                    <h3><ul id="menu">
                   
-                  <li><a href="{% url 'gamestore: home' %}">Home</a></li>
-                  <li><a href="{% url 'gamestore: home' %}">Help</a></li>
-                  </ul></h3>
-                <div id="mid">
-                    <br><bd>
-                     <h3>  Gladiators online Game website is in Aalto University
-                       created by :
-                       <li>Alapan Mukherjee</li>
-                        <li>Gergely Horváth </li>
-                          <li> Habtamnesh Goite </li> </h3>
-
-                          January,2015.     
-             
+                <div id="photo">
+                    <img src ="{% static 'gamestore/logo.png'%} " width="40%"> 
                 </div>
+                <div id="desc">
+                    <h1>404: page NOT found! </h1>
+                  <h4>  Sorry the page you are looking for cannot be found. 
+                    click <a href="{% url 'gamestore: home' %}">here </a>to go back to home.</h4>
+
+                </div>
+
+             
               </div>
             </div>
 
