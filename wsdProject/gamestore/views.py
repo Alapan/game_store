@@ -428,6 +428,10 @@ def addgame(request):
 				game.developer = request.user
 				game.save()
 				saved = True
+
+				# developers have their own games, but it does not count to the sales statistics
+				bought_game = Scores(game=game, player=request.user, registration_date=datetime.datetime.now())
+				bought_game.save()
 			else:
 				print(form.errors)
 		else:
