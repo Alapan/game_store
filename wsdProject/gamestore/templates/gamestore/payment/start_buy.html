@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head lang="en">
+        <title>Buy game</title>
         {% load staticfiles %}
                 <link rel="stylesheet" type="text/css" href="{% static 'gamestore/style.css'%}" />
         <meta charset="UTF-8">
@@ -78,11 +79,11 @@
                         <input type="hidden" name="pid" value="{{ pid }}" />
                         <input type="hidden" name="sid" value="{{ sid }}" />
                         <input type="hidden" name="success_url"
-                                value="http://localhost:8000/payment/success" />
+                                value="http://gladiatorgames.herokuapp.com/payment/success" />
                         <input type="hidden" name="cancel_url"
-                                value="http://localhost:8000/payment/cancel" />
+                                value="http://gladiatorgames.herokuapp.com/payment/cancel" />
                         <input type="hidden" name="error_url"
-                                value="http://localhost:8000/payment/error" />
+                                value="http://gladiatorgames.herokuapp.com/payment/error" />
                         <input type="hidden" name="checksum" value="{{ checksum }}" />
 
                         <input type="hidden" id="id_amount" name="amount" value="{{ amount }}" />

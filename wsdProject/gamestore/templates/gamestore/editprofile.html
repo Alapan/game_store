@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Edit a game</title>
+        <title>Edit profile</title>
         {% load staticfiles %}
         <link rel="stylesheet" type="text/css" href="{% static 'gamestore/style.css'%}" />
     </head>
@@ -31,13 +31,9 @@
             <div class="background right">
             </div>
             <div class="right_block right">
-              <div class="content">
-                    <br><br>
-                           <img src="hab.jpg" width="40%"><br>
-                    <div id="name"> <h2>{{username}}</h2> </div>
-                    <br>
+                <div class="content">
 
-              </div>
+                </div>
             </div>
             <div class="background main">
             </div>
@@ -47,14 +43,16 @@
                     <p>Logged-in user: {{ username }}</p></br>
                     {% if saved %}
                     <strong>Game successfully saved!</strong>
-                    <a href="{% url 'gamestore: player_homepage' %}">Login again.</a><br />
+                    <a href="/playerhome">Login again.</a><br />
                     {% else %}
                     <form action="/editprofile/{{username}}/" method="post">{% csrf_token %}
-			{{ typeform.as_p }}
+			            {{ typeform.as_p }}
                         {{ form.as_p }}
                         <input type="submit" name="submit" value="Save changes"/>
                     </form>
                     {% endif %}
+                    <br>
+                    <a href="/playerhome">Cancel</a>
                     <br>
                 </div>
             </div>
