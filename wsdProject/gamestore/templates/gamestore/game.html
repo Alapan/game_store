@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Play game</title>
+		<title>Game page</title>
 		{% load staticfiles %} 
         <link rel="stylesheet" type="text/css" href="{% static 'gamestore/style.css'%}" />
 		<meta charset="utf-8">
@@ -22,6 +22,7 @@
 					}
 					
 					else if (data.messageType == "SAVE"){
+
 						var gameid = document.getElementById("gameid").value;
 						var playerid = document.getElementById("playerid").value;
 
@@ -32,6 +33,11 @@
                                         		data : {'gameid': gameid, 'playerid': playerid, 'jsondata' : JSON.stringify(data), 'csrfmiddlewaretoken': csrftoken},
 							dataType : "json",
                                         		success : function(data){
+								
+								//var gamedata = '<p>';
+                                                                //gamedata += "Player items: " + data["gameState"] + '</p>';
+                                                                //gamedata += '<p>' + "Score: " + data['score'] + '</p><br>';
+                                                                //$('#gamestate').html(gamedata);
 								alert("Game saved successfully!");
                                         		}
                                 		});
@@ -49,6 +55,7 @@
 								// Gamestate exists, messageType = LOAD
 								if (data['messageType'] == "LOAD"){
 									alert("Gamestate loaded!");
+									
 								}
 								// No gamestate found, messageType = MESSAGE
 								else {
@@ -139,7 +146,7 @@
                                 <!--<a href="{#% url 'facebook_connect' %#}?facebook_login=1" >Login with facebook</a> -->
 
                                 <br><br><br>
-                                <p>Don't have an account? <br><a href="{% url 'gamestore: register_url' %}">Sign up</a></p>
+                                <p>Don't have an account? <a href="{% url 'gamestore: register_url' %}">Sign up</a></p>
                                 <br><br>
                             </form>
                         {% endif %}
@@ -156,14 +163,16 @@
             </div>
             <div class="center_block main">
                 <div class="content">
-                    <div id="category">
+
+                    <p>
+                        <strong>Player: {{player.username}}</strong>&nbsp;<br>
                         <input type="hidden" id="playerid" name="playerid" value="{{player.id}}"/><br>
+			<input type="hidden" id="gameid" name="gameid" value="{{game.id}}"/><br>
                         <p>
                             You are now playing <strong>{{game.name}}</strong>
-                            <br><br>
                             <a href="/loadhighscores/{{game.id}}"> View high scores</a>
                         </p><br>
-                        <iframe id="encoder_iframe" height=300px width="80%" src="{{game.url}}"></iframe>
+                        <iframe id="iframe" height=75% width="50%" src="{{game.url}}"></iframe>
                         <br>
                         <br>
                         <strong>Last score: </strong>&nbsp;
@@ -172,15 +181,15 @@
                                     <div id="gamestate"></div>
                         <br>
                         <br>
-                    </div>
+                        <a href="/playerhome/"> Go back to your homepage </a>
+                    </p>
+                    <br>
 			    </div>
             </div>
 
             <div class="bottom_block footer">
                 <div class="content">
                     CopyRight © Gladiators 2015, all rights reserved.
-                    <br><br>
-                  All images are licensed under a “Creative Commons Attribution 3.0 Generic License”.
                 </div>
             </div>
         </div>
