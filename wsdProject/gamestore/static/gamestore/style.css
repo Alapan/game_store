@@ -77,7 +77,7 @@ html, body {
   height: auto !important;
   padding-bottom: 0;
   right: 0;
-  width: 200px;
+  width: 190px;
   background-color: GoldenRod;
   margin-top: 70px;
   margin-bottom: 70px; 
@@ -87,7 +87,7 @@ html, body {
 
 .right {
   height: auto;
-  width: 200px;
+  width: 190px;
   padding-bottom: 70px;
 
   
@@ -102,7 +102,7 @@ html, body {
   margin-top: 70px;
   margin-bottom: 70px;
   margin-left: 180px;
-  margin-right: 200px;
+  margin-right: 190px;
   border-style: solid;
 }
 
@@ -194,7 +194,7 @@ text-align: left;
     }
     #category{
       padding-left: 5%;
-      padding-right: 1%;
+      padding-right: 5%;
     }
     #mid{
       text-align: center;

@@ -39,21 +39,23 @@
             </div>
             <div class="center_block main">
                 <div class="content">
-                    <h3>Update user details</h3>
-                    <p>Logged-in user: {{ username }}</p></br>
-                    {% if saved %}
-                    <strong>Game successfully saved!</strong>
-                    <a href="/playerhome">Login again.</a><br />
-                    {% else %}
-                    <form action="/editprofile/{{username}}/" method="post">{% csrf_token %}
-			            {{ typeform.as_p }}
-                        {{ form.as_p }}
-                        <input type="submit" name="submit" value="Save changes"/>
-                    </form>
-                    {% endif %}
-                    <br>
-                    <a href="/playerhome">Cancel</a>
-                    <br>
+                    <div id="category">
+                        <h3>Update user details</h3>
+                        <p>Logged-in user: {{ username }}</p></br>
+                        {% if saved %}
+                        <strong>Game successfully saved!</strong>
+                        <a href="/playerhome">Login again.</a><br />
+                        {% else %}
+                        <form action="/editprofile/{{username}}/" method="post">{% csrf_token %}
+                            {{ typeform.as_p }}
+                            {{ form.as_p }}
+                            <input type="submit" name="submit" value="Save changes"/>
+                        </form>
+                        {% endif %}
+                        <br>
+                        <a href="/playerhome">Cancel</a>
+                        <br>
+                    </div>
                 </div>
             </div>
         </div>
@@ -61,6 +63,8 @@
         <div class="bottom_block footer">
             <div class="content">
                 CopyRight © Gladiators 2015, all rights reserved.
+                <br><br>
+                  All images are licensed under a “Creative Commons Attribution 3.0 Generic License”.
             </div>
         </div>
     </body>
