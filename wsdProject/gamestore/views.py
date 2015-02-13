@@ -169,16 +169,13 @@ def login_view(request):
 		# check if the user that tries to log in is already active or not
 		if user.is_active:
 			login(request,user)
+			# no matter what is the usertype of the user, player home is rendered
+			return HttpResponseRedirect('/playerhome/')
 		# if not notify the user that the verification step is still necessary to be able to log in
 		else:
 			return HttpResponseRedirect('/verificationerror/')
-
-		# no matter what is the usertype of the user, player home is rendered
-		return HttpResponseRedirect('/playerhome/')
-
-
+	# Redirect to login page, as login is incorrect
 	else:
-		# Redirect to login page, as login is incorrect
 		top_games = Games.objects.all().order_by('sold_copies')[:5]
 		message = "Username or password is incorrect!"
 		return render_to_response('gamestore/home.html',context_instance=RequestContext(request, {'top_games': top_games, 'message': message}))
@@ -196,7 +193,6 @@ def logout_view(request):
 def devhome(request):
 
 	if request.user.is_authenticated():
-
 		# if a player types in /devhome/ in the address bar, redirect him to player homepage
 		if request.user.usertypes.developer==False:
 			return HttpResponseRedirect('/playerhome/')
@@ -213,43 +209,32 @@ def devhome(request):
 # load home page
 def home(request):
 
-	if request.user.is_anonymous():
+	if request.user.is_anonymous() and not request.user.is_authenticated():
 		top_games = Games.objects.all().order_by('sold_copies')[:5]
 		return render_to_response('gamestore/home.html',context_instance=RequestContext(request, {'top_games': top_games}))
 	else:
-		if request.user.usertypes.developer == False:
-			return HttpResponseRedirect('/playerhome/')
-		else:
-			return HttpResponseRedirect('/devhome/')
+		return HttpResponseRedirect('/playerhome/')
 
 
 # go to player homepage
 def playerhome(request):
 
 	if request.user.is_authenticated():
+		userobj = User.objects.get(pk=request.user.id)
+		owned_games = list()
 
-		# if user is player, load player homepage with details
-		if request.user.usertypes.developer == False:
-			userobj = User.objects.get(pk=request.user.id)
-			owned_games = list()
+		# query games for this player
+		for s in Scores.objects.filter(player=userobj):
+			owned_games.append(s.game)
 
-			# query games for this player
-			for s in Scores.objects.filter(player=userobj):
-				owned_games.append(s.game)
-
-			if owned_games:
-				list_of_games = owned_games
-				return render_to_response('gamestore/player_homepage.html',context_instance=RequestContext(request, {'list_of_games':list_of_games, 'owned_games': owned_games}))
-			else:
-				list_of_games = Games.objects.all()
-				return render_to_response('gamestore/player_homepage.html',context_instance=RequestContext(request, {'list_of_games':list_of_games, 'owned_games': owned_games}))
-		# if user is developer and enters /playerhome/ in the address bar, redirect him to developer homepage
+		if owned_games:
+			list_of_games = owned_games
+			return render_to_response('gamestore/player_homepage.html',context_instance=RequestContext(request, {'list_of_games':list_of_games, 'owned_games': owned_games, 'is_developer': request.user.usertypes.developer}))
 		else:
-			return HttpResponseRedirect('/devhome/')
-
+			top_games = Games.objects.all().order_by('sold_copies')[:5]
+			return render_to_response('gamestore/player_homepage.html',context_instance=RequestContext(request, {'top_games': top_games, 'is_developer': request.user.usertypes.developer}))
 	# if user types in /playerhome/ in the address bar without logging in, redirect him to homepage
 	else:
-
 		return HttpResponseRedirect('/')
 
 

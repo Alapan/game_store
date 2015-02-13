@@ -79,6 +79,7 @@
                     <br><br>
                     <img src="hab.jpg" width="40%"><br>
                     <div id="name"> <h2>{{user.get_username}}</h2> </div>
+                    <button id="lnk" onclick="window.location='/playerhome'">Player home</button>
                     <br><br> <br><br><br><br><br> <br>
                     <form action="/logout/" method="post">{% csrf_token %}
                           <input type="submit" value="Logout" />
