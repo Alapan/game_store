@@ -39,5 +39,6 @@ urlpatterns = patterns('',
 	url(r'^loadhighscores/(?P<id>\d+)/','gamestore.views.loadhighscores'),
 	url(r'^highscores/(?P<id>\d+)/','gamestore.views.highscores'),
 	url(r'^gamestore/', include('gamestore.urls', namespace="gamestore")),
-	url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+	url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^.*/$','gamestore.views.notfound')
 )

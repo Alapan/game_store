@@ -28,11 +28,8 @@ def signup(request):
 	return render_to_response('gamestore/registration.html',context_instance=RequestContext(request))
 
 
-# After successfully registering, the user logins in from the home page.
-def newlogin(request):
-
-	return render_to_response('gamestore/home.html',context_instance=RequestContext(request))
-
+def notfound(request):
+	return render_to_response('gamestore/404.html')
 
 # register a new user as player or developer
 def registration(request):
@@ -92,26 +89,26 @@ def editprofile(request, username):
 	user = User.objects.filter(username=username)
 	# User object to save modified user details
 	u = User.objects.get(pk=user[0].id)
-	
+
 	# Usertypes object to save 'developer' as True if user decides to upgrade to developer
 	usertype = Usertypes.objects.filter(user=u)
-	
+
 	saved = False
-	
+
 	if request.method == 'POST':
 
 		# Update user details
 		form = UserData(data=request.POST)
 		# Update usertype details, i.e. make 'developer' = True if user selects that option on editprofile.html
 		typeform = UserForm(data=request.POST)
-		
+
 		u.username = request.POST.get('username')
 		u.first_name = request.POST.get('first_name','')
 		u.last_name =  request.POST.get('last_name','')
 		u.email = request.POST.get('email')
 		u.set_password(request.POST.get('password'))
 		u.save()
-		
+
 		if usertype.update(developer = request.POST.get('developer')) == 1:
 			print("Type saved")
 
@@ -239,7 +236,7 @@ def playerhome(request):
 		if request.user.usertypes.developer == False:
 			userobj = User.objects.get(pk=request.user.id)
 			owned_games = list()
-			
+
 			# query games for this player
 			for s in Scores.objects.filter(player=userobj):
 				owned_games.append(s.game)
@@ -265,78 +262,88 @@ def game_info_view(request, id):
 
 	logged_in = False
 
-	game = Games.objects.get(pk=id)
-
-	have = False
-	buyable = False
-
-	if request.user.is_authenticated() and not request.user.is_anonymous():
-		logged_in = True
-		userobj = User.objects.get(pk=request.user.id)
-
-		scoreobj = Scores.objects.filter(game=game, player=userobj)
-
-		if scoreobj:
-			have = True
-		else:
-			buyable = True
-
-		return render_to_response('gamestore/game_info.html', {'id': game.id, 'name': game.name, 'description': game.description, 'price': game.price, 'category': game.category, 'have': have, 'buyable': buyable, 'logged_in': logged_in, 'user': userobj})
+	# check if the game object actually exists or not
+	game = Games.objects.filter(pk=id)
+	if not game:
+		return render_to_response('gamestore/404.html')
 	else:
-		return render_to_response('gamestore/game_info.html', {'id': game.id, 'name': game.name, 'description': game.description, 'price': game.price, 'category': game.category, 'have': have, 'buyable': buyable, 'logged_in': logged_in})
+		game = Games.objects.get(pk=id)
+		have = False
+		buyable = False
+
+		if request.user.is_authenticated() and not request.user.is_anonymous():
+			logged_in = True
+			userobj = User.objects.get(pk=request.user.id)
+
+			scoreobj = Scores.objects.filter(game=game, player=userobj)
+
+			if scoreobj:
+				have = True
+			else:
+				buyable = True
+
+			return render_to_response('gamestore/game_info.html',context_instance=RequestContext(request, {'id': game.id, 'name': game.name, 'description': game.description, 'price': game.price, 'category': game.category, 'have': have, 'buyable': buyable, 'logged_in': logged_in, 'user': userobj}))
+		else:
+			return render_to_response('gamestore/game_info.html',context_instance=RequestContext(request, {'id': game.id, 'name': game.name, 'description': game.description, 'price': game.price, 'category': game.category, 'have': have, 'buyable': buyable, 'logged_in': logged_in}))
 
 
 # start buying a game
 def start_buy_view(request, game_id):
 
-	game = Games.objects.get(pk=game_id)
+	if request.user.is_authenticated() and not request.user.is_anonymous():
+		game = Games.objects.get(pk=game_id)
 
-	pid = "%s_%s"%(request.user.id, game.id)
-	sid = "awesomegladiators"
-	amount = game.price
-	secret_key = "3e200efab59d77550cb7893b1b944ded"
-	checksum_str = "pid=%s&sid=%s&amount=%s&token=%s"%(pid, sid, amount, secret_key)
+		pid = "%s_%s"%(request.user.id, game.id)
+		sid = "awesomegladiators"
+		amount = game.price
+		secret_key = "3e200efab59d77550cb7893b1b944ded"
+		checksum_str = "pid=%s&sid=%s&amount=%s&token=%s"%(pid, sid, amount, secret_key)
 
-	m = md5(checksum_str.encode("ascii"))
-	checksum = m.hexdigest()
+		m = md5(checksum_str.encode("ascii"))
+		checksum = m.hexdigest()
 
-	return render_to_response('gamestore/payment/start_buy.html', {'pid': pid, 'sid': sid, 'amount': amount, 'checksum': checksum, 'user': request.user})
+		return render_to_response('gamestore/payment/start_buy.html', context_instance=RequestContext(request,{'pid': pid, 'sid': sid, 'amount': amount, 'checksum': checksum, 'user': request.user}))
+	else:
+		return render_to_response('gamestore/404.html')
 
 
 # successful payment
 def success_view(request):
 
-	pid = request.GET['pid']
-	ref = request.GET['ref']
-	got_checksum = request.GET['checksum']
+	if request.user.is_authenticated() and not request.user.is_anonymous():
+		pid = request.GET['pid']
+		ref = request.GET['ref']
+		got_checksum = request.GET['checksum']
 
-	secret_key = "3e200efab59d77550cb7893b1b944ded"
-	checksum_str = "pid=%s&ref=%s&token=%s"%(pid, ref, secret_key)
+		secret_key = "3e200efab59d77550cb7893b1b944ded"
+		checksum_str = "pid=%s&ref=%s&token=%s"%(pid, ref, secret_key)
 
-	m = md5(checksum_str.encode("ascii"))
-	checksum = m.hexdigest()
+		m = md5(checksum_str.encode("ascii"))
+		checksum = m.hexdigest()
 
-	user_id, game_id = pid.split('_')
+		user_id, game_id = pid.split('_')
 
-	# check if the payment was really successful
-	if got_checksum == checksum:
-		gameobj = Games.objects.get(pk=game_id)
-		userobj = User.objects.get(pk=user_id)
+		# check if the payment was really successful
+		if got_checksum == checksum:
+			gameobj = Games.objects.get(pk=game_id)
+			userobj = User.objects.get(pk=user_id)
 
-		scoreobj = Scores.objects.filter(game=gameobj, player=userobj)
+			scoreobj = Scores.objects.filter(game=gameobj, player=userobj)
 
-		# if for some reason the user already have that game, error
-		if scoreobj:
-			return render_to_response('gamestore/payment/error.html')
-		# if the user does not have the game, save it to the Scores table
+			# if for some reason the user already have that game, error
+			if scoreobj:
+				return render_to_response('gamestore/payment/error.html')
+			# if the user does not have the game, save it to the Scores table
+			else:
+				bought_game = Scores(game=gameobj, player=userobj, registration_date=datetime.datetime.now())
+				bought_game.save()
+				gameobj.sold_copies += 1
+				gameobj.save()
+				return render_to_response('gamestore/payment/success.html', {'pid': pid, 'ref': ref, 'checksum': checksum, 'game': gameobj})
 		else:
-			bought_game = Scores(game=gameobj, player=userobj, registration_date=datetime.datetime.now())
-			bought_game.save()
-			gameobj.sold_copies += 1
-			gameobj.save()
-			return render_to_response('gamestore/payment/success.html', {'pid': pid, 'ref': ref, 'checksum': checksum, 'game': gameobj})
+			return render_to_response('gamestore/payment/error.html')
 	else:
-		return render_to_response('gamestore/payment/error.html')
+		return render_to_response('gamestore/404.html')
 
 
 # canceled payment
@@ -395,60 +402,69 @@ def category_view(request, category_name):
 # a game is added by a developer
 def addgame(request):
 
-	saved = False
-	if request.method == 'POST':
-		form = GameForm(data=request.POST)
-		if form.is_valid():
-			game = form.save(commit=False)
-			game.developer = request.user
-			game.save()
-			saved = True
+	if request.user.is_authenticated() and not request.user.is_anonymous():
+		saved = False
+		if request.method == 'POST':
+			form = GameForm(data=request.POST)
+			if form.is_valid():
+				game = form.save(commit=False)
+				game.developer = request.user
+				game.save()
+				saved = True
+			else:
+				print(form.errors)
 		else:
-			print(form.errors)
-	else:
-		form = GameForm()
+			form = GameForm()
 
-	return render_to_response('gamestore/addgame.html',{'form': form, 'saved': saved},context_instance=RequestContext(request))
+		return render_to_response('gamestore/addgame.html',{'form': form, 'saved': saved},context_instance=RequestContext(request))
+	else:
+		return render_to_response('gamestore/404.html')
 
 
 # called when a game is modified on the developer homepage
 def editgame(request,id):
 
-	game = Games.objects.get(pk=id)
-	saved = False
-	if request.method == 'POST':
+	if request.user.is_authenticated() and not request.user.is_anonymous():
+		game = Games.objects.get(pk=id)
+		saved = False
+		if request.method == 'POST':
 
-		form = GameForm(data=request.POST)
-		game.name = request.POST.get('name','')
-		game.category = request.POST.get('category','')
-		game.url = request.POST.get('url','')
-		game.price = request.POST.get('price','')
-		game.save()
-		saved = True
+			form = GameForm(data=request.POST)
+			game.name = request.POST.get('name','')
+			game.category = request.POST.get('category','')
+			game.url = request.POST.get('url','')
+			game.price = request.POST.get('price','')
+			game.save()
+			saved = True
+		else:
+			form = GameForm(
+				initial = { 'name' : game.name, 'category' : game.category, 'url' : game.url, 'price' : game.price }
+			)
+
+		return render_to_response('gamestore/editgame.html',{'game': game,'form': form, 'saved': saved},context_instance=RequestContext(request))
 	else:
-		form = GameForm(
-			initial = { 'name' : game.name, 'category' : game.category, 'url' : game.url, 'price' : game.price }
-		)
-
-	return render_to_response('gamestore/editgame.html',{'game': game,'form': form, 'saved': saved},context_instance=RequestContext(request))
-
+		return render_to_response('gamestore/404.html')
 
 # delete a game on the developer homepage
 def deletegame(request, id, template_name='gamestore/game_confirm_delete.html'):
-	game = get_object_or_404(Games, pk=id)
-	if request.method=='POST':
-		game.delete()
-		return redirect('/devhome/')
-	return render(request, template_name, {'object':game})
+	if request.user.is_authenticated() and not request.user.is_anonymous():
+		game = Games.objects.get(pk=id)
+		if request.method=='POST':
+			game.delete()
+			return redirect('/devhome/')
+		return render(request, template_name, {'object':game})
+	else:
+		return render_to_response('gamestore/404.html')
 
 
 # load game.html with appropriate game iframe
 def loadgame(request, id):
-
-	player = request.user
-	game = Games.objects.get(pk=id)
-	return render_to_response('gamestore/game.html',{'player': player, 'game': game}, context_instance=RequestContext(request))
-
+	if request.user.is_authenticated() and not request.user.is_anonymous():
+		player = request.user
+		game = Games.objects.get(pk=id)
+		return render_to_response('gamestore/game.html',{'player': player, 'game': game}, context_instance=RequestContext(request))
+	else:
+		return render_to_response('gamestore/404.html')
 
 # display game statistics on the developer homepage
 def gamestats(request):
@@ -481,22 +497,27 @@ def gamestats(request):
 
 # open high scores page
 def loadhighscores(request, id):
-	player = request.user
-	game = get_object_or_404(Games, pk=id)
-	return render_to_response('gamestore/highscores.html',{'player': player, 'game': game},context_instance=RequestContext(request))
-
+	if request.user.is_authenticated() and not request.user.is_anonymous():
+		player = request.user
+		game = Games.objects.get(pk=id)
+		return render_to_response('gamestore/highscores.html',{'player': player, 'game': game},context_instance=RequestContext(request))
+	else:
+		return render_to_response('gamestore/404.html')
 
 # display high scores in the high scores page
 @api_view(['GET'])
 def highscores(request, id):
 
-	userobj = request.user
-	gameobj = Games.objects.get(pk=id)
-	scoreobj = Scores.objects.filter(game=gameobj, player=userobj)
+	if request.user.is_authenticated() and not request.user.is_anonymous():
+		userobj = request.user
+		gameobj = Games.objects.get(pk=id)
+		scoreobj = Scores.objects.filter(game=gameobj, player=userobj)
 
-	if request.method == 'GET':
-		serializer = ScoreSerializer(scoreobj[0])
-		return Response(serializer.data)
+		if request.method == 'GET':
+			serializer = ScoreSerializer(scoreobj[0])
+			return Response(serializer.data)
+	else:
+		return render_to_response('gamestore/404.html')
 
 
 # save game state

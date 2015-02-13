@@ -59,8 +59,8 @@
                             <li><button id="lnk" onclick="window.location='/category/puzzle'">Puzzle</button></li>
                             <li><button id="lnk" onclick="window.location='/category/racing'">Racing</button></li>
                             <li><button id="lnk" onclick="window.location='/category/sports'">Sports</button></li>
-                            <li><a href="{% url 'gamestore: home' %}">Help</a></li>
-                            <li><a href="{% url 'gamestore: home' %}">About</a></li>
+                            <li><button id="lnk" onclick="window.location='/help'">Help</button></li>
+                            <li><button id="lnk" onclick="window.location='/about'">About</button></li>
                         </ul></h3><br>
                         <form action="/search/" method="post">{% csrf_token %}
                         <label for="textsearch">Search for games</label>
