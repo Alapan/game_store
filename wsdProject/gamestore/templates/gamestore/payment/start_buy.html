@@ -27,10 +27,16 @@
             </div>
             <div class="right_block right">
               <div class="content">
-                    <br><br>
-                           <img src="hab.jpg" width="40%"><br>
-                    <div id="name"> <h2>{{user.get_username}}</h2> </div>
-                    <br>
+                     <div id="pad">
+                        <br><br>
+                        <img src="hab.jpg" width="40%"><br>
+                        <div id="name"> <h2>{{user.get_username}}</h2> </div>
+                        <br><br> <br><br><br><br><br> <br>
+                        <form action="/logout/" method="post">{% csrf_token %}
+                              <input type="submit" value="Logout" />
+                          </form>
+                    </div>
+
 
               </div>
             </div>
@@ -38,6 +44,7 @@
             </div>
             <div class="center_block main">
                 <div class="content">
+                    <div id="pad">
                     <p>You are about to be redirected to the payment page</p>
 
                     <form action="http://payments.webcourse.niksula.hut.fi/pay/" method="POST">{% csrf_token %}
@@ -55,6 +62,7 @@
                         <input type="submit" value="Continue"/>
                     </form>
                 </div>
+            </div>
             </div>
 
             <div class="bottom_block footer">

@@ -27,10 +27,15 @@
             </div>
             <div class="right_block right">
               <div class="content">
-                    <br><br>
-                           <img src="hab.jpg" width="40%"><br>
-                    <div id="name"> <h2>{{user.get_username}}</h2> </div>
-                    <br>
+                    <div id="pad">
+                        <br><br>
+                        <img src="hab.jpg" width="40%"><br>
+                        <div id="name"> <h2>{{user.get_username}}</h2> </div>
+                        <br><br> <br><br><br><br><br> <br>
+                        <form action="/logout/" method="post">{% csrf_token %}
+                              <input type="submit" value="Logout" />
+                          </form>
+                    </div>
 
               </div>
             </div>
@@ -38,9 +43,11 @@
             </div>
             <div class="center_block main">
                 <div class="content">
+                    <div id ="pad">
                     <p>Success! you can now play {{game.name}} you bought</p>
                     <a href="{% url 'gamestore: player_homepage' %}"> Click here </a>to go back to your profile</p>
     		    </div>
+            </div>
             </div>
 
             <div class="bottom_block footer">

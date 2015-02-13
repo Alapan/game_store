@@ -29,10 +29,16 @@
             </div>
             <div class="right_block right">
               <div class="content">
-                    <br><br>
-                           <img src="hab.jpg" width="40%"><br>
-                    <div id="name"> <h2>{{user.get_username}}</h2> </div>
-                    <br>
+                    <div id="pad">
+                        <br><br>
+                        <img src="hab.jpg" width="40%"><br>
+                        <div id="name"> <h2>{{user.get_username}}</h2> </div>
+                        <br><br> <br><br><br><br><br> <br>
+                        <form action="/logout/" method="post">{% csrf_token %}
+                              <input type="submit" value="Logout" />
+                          </form>
+                    </div>
+
 
               </div>
             </div>
@@ -40,7 +46,9 @@
             </div>
             <div class="center_block main">
                 <div class="content">
-                    <p>Purchase games Cancelled ! <a href="{% url 'gamestore: player_homepage' %}"> click here </a>to go back to your profile</p>
+                  <div id="pad">
+                    <p>Purchase games Cancelled ! <a href="{% url 'gamestore: home' %}"> click here </a>to go back to your profile</p>
+                  </div>
 
                 </div>
             </div>
