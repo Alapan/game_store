@@ -11,10 +11,10 @@ class UserData(forms.ModelForm):
 
 class UserForm(forms.ModelForm):
 		CHOICES = (
-				(False,'Player',),(True,'Developer')
+				(False,'Remain as player',),(True,'Upgrade to developer')
 		)
 
-		developer = forms.ChoiceField(widget=forms.Select(),choices=CHOICES, required=True, label='User type ')
+		developer = forms.ChoiceField(widget=forms.Select(),choices=CHOICES, required=True, label='Do you want to remain as player or upgrade to developer? ')
 		class Meta:
 				model = Usertypes
 				fields = ('developer',)

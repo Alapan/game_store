@@ -81,10 +81,52 @@ Your can verify your account by clicking on this link: http://localhost:8000/ver
 
 Best regards,
 The Gladiators team'''
-	from_email = 'no-reply@gladiator.com'
 	recipient_list = []
 	recipient_list.append(user.email)
-	send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+	send_mail(subject, message, 'alapandummy@gmail.com', recipient_list, fail_silently=False)
+
+
+# load profile update page
+def editprofile(request, username):
+
+	user = User.objects.filter(username=username)
+	# User object to save modified user details
+	u = User.objects.get(pk=user[0].id)
+	
+	# Usertypes object to save 'developer' as True if user decides to upgrade to developer
+	usertype = Usertypes.objects.filter(user=u)
+	
+	saved = False
+	
+	if request.method == 'POST':
+
+		# Update user details
+		form = UserData(data=request.POST)
+		# Update usertype details, i.e. make 'developer' = True if user selects that option on editprofile.html
+		typeform = UserForm(data=request.POST)
+		
+		u.username = request.POST.get('username')
+		u.first_name = request.POST.get('first_name','')
+		u.last_name =  request.POST.get('last_name','')
+		u.email = request.POST.get('email')
+		u.set_password(request.POST.get('password'))
+		u.save()
+		
+		if usertype.update(developer = request.POST.get('developer')) == 1:
+			print("Type saved")
+
+		saved = True
+	else:
+		form = UserData(
+			initial = { 'username' : u.username, 'first_name' : u.first_name, 'last_name' : u.last_name, 'email' : u.email, }
+		)
+
+		typeform = UserForm(
+			initial = { 'developer' : usertype[0].developer,}
+		)
+
+	return render_to_response('gamestore/editprofile.html',{'username': u.username,'form': form, 'typeform': typeform, 'saved': saved},context_instance=RequestContext(request))
+
 
 
 # help page

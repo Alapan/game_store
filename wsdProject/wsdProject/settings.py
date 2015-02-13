@@ -76,7 +76,14 @@ MIDDLEWARE_CLASSES = (
 #AUTH_PROFILE_MODULE = 'django_facebook.FacebookProfile',
 
 # Django console backend for e-mail
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'alapandummy@gmail.com'
+EMAIL_HOST_PASSWORD = 'mukhera3'
 
 ROOT_URLCONF = 'wsdProject.urls'
 
