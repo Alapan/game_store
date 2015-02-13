@@ -93,7 +93,9 @@
                                     {{ game.name }}<br>
                                     {{ game.description }}<br>
                                     {{ game.category }}<br>
-                                    {{ game.price }}</div>
+                                    {{ game.price }}<br>
+                                    <a href="/game_info/{{ game.id }}">Go to game</a>
+                                </div>
                         </div>
                         {% endfor %}
                     </div>
