@@ -11,9 +11,15 @@
         <div class="content">
            <div class="top_block title">
               <div class="content">
+                <div id="photo">
+                        <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="30%"></a>
+                    </div>
 
-                <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a></div>
-                <div id="glad"> <h2> Gladiators online games</h2></div>
+                <div id="desc">
+                 <font size="10"> <br> <B>Gladiators online games </B></font>
+             </div>
+         </div>
+
 
             </div>
             <div class="background left">
@@ -33,6 +39,7 @@
                         <img src="hab.jpg" width="40%"><br>
                         <div id="name"> <h2>{{user.get_username}}</h2> </div>
                         <br>
+                        <a href="/editprofile/{{user.get_username}}/"> Update your profile</a>
                     {% else %}
                         
                             <form action="/login/" method="post">{% csrf_token %}

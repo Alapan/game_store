@@ -131,6 +131,7 @@ ul#menu li {
   display: inline;
 
 }
+
   ul#menu li  {
     color: white;
     border-color: grey;
@@ -142,6 +143,16 @@ ul#menu li {
     position:relative;
     border-right-style: solid;
   }
+  #men li{
+    color: white;
+   border-color: black;
+   border-style: solid;
+  margin-right: 3%;
+    padding: 3%;
+    font-weight: bold;
+    
+    list-style-type: none;
+ }
 
   #pop_container{
     margin-left: 15%;
@@ -162,6 +173,10 @@ ul#menu li {
     #desc{
 float: left;
     }
+    #description{
+float: left;
+text-align: left;
+    }
     #photo{
       float: left;
       width: 30%;
@@ -172,6 +187,11 @@ float: left;
     padding-right: 1%;
     
     }
+    #search{
+      padding: 5%;
+      padding-bottom: 2%;
+      text-align: center;
+    }
     #category{
       padding-left: 5%;
       padding-right: 1%;
@@ -179,5 +199,4 @@ float: left;
     #mid{
       text-align: center;
     }
-
     

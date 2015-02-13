@@ -11,15 +11,32 @@
         <div class="content">
             <div class="top_block title">
                 <div class="content">
-                    <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a>
-                </div>
+                    <div id="photo">
+                        <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="30%"></a>
+                    </div>
 
-                <div id="glad"> <h2> Gladiators online games</h2></div>
+                <div id="desc">
+                 <font size="10"> <br> <B>Gladiators online games </B></font>
+             </div>
+                    </div>
 
             </div>
             <div class="background left"></div>
             <div class="left_block left">
-                <div class="content"></div>
+                <div class="content">
+                    <ul id="men">
+                    
+                          <li><button id="lnk" onclick="window.location='/playerhome'">Home   </button></li><br>
+                          <li><button id="lnk" onclick="window.location='/category/all'">All games</button></li><br>
+                          <li><button id="lnk" onclick="window.location='/category/adventure'">Adventure</button></li><br>
+                          <li><button id="lnk" onclick="window.location='/category/football'">Football</button></li><br>
+                          <li><button id="lnk" onclick="window.location='/category/puzzle'">Puzzle</button></li><br>
+                          <li><button id="lnk" onclick="window.location='/category/racing'">Racing</button></li><br>
+                          <li><button id="lnk" onclick="window.location='/category/sports'">Sports</button></li><br>
+                      
+
+                    </ul>
+                </div>
             </div>
 
             <div class="background right"></div>
@@ -31,6 +48,7 @@
                         <img src="hab.jpg" width="40%"><br>
                         <div id="name"> <h2>{{user.get_username}}</h2> </div>
                         <br>
+                        <a href="/editprofile/{{user.get_username}}/"> Update your profile</a>
                     {% else %}
                         
                             <form action="/login/" method="post">{% csrf_token %}
@@ -66,25 +84,16 @@
                 <div class="content">
                     
                    <div class="content">
-                    <ul id="menu">
-                        <li><button id="lnk" onclick="window.location='/playerhome'">Home   </button></li>
+                    <div id="search">
+                <form action="/search/" method="post">{% csrf_token %}
+                    <label for="textsearch">Search for games</label>
+                    <input id="textsearch" type="text" name="textsearch"/>
 
-                        <li><button id="lnk" onclick="window.location='/category/all'">All games</button></li>
-                        <li><button id="lnk" onclick="window.location='/category/adventure'">Adventure</button></li>
-                        <li><button id="lnk" onclick="window.location='/category/football'">Football</button></li>
-                        <li><button id="lnk" onclick="window.location='/category/puzzle'">Puzzle</button></li>
-                        <li><button id="lnk" onclick="window.location='/category/racing'">Racing</button></li>
-                        <li><button id="lnk" onclick="window.location='/category/sports'">Sports</button></li>
-                    </ul>
-                    <div id="category">
-                    
+                    <input type="submit" name="submit" value="Search"/>
+                </form>
+                   
+                    <div id="category">                  
 
-                    <form action="/search/" method="post">{% csrf_token %}
-                        <label for="textsearch">Search for games</label>
-                        <input id="textsearch" type="text" name="textsearch"/>
-
-                        <input type="submit" name="submit" value="Search"/>
-                    </form>
             
                     <br>
 

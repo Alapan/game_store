@@ -12,8 +12,15 @@
             <div class="top_block title">
               <div class="content">
 
-                <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a></div>
-                <div id="glad"> <h2> Gladiators online games</h2></div>
+                <div id="photo">
+                        <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="30%"></a>
+                    </div>
+
+                <div id="desc">
+                 <font size="10"> <br> <B>Gladiators online games </B></font>
+             </div>
+
+            </div>
 
             </div>
             <div class="background left">
@@ -21,7 +28,18 @@
             <div class="left_block left">
               <div class="content">
 
+                  <ul id="men">
+                    
+                          <li><button id="lnk" onclick="window.location='/playerhome'">Home   </button></li><br>
+                          <li><button id="lnk" onclick="window.location='/category/all'">All games</button></li><br>
+                          <li><button id="lnk" onclick="window.location='/category/adventure'">Adventure</button></li><br>
+                          <li><button id="lnk" onclick="window.location='/category/football'">Football</button></li><br>
+                          <li><button id="lnk" onclick="window.location='/category/puzzle'">Puzzle</button></li><br>
+                          <li><button id="lnk" onclick="window.location='/category/racing'">Racing</button></li><br>
+                          <li><button id="lnk" onclick="window.location='/category/sports'">Sports</button></li><br>
+                      
 
+                    </ul>
               </div>
             </div>
             <div class="background right">
@@ -58,12 +76,8 @@
             <div class="center_block main">
                 <div class="content">
                   <div id="pad">
-                    <h3><ul id="menu">
                   
-                  <li><a href="{% url 'gamestore: home' %}">Home</a></li>
-                  <li><a href="{% url 'gamestore: home' %}">Help</a></li>
-                  </ul></h3>
-                <div id="category">
+                
                     <h2><p>  Gladiatos online game help</p></h2>
                 <p>
                   Note that in this website all players must be registed and logged in to play a game.
@@ -87,7 +101,7 @@
                       <li>logout button is found in the bottom of the page.</li>
                     </p>    
              
-                </div>
+                
               </div>
             </div>
 

@@ -12,16 +12,32 @@
             <div class="top_block title">
               <div class="content">
 
-                <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a></div>
-                <div id="glad"> <h2> Gladiators online games</h2></div>
+               <div id="photo">
+                        <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="30%"></a>
+                    </div>
 
+                <div id="desc">
+                 <font size="10"> <br> <B>Gladiators online games </B></font>
+             </div>
             </div>
+        </div>
             <div class="background left">
             </div>
             <div class="left_block left">
               <div class="content">
 
+                    <ul id="men">
+                                        
+                              <li><button id="lnk" onclick="window.location='/playerhome'">Home   </button></li><br>
+                              <li><button id="lnk" onclick="window.location='/category/all'">All games</button></li><br>
+                              <li><button id="lnk" onclick="window.location='/category/adventure'">Adventure</button></li><br>
+                              <li><button id="lnk" onclick="window.location='/category/football'">Football</button></li><br>
+                              <li><button id="lnk" onclick="window.location='/category/puzzle'">Puzzle</button></li><br>
+                              <li><button id="lnk" onclick="window.location='/category/racing'">Racing</button></li><br>
+                              <li><button id="lnk" onclick="window.location='/category/sports'">Sports</button></li><br>
+                          
 
+                    </ul>
               </div>
             </div>
             <div class="background right">
@@ -33,6 +49,7 @@
                         <img src="hab.jpg" width="40%"><br>
                         <div id="name"> <h2>{{user.get_username}}</h2> </div>
                         <br>
+                        <a href="/editprofile/{{user.get_username}}/"> Update your profile</a>
                     {% else %}
                         
                             <form action="/login/" method="post">{% csrf_token %}
@@ -65,24 +82,22 @@
             </div>
             <div class="center_block main">
                 <div class="content">
-                    <div id="category">
-                    <p><h2>Game {{ name }} information page</h2></p>
-                    
+                    <div id="search">
+                    <p><h2>Game {{ name }} information page <BR></h2></p>
+                    <br>
 
-                      <h3><table id="info">
-                        <tr bgcolor="#CC6600">
-                          <th>Name</th>
-                          <th>Description</th>
-                          <th>Category</th>
-                          <th>Price</th>
-                        </tr>
-                        <tr bgcolor="#FF9933">
-                            <td>{{ name }}</td>
-                            <td>{{ description }}</td>
-                            <td>{{ category }}</td>
-                            <td>{{ price }}</td>
-                        </tr>
-                    </table></h3> 
+                     <div id="photo">
+                        <img src ="{% static 'gamestore/'|add:category|add:'.png' %}" width="40%">
+                    </div>
+
+                <div id="description">
+                 <b> Name: &nbsp;   </b> {{ name }}<br>
+                  <b> Description: &nbsp; </b> {{ description }}<br>
+                  <b>Category: &nbsp; </b> {{ category }}<br>
+                  <b>Price: &nbsp; </b>  {{ price }}<br>
+              
+                 
+             
 
                     {% if have == True %}
                         <p><a href="/loadgame/{{ id }}">Go to game.</a></p><br>
@@ -92,6 +107,7 @@
                         <p>You have to log in or register first to buy a game!</p>
                         <a href="{% url 'gamestore: home' %}"><p>Home</p>
                     {% endif %}
+                    </div>
                 </div>
             </div>
             </div>

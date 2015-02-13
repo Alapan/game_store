@@ -12,15 +12,33 @@
         <div class="content">
             <div class="top_block title">
               <div class="content">
+                <div id="photo">
+                        <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="30%"></a>
+                    </div>
 
-                <a href="{% url 'gamestore: home' %}"><img src ="{% static 'gamestore/logo.png'%} " width="10%"></a></div>
-                <div id="glad"> <h2> Gladiators online games</h2></div>
+                <div id="desc">
+                 <font size="10"> <br> <B>Gladiators online games </B></font>
+             </div>
+
+            </div>
 
             </div>
             <div class="background left">
             </div>
             <div class="left_block left">
               <div class="content">
+                <ul id="men">
+                    
+                          <li><button id="lnk" onclick="window.location='/playerhome'">Home   </button></li><br>
+                          <li><button id="lnk" onclick="window.location='/category/all'">All games</button></li><br>
+                          <li><button id="lnk" onclick="window.location='/category/adventure'">Adventure</button></li><br>
+                          <li><button id="lnk" onclick="window.location='/category/football'">Football</button></li><br>
+                          <li><button id="lnk" onclick="window.location='/category/puzzle'">Puzzle</button></li><br>
+                          <li><button id="lnk" onclick="window.location='/category/racing'">Racing</button></li><br>
+                          <li><button id="lnk" onclick="window.location='/category/sports'">Sports</button></li><br>
+                      
+
+                    </ul>
 
 
               </div>
@@ -30,7 +48,6 @@
             <div class="right_block right">
                 <div class="content">
                     <div id="pad">
-                        <p>{{message}}</p>
                         <form action="/login/" method="post">{% csrf_token %}
                             <label for="username">Username</label>
                             <input id="username" type="text" name="username">&nbsp;
@@ -52,25 +69,17 @@
             </div>
             <div class="center_block main">
                 <div class="content">
-                    <div id="category">
-                        <h3><ul id="menu">
-                            <li><button id="lnk" onclick="window.location='/category/all'">All games</button></li>
-                            <li><button id="lnk" onclick="window.location='/category/adventure'">Adventure</button></li>
-                            <li><button id="lnk" onclick="window.location='/category/football'">Football</button></li>
-                            <li><button id="lnk" onclick="window.location='/category/puzzle'">Puzzle</button></li>
-                            <li><button id="lnk" onclick="window.location='/category/racing'">Racing</button></li>
-                            <li><button id="lnk" onclick="window.location='/category/sports'">Sports</button></li>
-                            <li><button id="lnk" onclick="window.location='/help'">Help</button></li>
-                            <li><button id="lnk" onclick="window.location='/about'">About</button></li>
-                        </ul></h3><br>
-                        <form action="/search/" method="post">{% csrf_token %}
-                        <label for="textsearch">Search for games</label>
-                        <input id="textsearch" type="text" name="textsearch"/>
+                <div id="search">
+                <form action="/search/" method="post">{% csrf_token %}
+                    <label for="textsearch">Search for games</label>
+                    <input id="textsearch" type="text" name="textsearch"/>
 
-                        <input type="submit" name="submit" value="Search"/>
-                    </form>
-                    </div>
+                    <input type="submit" name="submit" value="Search"/>
+                </form>
+            </div>                    
 
+
+                    <p>{{message}}</p>
 
                     <div id="pop_container">
                         <h2>Popular games</h2>
