@@ -155,21 +155,17 @@ def about(request):
 
 # verifying the user account based on the username and hashed password sent to the user in e-mail
 def verify(request, conf_code):
-	#conf_code = request.GET['conf']
-	print(conf_code + "THIS")
+
 	username, password = conf_code.split(':::')
 	user = User.objects.filter(username=username, password=password)
 	if user is not None:
 		user.update(is_active = True)
-		print(user[0].is_active)
+		message = "Your account is now verified!"
+	else:
+		message = "Verification error!"
 
-	return HttpResponseRedirect('/')
-
-
-# if the verification is not successful for some reason or the user is not yet verified
-def verificationerror(request):
-
-	return render_to_response('gamestore/verification_error.html',context_instance=RequestContext(request, {'user': request.user}))
+	top_games = Games.objects.all().order_by('sold_copies')[:5]
+	return render_to_response('gamestore/home.html',context_instance=RequestContext(request, {'top_games': top_games, 'message': message}))
 
 
 # @cache_control(no_cache=True, must_revalidate=True, no_store=True)
@@ -189,7 +185,10 @@ def login_view(request):
 			return HttpResponseRedirect('/playerhome/')
 		# if not notify the user that the verification step is still necessary to be able to log in
 		else:
-			return HttpResponseRedirect('/verificationerror/')
+			message = "You have to verify your account! Check your inbox!"
+			top_games = Games.objects.all().order_by('sold_copies')[:5]
+			return render_to_response('gamestore/home.html',context_instance=RequestContext(request, {'top_games': top_games, 'message': message}))
+
 	# Redirect to login page, as login is incorrect
 	else:
 		top_games = Games.objects.all().order_by('sold_copies')[:5]

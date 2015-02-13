@@ -17,7 +17,6 @@ urlpatterns = patterns('',
 	url(r'^category/(\w+)/', 'gamestore.views.category_view'),
 	url(r'^playerhome/','gamestore.views.playerhome'),
     url(r'^verify/([^\s]+)/$', 'gamestore.views.verify'),
-    url(r'^verificationerror/', 'gamestore.views.verificationerror'),
 
 
 	url(r'^admin/', include(admin.site.urls)),
