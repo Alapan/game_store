@@ -22,10 +22,7 @@
 					}
 					
 					else if (data.messageType == "SAVE"){
-						//HARDCODED GAME ID
-						var gameid = 32;
-						//REPLACE WITH CODE TO GET IDS DYNAMICALLY
-
+						var gameid = document.getElementById("gameid").value;
 						var playerid = document.getElementById("playerid").value;
 
                                 		var csrftoken = getCookie('csrftoken');
@@ -35,17 +32,13 @@
                                         		data : {'gameid': gameid, 'playerid': playerid, 'jsondata' : JSON.stringify(data), 'csrfmiddlewaretoken': csrftoken},
 							dataType : "json",
                                         		success : function(data){
-								var gamedata = '<p>';
-                                                                gamedata += "Player items: " + data['playerItems'] + '</p>';
-                                                                gamedata += '<p>' + "Score: " + data['score'] + '</p><br>';
-                                                                $('#gamestate').html(gamedata);
 								alert("Game saved successfully!");
                                         		}
                                 		});
 					}
 					else if (data.messageType == "LOAD_REQUEST"){
 						var csrftoken = getCookie('csrftoken');
-						var gameid = 32;
+						var gameid = document.getElementById("gameid").value;
 						var playerid = document.getElementById("playerid").value;
 						$.ajax({
 							type : "POST",
@@ -55,16 +48,13 @@
 							success : function(data){
 								// Gamestate exists, messageType = LOAD
 								if (data['messageType'] == "LOAD"){
-									var gamedata = '<p>';
-									var state = $.parseJSON(data["gameState"]);
-									gamedata += "Player items: " + state.playerItems + '</p>';
-									gamedata += '<p>' + "Score: " + state.score + '</p><br>';
-									$('#gamestate').html(gamedata);
+									alert("Gamestate loaded!");
 								}
 								// No gamestate found, messageType = MESSAGE
 								else {
-									$('#gamestate').html(data['message']);
+									alert("No saved gamestate present!");
 								}
+								document.getElementById("iframe").contentWindow.postMessage(data, "*");
 							}
 						});
 					}
