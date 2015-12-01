@@ -1,2 +1,6 @@
+This is a web application which provides a platform for players to buy and play games hosted by third-party servers. Developers 
+add games to the site by posting a URL to the game, which is then included as a iframe in a parent HTML. Players can access the game
+after buying it. 
+
 The website details can be found in the file DOCUMENTATION.docx. The application has been built using Django and other web technologies such as HTML5/CSS and JavaScript.
 The application has been deployed on Heroku.
